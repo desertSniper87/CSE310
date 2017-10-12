@@ -1,0 +1,11 @@
+In slot:1
+<=,RELOP
+<=,RELOP
+
+In slot:10
+foo,FUNCTION
+foo,FUNCTION
+
+In slot:13
+5,NUMBER
+
