@@ -1,11 +1,99 @@
-In slot:1
-<=,RELOP
-<=,RELOP
+I foo FUNCTION
+foo Inserted in ScopeTable# 1 at position 2, 0
 
-In slot:10
-foo,FUNCTION
-foo,FUNCTION
+I i VAR
+i Inserted in ScopeTable# 1 at position 0, 0
 
-In slot:13
-5,NUMBER
+L foo
+Symbol found: foo
+
+L j
+Symbol not found
+
+I 5 NUMBER
+5 Inserted in ScopeTable# 1 at position 4, 0
+
+P A
+0 -->i VAR
+1-->
+2 -->foo FUNCTION
+3-->
+4 -->5 NUMBER
+5-->
+6-->
+
+D j
+Symbol not found, Cannot delete
+
+D i
+Symbol found:i. Deleting.
+
+P A
+0-->
+1-->
+2 -->foo FUNCTION
+3-->
+4 -->5 NUMBER
+5-->
+6-->
+
+S
+I <= RELOP
+Symbol not found
+
+<= Inserted in ScopeTable# 1 at position 4, 0
+
+I == RELOP
+Symbol not found
+
+== Inserted in ScopeTable# 1 at position 2, 0
+
+P A
+0-->
+1-->
+2 -->foo FUNCTION -->== RELOP
+3-->
+4 -->5 NUMBER --><= RELOP
+5-->
+6-->
+
+I <= RELOP
+Symbol found: <=
+
+The symbol <= already exists at 4
+
+I foo FUNCTION
+Symbol found: foo
+
+The symbol foo already exists at 2
+
+D ==
+Symbol found:==. Deleting.
+
+P A
+0-->
+1-->
+2-->
+3-->
+4 -->5 NUMBER --><= RELOP
+5-->
+6-->
+
+E
+I t t
+Symbol not found
+
+t Inserted in ScopeTable# 1 at position 4, 1
+
+I k k
+k Inserted in ScopeTable# 1 at position 2, 0
+
+P A
+0-->
+1-->
+2 -->k k
+3-->
+4 -->5 NUMBER --><= RELOP -->t t
+5-->
+6-->
 

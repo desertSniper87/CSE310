@@ -4,67 +4,62 @@
 #include <sstream>
 using namespace std;
 
-int number_of_inputs;
+int hash_buckets;
+bool scope_flag;
 
-class SymbolInfo   {
+class Symbol_info   {
     public:
         string symbol, symbol_type;
-        SymbolInfo *next;
+        Symbol_info *next;
 
 };
 
-class SymbolTable  {
+class Symbol_table  {
     public:
-        SymbolInfo* arr[30];
+        Symbol_info* arr[7];
 
-        bool lookup(int count,string s)
-        {
+        bool lookup(int count,string s) {
             ofstream outfile;
             outfile.open("output.txt", ios::app);
 
             int flag=0;
-            SymbolInfo *cur = arr[count];
+            Symbol_info *cur = arr[count];
             while(cur) {
-
-
-                if(cur->symbol==s)
-                {
+                if(cur->symbol==s) {
                     flag=1;
-                    cout <<"Symbol found: " <<cur->symbol<<endl;  ///পয়েন্টার কোড :p
-                    outfile <<"\nSymbol found: " <<cur->symbol<<endl;
+                    //cout <<"Symbol found: " <<cur->symbol<<endl;  
+                    outfile <<"Symbol found: " <<cur->symbol<<endl<< endl;
                     break;
-
                 }
                 cur=cur->next;
 
-            }
-            if(flag==1)
-            {
+            } 
+            
+            if(flag==1) {
                 return true;
             }
             else
             {
-                cout<< s << " Symbol not found"<< endl;
-                outfile<< "\nSymbol not found\n";
+                //cout<< s << " Symbol not found"<< endl;
+                outfile<< "Symbol not found\n"<< endl;
                 return false;
             }
 
             outfile.close();
         }
 
-        void remove(int count,string s)
-        {
+        void remove(int count,string s) {
             ofstream outfile;
-            outfile.open("output.txt", ios::out);
+            outfile.open("output.txt", ios::app);
 
             int flag=0;
-            SymbolInfo *cur = arr[count];
+            Symbol_info *cur = arr[count];
             while(cur) {
                 if(cur->symbol==s)
                 {
                     flag=1;
                     //cout <<"\nSymbol found: " <<cur->symbol<<endl;  
-                    //outfile <<"\nSymbol found: " <<cur->symbol<<endl;
+                    outfile <<"Symbol found:" <<cur->symbol<<". Deleting."<< endl<< endl;
                     arr[count] = NULL;
                     break;
 
@@ -72,79 +67,80 @@ class SymbolTable  {
                 cur=cur->next;
 
             }
-            if(flag==1)
-            {
-                cout<< s<< " Deleted"<< endl;
+
+            if(flag==1) {
+                //cout<< s<< " Deleted"<< endl;
                 outfile.close();
             }
-            else
-            {
-                outfile.close();
-                cout<< s << " Symbol not found, Cannot delete"<< endl;
-                outfile<< "\nSymbol not found, Cannot delete\n";
+
+            else {
+                //cout<< s << " Symbol not found, Cannot delete"<< endl;
+                outfile<< "Symbol not found, Cannot delete\n"<< endl;
             }
-
-
         }
 
 
-        void insert(string s1,string s2)
-        {
+        void insert(string s1,string s2, int hash_buckets)        {
             /// should return a hash key where to insert
+            /// cur is the position of has in the table
             int count;
+            count= hash_key(s1, hash_buckets);
 
-            count=hash_key(s1,20);
+            Symbol_info *cur = arr[count];
 
+            if(cur!=NULL) {
+                bool search=lookup(count,s1);
 
-            SymbolInfo *cur = arr[count];
+                if(search) {
+                    ofstream outfile;
+                    outfile.open("output.txt", ios::app);
+                    outfile <<"The symbol "<< s1<< " already exists at " <<count <<endl<< endl;
+                    outfile.close();
+                } else {
+                    int level = 0;
+                    
+                    while(cur) {
+                        if(cur->next!=NULL) {
+                            cur=cur->next;
+                            level++;
+                        }
+                        else {
+                            Symbol_info *newOb=new Symbol_info;
+                            newOb->symbol=s1;
+                            newOb->symbol_type=s2;
+                            cur->next=newOb;
 
-            if(cur!=NULL)
-            {
+                            cur->next->next=NULL;
 
-                //bool search=lookup(count,s1);
+                            ofstream outfile;
+                            outfile.open("output.txt", ios::app);
+                            outfile<< s1<< " Inserted in"<< " ScopeTable# 1"<< " at position "<< count<< ", "<< level<< endl<<endl; 
+                            outfile.close();
 
-                /*if(search)/// the symbol is already in the table
-                  {
-                  cout <<"(The symbol is already exists)"<<count<<endl;
-                  }
-                  else
-                  {*/
-                while(cur)
-                {
-                    if(cur->next!=NULL)
-                    {
-                        cur=cur->next;
+    //                        string temp = s2.substr(0, s2.size()-1);
+                            //cout<< "< "<< s1<<", "<< temp<< " >"<< " inserted"<< endl;
+
+                            break;
+                        }
+
                     }
-                    else
-                    {
-                        SymbolInfo *newOb=new SymbolInfo;
-                        newOb->symbol=s1;
-                        newOb->symbol_type=s2;
-                        cur->next=newOb;
-
-                        cur->next->next=NULL;
-
-                        string temp = s2.substr(0, s2.size()-1);
-                        cout<< "< "<< s1<<", "<< temp<< " >"<< " inserted"<< endl;
-
-                        break;
-                    }
-
                 }
-                //}
 
             }
-            else
-            {
-
-                arr[count]=new SymbolInfo;
+            else {
+                arr[count]=new Symbol_info;
 
                 arr[count]->symbol=s1;
                 arr[count]->symbol_type=s2;
                 arr[count]->next=NULL;
 
-                string temp = s2.substr(0, s2.size()-1);
-                cout<< "< "<< s1<<", "<< temp<< " >"<< " inserted"<< endl;
+                ofstream outfile;
+                outfile.open("output.txt", ios::app);
+                outfile<< s1<< " Inserted in"<< " ScopeTable# 1"<< " at position "<< count<< ", 0"<< endl<< endl;
+                outfile.close();
+
+//                string temp = s2.substr(0, s2.size()-1);
+                //cout<< "< "<< s1<<", "<< temp<< " >"<< " inserted"<< endl;
 
 
             }
@@ -156,10 +152,10 @@ class SymbolTable  {
         //        /// should return a hash key where to insert
         //        int count;
         //
-        //        count=hash_key(s1,20);
+        //        count=hash_key(s1,7);
         //
         //
-        //        SymbolInfo *cur = arr[count];
+        //        Symbol_info *cur = arr[count];
         //
         //        if(cur!=NULL)
         //        {
@@ -173,7 +169,7 @@ class SymbolTable  {
         //            else
         //            {*/
         //
-        //            SymbolInfo *newOb=new SymbolInfo;
+        //            Symbol_info *newOb=new Symbol_info;
         //            newOb->symbol=s1;
         //            newOb->symbol_type=s2;
         //            cur->next=newOb;
@@ -201,7 +197,7 @@ class SymbolTable  {
         //        else
         //        {
         //
-        //            arr[count]=new SymbolInfo;
+        //            arr[count]=new Symbol_info;
         //
         //            arr[count]->symbol=s1;
         //            arr[count]->symbol_type=s2;
@@ -215,48 +211,49 @@ class SymbolTable  {
         //
         //    }
 
-        void print()
-        {
-
+        void print() {
             ofstream outfile;
-            outfile.open("output.txt", ios::out);
+            outfile.open("output.txt", ios::app);
 
-            for(int i=0;i<30;i++)
+            for(int i=0;i<7;i++)
             {
-                SymbolInfo *cur = arr[i];
-                if(cur)
-                {
-                    outfile <<"In slot:"<<i<<endl;
+                Symbol_info *cur = arr[i];
+                if(cur) {
+                    outfile<< i;
+                    while(cur) {
+                        outfile<< " -->"<< cur->symbol<< " "<< cur->symbol_type;
+                            //outfile << "("<<cur->symbol<<","<<cur->symbol_type<<")->";
+                            //outfile <<cur->symbol<<","<<cur->symbol_type<< endl;
+
+                        //string st=cur->symbol+","+cur->symbol_type;
+                            //cout << st<<endl;
+                            //cout <<"-->"<<endl;
+                            //cout << "("<<cur->symbol<<","<<cur->symbol_type<<")->";
+
+                        cur=cur->next;
+
+                            //cout<< cur->symbol;
+        //                    if(!cur)
+        //                    {
+        //                        //outfile <<"NULL";
+        //                        //cout << "NULL";
+        //                    }
+
+                        }
                 }
 
-                while(cur)
-                {
-
-                    //outfile << "("<<cur->symbol<<","<<cur->symbol_type<<")->";
-                    outfile <<cur->symbol<<","<<cur->symbol_type<< endl;
-
-                    /*string st=cur->symbol+","+cur->symbol_type;
-                      cout << st<<endl;
-                      cout <<"-->"<<endl;*/
-                    //cout << "("<<cur->symbol<<","<<cur->symbol_type<<")->";
-
-
-                    cur=cur->next;
-                    if(!cur)
-                    {
-                        //outfile <<"NULL";
-                        //cout << "NULL";
-                    }
-
+                else {
+                    outfile<< i<< "-->"<< endl;
                 }
-                if(arr[i])
-                {
+
+                if(arr[i]) {
                     outfile <<endl;
                 }
 
             }
 
 
+            outfile<< endl;
             outfile.close();
         }
 
@@ -267,7 +264,7 @@ class SymbolTable  {
             for (counter =0; word[counter]!='\0'; counter++)
             {
 
-                hashAddress = word[counter] + (hashAddress << 6) + (hashAddress << 16) - hashAddress;
+                hashAddress = word[counter] + (hashAddress << 7) + (hashAddress << 17) - hashAddress;
             }
             return (hashAddress%hashtable_size);
         }
@@ -278,10 +275,20 @@ int main() {
     string temp;
     fstream datafile("input.txt", ios::in);
     string input0, input1, input2;
-    SymbolTable obtable;
 
-    for (int i = 0; i < 30; i++) {
-        obtable.arr[i] = NULL;    ///     টেবল পপুলেট করছে
+    Symbol_table obtable;
+    Symbol_table obtable2;
+
+    ofstream outfile;
+    outfile.open("output.txt", ios::out);
+    outfile.close();
+
+    for (int i = 0; i < 7; i++) {
+        obtable.arr[i] = NULL;  
+    }
+
+    for (int i = 0; i < 7; i++) {
+        obtable2.arr[i] = NULL;  
     }
 
     if (!datafile) {
@@ -291,36 +298,45 @@ int main() {
     }
 
     getline(datafile, temp, '\n');
-    number_of_inputs = stoi(temp);
-
-
+    hash_buckets = stoi(temp);
 
     stringstream ss;
     string line;
 
     if (datafile) {
         while (getline(datafile, line)) {
+            ofstream outfile;
+            outfile.open("output.txt", ios::app);
+
+            outfile<< line<< endl;
+            outfile.close();
             ss << line;
             while (getline(ss, input0, ' ')) {
+
                 if (input0 == "P") {
                     obtable.print();
-                } else if (input0 == "I") {
-                    getline(ss, input1, ' ');     ///ফাইল থেকে ইনপুট নিচ্ছে।  গেটলাইন কাজ করে, getline ( স্ট্রিম, ভারিয়েবল, ডেলিমিটার ) । স্ট্রিম থেকে ভারিয়েবলএ ইনপুট নিবে,ব   ডেলিমিটার পেলে ইনপুট নেয়া বন্ধ করবে।
-                    getline(ss, input2);        /// দুইটা ইনপুট নিল। প্রথম ইনপুট লাইনের কাজ শেষ
+                }
 
+                else if (input0 == "I") {
+                    getline(ss, input1, ' ');
+                    getline(ss, input2);
 
-                    if (input1 != "" && input2 != "" && number_of_inputs) {
-                        obtable.insert(input1, input2);
+                    if (input1 != "" && input2 != "" ) {
+                        if (scope_flag){
+                            obtable.insert(input1, input2, hash_buckets);
+                        } else {
+                            obtable2.insert(input1, input2, hash_buckets);
+                        }
                         input1 = "";
                         input2 = "";
-                        number_of_inputs--;
-                    } else if (!number_of_inputs)
-                        cout << "Symbol table full cannot insert " << input1<< endl;
+                    }
+                    //else if (!hash_buckets)
+                        //cout << "Symbol table full cannot insert " << input1<< endl;
 
                 } else if (input0 == "L") {
                     getline(ss, input1, '\n');
                     input1.pop_back();
-                    int count2 = obtable.hash_key(input1, 20);
+                    int count2 = obtable.hash_key(input1, 7);
                     obtable.lookup(count2, input1);
                     input1 = "";
                 }
@@ -328,10 +344,19 @@ int main() {
                 else if (input0 == "D"){
                     getline (ss, input1, '\n');
                     input1.pop_back();
-                    int count2 = obtable.hash_key(input1, 20);
+                    int count2 = obtable.hash_key(input1, 7);
                     obtable.remove(count2, input1);
                     input1 = "";
                 }
+
+                else if (input0 == "S"){
+                    scope_flag = 1;
+                }
+
+                else if (input0 == "E"){
+                    scope_flag = 0;
+                }
+
             }       /// End of while
 
             ss.clear();
@@ -339,45 +364,47 @@ int main() {
 
     }
 
-    int choice;
-    while (true) {
-        cout << "\n1.insert\n2.lookup\n3.print\n4.Delete\n5.other number to exit\nEnter choice:";
-        cin >> choice;
-        switch (choice) {
-            case 1: {
-                        cout << "Input1:";
-                        cin >> input1;
-                        cout << "Input2:";
-                        cin >> input2;
-                        obtable.insert(input1, input2);
-                        break;
-                    }
-
-            case 2: {
-                        cout << "Enter:";
-                        cin >> input1;
-                        int count2 = obtable.hash_key(input1, 20);
-                        obtable.lookup(count2, input1);
-                        break;
-                    }
-
-            case 3: {
-                        obtable.print();
-                        break;
-                    }
-            case 4: {
-                        cout << "Enter:";
-                        cin >> input1;
-                        int count2 = obtable.hash_key(input1, 20);
-                        obtable.remove(count2, input1);
-                        break;
-                    }
-            default: {
-                         return 0;
-                     }
-
-        }
-    }
+    //int choice;
+/*
+ *    while (true) {
+ *        cout << "\n1.insert\n2.lookup\n3.print\n4.Delete\n5.other number to exit\nEnter choice:";
+ *        cin >> choice;
+ *        switch (choice) {
+ *            case 1: {
+ *                        cout << "Input1:";
+ *                        cin >> input1;
+ *                        cout << "Input2:";
+ *                        cin >> input2;
+ *                        obtable.insert(input1, input2);
+ *                        break;
+ *                    }
+ *
+ *            case 2: {
+ *                        cout << "Enter:";
+ *                        cin >> input1;
+ *                        int count2 = obtable.hash_key(input1, 7);
+ *                        obtable.lookup(count2, input1);
+ *                        break;
+ *                    }
+ *
+ *            case 3: {
+ *                        obtable.print();
+ *                        break;
+ *                    }
+ *            case 4: {
+ *                        cout << "Enter:";
+ *                        cin >> input1;
+ *                        int count2 = obtable.hash_key(input1, 7);
+ *                        obtable.remove(count2, input1);
+ *                        break;
+ *                    }
+ *            default: {
+ *                         return 0;
+ *                     }
+ *
+ *        }
+ *    }
+ */
 
 
 }
