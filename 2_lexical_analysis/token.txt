@@ -1,0 +1,11 @@
+
+<CHAR, 'a'>
+<ID, ab>
+<ID, ab>
+<ID, cd>
+
+<STRING, "abcd
+">
+<ID, abcd>
+<ID, efgh>
+<ID, ijk>
