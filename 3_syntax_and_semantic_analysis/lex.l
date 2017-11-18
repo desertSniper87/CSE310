@@ -4,10 +4,10 @@
 #include "y.tab.hpp"
 
 
-extern "C"
-{
-    extern int yylex(void);
-}
+/*extern "C"*/
+/*{*/
+    /*extern int yylex(void);*/
+/*}*/
 
 int line_count = 1;
 Symbol_table table;
@@ -55,7 +55,62 @@ hash			#
 
 err_dotdot      {number}\.{unsigned}{exponent}?
 err_id 			{digit}+{id}
+
 %%
+
+"{"				{return LPAREN;}
+
+"}"				{return RPAREN;}
+
+"("				{return LBRAKET;}
+
+")"				{return RBRAKET;}
+
+"char"			{ return  CHAR; }
+
+"const"			{ return  CONST; }
+
+"double"		{ return  DOUBLE; }
+
+"else"			{ return  ELSE; }
+
+"enum"			{ return  ENUM; }
+
+"extern"		{ return  EXTERN; }
+
+"float"			{ return  FLOAT; }
+
+"for"			{ return  FOR; }
+
+"if"			{ return  IF; }
+
+"int"			{ return  INT; }
+
+"long"			{ return  LONG; }
+
+"return"		{ return  RETURN; }
+
+"short"			{ return  SHORT; }
+
+"signed"		{ return  SIGNED; }
+
+"static"		{ return  STATIC; }
+
+"struct"		{ return  STRUCT; }
+
+"typedef"		{ return  TYPEDEF; }
+
+"union"			{ return  UNION; }
+
+"unsigned"		{ return  UNSIGNED; }
+
+"void"			{ return  VOID; }
+
+"volatile"		{ return  VOLATILE; }
+
+"while"			{ return  WHILE; }
+
+"main"			{ return MAIN; }
 {newLine} {
 	line_count++;
     /*table.print(logout);*/
@@ -67,6 +122,7 @@ err_id 			{digit}+{id}
 	printf("line no: %d\n",line_count);
 	/*fprintf(tokenout,"\n<STRING, %s>\n",yytext);*/
 	/*fprintf(logout,"\nLine no %d:Token <STRING> lexeme <%s> found\n",line_count,yytext);*/
+    return STRING;
 }
 
 
@@ -108,6 +164,7 @@ err_id 			{digit}+{id}
 	//printf("keyword");
 	/*fprintf(tokenout,"\n<KEYWORD, %s>\n",yytext);*/
 	/*fprintf(logout,"\nLine no %d: Token <KEYWORD> lexeme <%s> found\n",line_count,yytext);*/
+    return KEYWORD;
 	
 }
 
@@ -115,6 +172,7 @@ err_id 			{digit}+{id}
 	insert("header",yytext);
 	/*fprintf(tokenout,"\n<HEADER %s>\n",yytext);*/
 	/*fprintf(logout,"\nLine no %d: Token <HEADER> lexeme <%s> found\n",line_count,yytext);*/
+    return HEADER;
 }
 
 
@@ -123,6 +181,7 @@ err_id 			{digit}+{id}
 	/*printf("id: %s\n", yytext); */
 	/*fprintf(tokenout,"<ID, %s>\n",yytext);*/
 	/*fprintf(logout,"\nLine no %d: Token <ID> lexeme <%s> found\n",line_count,yytext);*/
+    return HEADER;
 }
 
 {sin_comment} {
@@ -146,7 +205,7 @@ err_id 			{digit}+{id}
 	/*printf("line no: %d\n",line_count);*/
 	/*fprintf(tokenout,"<NUMBER, %s>\n",yytext);*/
 	/*fprintf(logout,"\nLine no %d: Token <NUMBER> lexeme <%s> found\n",line_count,yytext);*/
-	
+    return NUMBER;
 }
 
 {addop} {
