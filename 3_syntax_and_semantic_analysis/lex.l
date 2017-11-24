@@ -28,7 +28,7 @@ unsigned		{digit}+
 exponent		[eE][+-]?{unsigned}
 number			[-+]?({unsigned}|{unsigned}\.{unsigned}?|{unsigned}?\.{unsigned}){exponent}?
 letter			[A-Za-z]
-keyword			program|if|not|end|begin|else|then|do|while|function|Procedure|integer|real|var|oh|array|write|include|int|char|float|string|printf
+keyword         program|if|not|end|begin|else|then|do|while|function|Procedure|integer|real|var|oh|array|write|include|int|char|float|string|printf
 prnt_stmt       [printf](\.|\n)*{semicolon}
 header			{id}\.h
 sin_comment		\/\/.*
@@ -58,13 +58,23 @@ err_id 			{digit}+{id}
 
 %%
 
-"{"				{return LPAREN;}
+"{"				{return LCURL;}
 
-"}"				{return RPAREN;}
+"}"				{return RCURL;}
 
-"("				{return LBRAKET;}
+"("				{
+    printf("found LPAREN\n");
+    return LPAREN;}
 
-")"				{return RBRAKET;}
+")"				{
+    printf("found RPAREN\n");
+    return RPAREN;}
+
+"["				{return LSQBRAC;}
+
+"]"				{return RSQBRAC;}
+
+,               {return COMMA;}
 
 "char"			{ return  CHAR; }
 
@@ -84,7 +94,9 @@ err_id 			{digit}+{id}
 
 "if"			{ return  IF; }
 
-"int"			{ return  INT; }
+"int"			{
+    printf("found INT\n");
+    return  INT; }
 
 "long"			{ return  LONG; }
 
@@ -110,7 +122,6 @@ err_id 			{digit}+{id}
 
 "while"			{ return  WHILE; }
 
-"main"			{ return MAIN; }
 {newLine} {
 	line_count++;
     /*table.print(logout);*/
@@ -181,7 +192,8 @@ err_id 			{digit}+{id}
 	/*printf("id: %s\n", yytext); */
 	/*fprintf(tokenout,"<ID, %s>\n",yytext);*/
 	/*fprintf(logout,"\nLine no %d: Token <ID> lexeme <%s> found\n",line_count,yytext);*/
-    return HEADER;
+    printf("found ID.\n");
+    return ID;
 }
 
 {sin_comment} {
@@ -205,7 +217,7 @@ err_id 			{digit}+{id}
 	/*printf("line no: %d\n",line_count);*/
 	/*fprintf(tokenout,"<NUMBER, %s>\n",yytext);*/
 	/*fprintf(logout,"\nLine no %d: Token <NUMBER> lexeme <%s> found\n",line_count,yytext);*/
-    return NUMBER;
+    return CONST_INT;
 }
 
 {addop} {
@@ -260,6 +272,11 @@ err_id 			{digit}+{id}
 {prnt_stmt} {
 	/*printf("Illegal id\n");*/
 	/*fprintf(logout,"\nLine no %d: Printf statement<%s> found\n",line_count,yytext);*/
+}
+
+{semicolon} {
+    printf("found Semicolon");
+    return SEMICOLON;
 }
 
 %%

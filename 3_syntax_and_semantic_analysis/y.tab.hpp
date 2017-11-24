@@ -54,9 +54,9 @@ extern int yydebug;
     LCURL = 264,
     RCURL = 265,
     ID = 266,
-    LTHIRD = 267,
+    LSQBRAC = 267,
     CONST = 268,
-    RTHIRD = 269,
+    RSQBRAC = 269,
     FOR = 270,
     LPAREN = 271,
     RPAREN = 272,
@@ -82,28 +82,29 @@ extern int yydebug;
     TYPE_NAME = 292,
     VOLATILE = 293,
     AUTO = 294,
-    VOID = 295,
-    SHORT = 296,
-    LONG = 297,
-    DOUBLE = 298,
-    SIGNED = 299,
-    UNSIGNED = 300,
-    EXTERN = 301,
-    ENUM = 302,
-    IDENTIFIER = 303,
-    STRUCT = 304,
-    UNION = 305,
-    HEADER = 306,
-    NUMBER = 307,
-    STRING = 308,
-    OR_OP = 309,
-    AND_OP = 310,
-    EQ_OP = 311,
-    NE_OP = 312,
-    LEFT_OP = 313,
-    GE_OP = 314,
-    LE_OP = 315,
-    RIGHT_OP = 316
+    KEYWORD = 295,
+    VOID = 296,
+    SHORT = 297,
+    LONG = 298,
+    DOUBLE = 299,
+    SIGNED = 300,
+    UNSIGNED = 301,
+    EXTERN = 302,
+    ENUM = 303,
+    IDENTIFIER = 304,
+    STRUCT = 305,
+    UNION = 306,
+    HEADER = 307,
+    NUMBER = 308,
+    STRING = 309,
+    OR_OP = 310,
+    AND_OP = 311,
+    EQ_OP = 312,
+    NE_OP = 313,
+    LEFT_OP = 314,
+    GE_OP = 315,
+    LE_OP = 316,
+    RIGHT_OP = 317
   };
 #endif
 /* Tokens.  */
@@ -116,9 +117,9 @@ extern int yydebug;
 #define LCURL 264
 #define RCURL 265
 #define ID 266
-#define LTHIRD 267
+#define LSQBRAC 267
 #define CONST 268
-#define RTHIRD 269
+#define RSQBRAC 269
 #define FOR 270
 #define LPAREN 271
 #define RPAREN 272
@@ -144,28 +145,29 @@ extern int yydebug;
 #define TYPE_NAME 292
 #define VOLATILE 293
 #define AUTO 294
-#define VOID 295
-#define SHORT 296
-#define LONG 297
-#define DOUBLE 298
-#define SIGNED 299
-#define UNSIGNED 300
-#define EXTERN 301
-#define ENUM 302
-#define IDENTIFIER 303
-#define STRUCT 304
-#define UNION 305
-#define HEADER 306
-#define NUMBER 307
-#define STRING 308
-#define OR_OP 309
-#define AND_OP 310
-#define EQ_OP 311
-#define NE_OP 312
-#define LEFT_OP 313
-#define GE_OP 314
-#define LE_OP 315
-#define RIGHT_OP 316
+#define KEYWORD 295
+#define VOID 296
+#define SHORT 297
+#define LONG 298
+#define DOUBLE 299
+#define SIGNED 300
+#define UNSIGNED 301
+#define EXTERN 302
+#define ENUM 303
+#define IDENTIFIER 304
+#define STRUCT 305
+#define UNION 306
+#define HEADER 307
+#define NUMBER 308
+#define STRING 309
+#define OR_OP 310
+#define AND_OP 311
+#define EQ_OP 312
+#define NE_OP 313
+#define LEFT_OP 314
+#define GE_OP 315
+#define LE_OP 316
+#define RIGHT_OP 317
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

@@ -1,0 +1,4 @@
+ID Inserted in scope table: 1 at position 6, 0
+
+NUMBER Inserted in: Table 1 at position 6, 0
+

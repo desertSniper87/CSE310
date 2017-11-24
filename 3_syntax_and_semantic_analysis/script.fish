@@ -1,4 +1,4 @@
-#!/bin/fish 
+#!/usr/bin/fish 
 
 echo "Analyzing grammer.y..."
 bison -d -y -o y.tab.cpp parser.y
@@ -14,5 +14,5 @@ echo "Creating compiler"
 g++ -o compiler lexer.o parser.o main.o -L /usr/lib -lfl -ly
 echo "Inputting file..."
 ./compiler < in3.c
-echo "Done... Removing files"
-rm compiler lex.yy.cpp parser.o main.o 
+#echo "Done... Removing files"
+#rm compiler lex.yy.cpp parser.o main.o 
