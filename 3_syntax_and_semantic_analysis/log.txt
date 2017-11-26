@@ -7,18 +7,29 @@ Printing table:
 6 --> <main ID>  
 
 
-Line no 3: Token <ID> lexeme <s> found
+Line no 3: Token <ID> lexeme <n> found
+
+Line no 3: Token <ID> lexeme <x> found
 Printing table:
-3 --> <s ID>  
+1 --> <x ID>  
+5 --> <n ID>  
+6 --> <main ID>  
+
+
+Line no 4: Token <ID> lexeme <factorial> found
+Printing table:
+1 --> <x ID>  
+2 --> <factorial ID>  
+5 --> <n ID>  
 6 --> <main ID>  
 
 Printing table:
-3 --> <s ID>  
+1 --> <x ID>  
+2 --> <factorial ID>  
+5 --> <n ID>  
 6 --> <main ID>  
 
-Printing table:
-3 --> <s ID>  
-6 --> <main ID>  
 
+Line no 6: Token <KEYWORD> lexeme <printf> found
 Printing table:
 

@@ -1856,32 +1856,32 @@ yyreduce:
   case 54:
 #line 303 "parser.y" /* yacc.c:1646  */
     {
-                     fprintf(parseLog, "unary_expression -> factor	-> variable   \n"); 
-                 }
+        fprintf(parseLog, "unary_expression -> factor	-> variable   \n"); 
+        }
 #line 1862 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 55:
 #line 307 "parser.y" /* yacc.c:1646  */
     {
-                     fprintf(parseLog, "unary_expression -> ID LPAREN argument_list RPAREN  \n"); 
-                 }
+            fprintf(parseLog, "unary_expression -> ID LPAREN argument_list RPAREN  \n"); 
+        }
 #line 1870 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 56:
 #line 311 "parser.y" /* yacc.c:1646  */
     {
-                     fprintf(parseLog, "unary_expression -> LPAREN expression RPAREN  \n"); 
-                 }
+            fprintf(parseLog, "unary_expression -> LPAREN expression RPAREN  \n"); 
+        }
 #line 1878 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 57:
 #line 315 "parser.y" /* yacc.c:1646  */
     {
-                     fprintf(parseLog, "unary_expression -> CONST_INT   \n"); 
-                 }
+            fprintf(parseLog, "unary_expression -> CONST_INT   \n"); 
+        }
 #line 1886 "y.tab.cpp" /* yacc.c:1646  */
     break;
 

@@ -1,7 +1,7 @@
 int main()
 {
-    int n, i;
-    unsigned long long factorial = 1;
+    int n, x;
+    int factorial;
 
     printf("Enter an integer: ");
     scanf("%d",&n);

@@ -300,21 +300,21 @@ unary_expression : ADDOP unary_expression
          ;
 
 factor	: variable 
-                 {
-                     fprintf(parseLog, "unary_expression -> factor	-> variable   \n"); 
-                 }
-       | ID LPAREN argument_list RPAREN
-                 {
-                     fprintf(parseLog, "unary_expression -> ID LPAREN argument_list RPAREN  \n"); 
-                 }
-    | LPAREN expression RPAREN
-                 {
-                     fprintf(parseLog, "unary_expression -> LPAREN expression RPAREN  \n"); 
-                 }
-    | CONST_INT 
-                 {
-                     fprintf(parseLog, "unary_expression -> CONST_INT   \n"); 
-                 }
+        {
+        fprintf(parseLog, "unary_expression -> factor	-> variable   \n"); 
+        }
+        | ID LPAREN argument_list RPAREN
+        {
+            fprintf(parseLog, "unary_expression -> ID LPAREN argument_list RPAREN  \n"); 
+        }
+        | LPAREN expression RPAREN
+        {
+            fprintf(parseLog, "unary_expression -> LPAREN expression RPAREN  \n"); 
+        }
+        | CONST_INT 
+        {
+            fprintf(parseLog, "unary_expression -> CONST_INT   \n"); 
+        }
     | CONST_FLOAT
                  {
                      fprintf(parseLog, "unary_expression -> CONST_FLOAT  \n"); 

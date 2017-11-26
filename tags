@@ -322,7 +322,7 @@ DOUBLE	3_syntax_and_semantic_analysis/y.tab.hpp	/^    DOUBLE = 299,$/;"	e	enum:y
 DOUBLE	3_syntax_and_semantic_analysis/y.tab.hpp	152;"	d
 ECHO	2_lexical_analysis/lex.yy.cpp	755;"	d	file:
 ECHO	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	555;"	d	file:
-ECHO	3_syntax_and_semantic_analysis/lex.yy.cpp	828;"	d	file:
+ECHO	3_syntax_and_semantic_analysis/lex.yy.cpp	833;"	d	file:
 ELSE	3_syntax_and_semantic_analysis/y.tab.cpp	/^    ELSE = 275,$/;"	e	enum:yytokentype	file:
 ELSE	3_syntax_and_semantic_analysis/y.tab.cpp	236;"	d	file:
 ELSE	3_syntax_and_semantic_analysis/y.tab.hpp	/^    ELSE = 275,$/;"	e	enum:yytokentype
@@ -401,7 +401,7 @@ INCOP	3_syntax_and_semantic_analysis/y.tab.hpp	/^    INCOP = 286,$/;"	e	enum:yyt
 INCOP	3_syntax_and_semantic_analysis/y.tab.hpp	139;"	d
 INITIAL	2_lexical_analysis/lex.yy.cpp	660;"	d	file:
 INITIAL	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	460;"	d	file:
-INITIAL	3_syntax_and_semantic_analysis/lex.yy.cpp	732;"	d	file:
+INITIAL	3_syntax_and_semantic_analysis/lex.yy.cpp	737;"	d	file:
 INT	3_syntax_and_semantic_analysis/y.tab.cpp	/^    INT = 259,$/;"	e	enum:yytokentype	file:
 INT	3_syntax_and_semantic_analysis/y.tab.cpp	220;"	d	file:
 INT	3_syntax_and_semantic_analysis/y.tab.hpp	/^    INT = 259,$/;"	e	enum:yytokentype
@@ -892,7 +892,7 @@ YYSTYPE_IS_TRIVIAL	3_syntax_and_semantic_analysis/y.tab.cpp	283;"	d	file:
 YYSTYPE_IS_TRIVIAL	3_syntax_and_semantic_analysis/y.tab.hpp	175;"	d
 YYTABLES_NAME	2_lexical_analysis/lex.yy.cpp	2172;"	d	file:
 YYTABLES_NAME	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	1792;"	d	file:
-YYTABLES_NAME	3_syntax_and_semantic_analysis/lex.yy.cpp	2406;"	d	file:
+YYTABLES_NAME	3_syntax_and_semantic_analysis/lex.yy.cpp	2420;"	d	file:
 YYTABLE_NINF	3_syntax_and_semantic_analysis/Democodes/conflict/y.tab.c	453;"	d	file:
 YYTABLE_NINF	3_syntax_and_semantic_analysis/Democodes/simplecalc/y.tab.c	478;"	d	file:
 YYTABLE_NINF	3_syntax_and_semantic_analysis/y.tab.cpp	652;"	d	file:
@@ -938,7 +938,7 @@ YY_AT_BOL	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	322;"	d	f
 YY_AT_BOL	3_syntax_and_semantic_analysis/lex.yy.cpp	329;"	d	file:
 YY_BREAK	2_lexical_analysis/lex.yy.cpp	834;"	d	file:
 YY_BREAK	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	634;"	d	file:
-YY_BREAK	3_syntax_and_semantic_analysis/lex.yy.cpp	907;"	d	file:
+YY_BREAK	3_syntax_and_semantic_analysis/lex.yy.cpp	912;"	d	file:
 YY_BUFFER_EOF_PENDING	2_lexical_analysis/lex.yy.cpp	244;"	d	file:
 YY_BUFFER_EOF_PENDING	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	243;"	d	file:
 YY_BUFFER_EOF_PENDING	3_syntax_and_semantic_analysis/lex.yy.cpp	245;"	d	file:
@@ -968,10 +968,10 @@ YY_CURRENT_BUFFER_LVALUE	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex
 YY_CURRENT_BUFFER_LVALUE	3_syntax_and_semantic_analysis/lex.yy.cpp	268;"	d	file:
 YY_DECL	2_lexical_analysis/lex.yy.cpp	822;"	d	file:
 YY_DECL	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	622;"	d	file:
-YY_DECL	3_syntax_and_semantic_analysis/lex.yy.cpp	895;"	d	file:
+YY_DECL	3_syntax_and_semantic_analysis/lex.yy.cpp	900;"	d	file:
 YY_DECL_IS_OURS	2_lexical_analysis/lex.yy.cpp	818;"	d	file:
 YY_DECL_IS_OURS	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	618;"	d	file:
-YY_DECL_IS_OURS	3_syntax_and_semantic_analysis/lex.yy.cpp	891;"	d	file:
+YY_DECL_IS_OURS	3_syntax_and_semantic_analysis/lex.yy.cpp	896;"	d	file:
 YY_DO_BEFORE_ACTION	2_lexical_analysis/lex.yy.cpp	349;"	d	file:
 YY_DO_BEFORE_ACTION	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	349;"	d	file:
 YY_DO_BEFORE_ACTION	3_syntax_and_semantic_analysis/lex.yy.cpp	357;"	d	file:
@@ -983,13 +983,13 @@ YY_END_OF_BUFFER_CHAR	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy
 YY_END_OF_BUFFER_CHAR	3_syntax_and_semantic_analysis/lex.yy.cpp	129;"	d	file:
 YY_EXIT_FAILURE	2_lexical_analysis/lex.yy.cpp	1968;"	d	file:
 YY_EXIT_FAILURE	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	1588;"	d	file:
-YY_EXIT_FAILURE	3_syntax_and_semantic_analysis/lex.yy.cpp	2202;"	d	file:
+YY_EXIT_FAILURE	3_syntax_and_semantic_analysis/lex.yy.cpp	2216;"	d	file:
 YY_EXTRA_TYPE	2_lexical_analysis/lex.yy.cpp	671;"	d	file:
 YY_EXTRA_TYPE	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	471;"	d	file:
-YY_EXTRA_TYPE	3_syntax_and_semantic_analysis/lex.yy.cpp	743;"	d	file:
+YY_EXTRA_TYPE	3_syntax_and_semantic_analysis/lex.yy.cpp	748;"	d	file:
 YY_FATAL_ERROR	2_lexical_analysis/lex.yy.cpp	809;"	d	file:
 YY_FATAL_ERROR	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	609;"	d	file:
-YY_FATAL_ERROR	3_syntax_and_semantic_analysis/lex.yy.cpp	882;"	d	file:
+YY_FATAL_ERROR	3_syntax_and_semantic_analysis/lex.yy.cpp	887;"	d	file:
 YY_FLEX_MAJOR_VERSION	2_lexical_analysis/lex.yy.cpp	10;"	d	file:
 YY_FLEX_MAJOR_VERSION	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	9;"	d	file:
 YY_FLEX_MAJOR_VERSION	3_syntax_and_semantic_analysis/lex.yy.cpp	10;"	d	file:
@@ -1022,7 +1022,7 @@ YY_INITIAL_VALUE	3_syntax_and_semantic_analysis/y.tab.cpp	396;"	d	file:
 YY_INITIAL_VALUE	3_syntax_and_semantic_analysis/y.tab.cpp	403;"	d	file:
 YY_INPUT	2_lexical_analysis/lex.yy.cpp	762;"	d	file:
 YY_INPUT	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	562;"	d	file:
-YY_INPUT	3_syntax_and_semantic_analysis/lex.yy.cpp	835;"	d	file:
+YY_INPUT	3_syntax_and_semantic_analysis/lex.yy.cpp	840;"	d	file:
 YY_INT_ALIGNED	2_lexical_analysis/lex.yy.cpp	5;"	d	file:
 YY_INT_ALIGNED	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	4;"	d	file:
 YY_INT_ALIGNED	3_syntax_and_semantic_analysis/lex.yy.cpp	5;"	d	file:
@@ -1057,8 +1057,8 @@ YY_READ_BUF_SIZE	2_lexical_analysis/lex.yy.cpp	744;"	d	file:
 YY_READ_BUF_SIZE	2_lexical_analysis/lex.yy.cpp	746;"	d	file:
 YY_READ_BUF_SIZE	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	544;"	d	file:
 YY_READ_BUF_SIZE	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	546;"	d	file:
-YY_READ_BUF_SIZE	3_syntax_and_semantic_analysis/lex.yy.cpp	817;"	d	file:
-YY_READ_BUF_SIZE	3_syntax_and_semantic_analysis/lex.yy.cpp	819;"	d	file:
+YY_READ_BUF_SIZE	3_syntax_and_semantic_analysis/lex.yy.cpp	822;"	d	file:
+YY_READ_BUF_SIZE	3_syntax_and_semantic_analysis/lex.yy.cpp	824;"	d	file:
 YY_REDUCE_PRINT	3_syntax_and_semantic_analysis/Democodes/conflict/y.tab.c	666;"	d	file:
 YY_REDUCE_PRINT	3_syntax_and_semantic_analysis/Democodes/conflict/y.tab.c	679;"	d	file:
 YY_REDUCE_PRINT	3_syntax_and_semantic_analysis/Democodes/simplecalc/y.tab.c	701;"	d	file:
@@ -1070,7 +1070,7 @@ YY_RESTORE_YY_MORE_OFFSET	3_syntax_and_semantic_analysis/Democodes/simplecalc/le
 YY_RESTORE_YY_MORE_OFFSET	3_syntax_and_semantic_analysis/lex.yy.cpp	706;"	d	file:
 YY_RULE_SETUP	2_lexical_analysis/lex.yy.cpp	837;"	d	file:
 YY_RULE_SETUP	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	637;"	d	file:
-YY_RULE_SETUP	3_syntax_and_semantic_analysis/lex.yy.cpp	910;"	d	file:
+YY_RULE_SETUP	3_syntax_and_semantic_analysis/lex.yy.cpp	915;"	d	file:
 YY_SC_TO_UI	2_lexical_analysis/lex.yy.cpp	112;"	d	file:
 YY_SC_TO_UI	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	111;"	d	file:
 YY_SC_TO_UI	3_syntax_and_semantic_analysis/lex.yy.cpp	108;"	d	file:
@@ -1086,7 +1086,7 @@ YY_START	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	122;"	d	fi
 YY_START	3_syntax_and_semantic_analysis/lex.yy.cpp	120;"	d	file:
 YY_START_STACK_INCR	2_lexical_analysis/lex.yy.cpp	804;"	d	file:
 YY_START_STACK_INCR	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	604;"	d	file:
-YY_START_STACK_INCR	3_syntax_and_semantic_analysis/lex.yy.cpp	877;"	d	file:
+YY_START_STACK_INCR	3_syntax_and_semantic_analysis/lex.yy.cpp	882;"	d	file:
 YY_STATE_BUF_SIZE	2_lexical_analysis/lex.yy.cpp	146;"	d	file:
 YY_STATE_BUF_SIZE	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	145;"	d	file:
 YY_STATE_BUF_SIZE	3_syntax_and_semantic_analysis/lex.yy.cpp	146;"	d	file:
@@ -1110,7 +1110,7 @@ YY_TYPEDEF_YY_SIZE_T	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.
 YY_TYPEDEF_YY_SIZE_T	3_syntax_and_semantic_analysis/lex.yy.cpp	154;"	d	file:
 YY_USER_ACTION	2_lexical_analysis/lex.yy.cpp	829;"	d	file:
 YY_USER_ACTION	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	629;"	d	file:
-YY_USER_ACTION	3_syntax_and_semantic_analysis/lex.yy.cpp	902;"	d	file:
+YY_USER_ACTION	3_syntax_and_semantic_analysis/lex.yy.cpp	907;"	d	file:
 YY_YY_Y_TAB_HPP_INCLUDED	3_syntax_and_semantic_analysis/y.tab.cpp	142;"	d	file:
 YY_YY_Y_TAB_HPP_INCLUDED	3_syntax_and_semantic_analysis/y.tab.hpp	34;"	d
 YY_YY_Y_TAB_H_INCLUDED	3_syntax_and_semantic_analysis/Democodes/conflict/y.tab.c	103;"	d	file:
@@ -1243,7 +1243,11 @@ main	2_lexical_analysis/in.c	/^int main(){$/;"	f
 main	2_lexical_analysis/lex.yy.cpp	/^int main(int argc,char *argv[]){$/;"	f
 main	3_syntax_and_semantic_analysis/Democodes/conflict/y.tab.c	/^int main(void){$/;"	f
 main	3_syntax_and_semantic_analysis/Democodes/simplecalc/y.tab.c	/^main()$/;"	f
+main	3_syntax_and_semantic_analysis/in1.c	/^int main(){$/;"	f
 main	3_syntax_and_semantic_analysis/in3.c	/^int main()$/;"	f
+main	3_syntax_and_semantic_analysis/in4.c	/^int main()$/;"	f
+main	3_syntax_and_semantic_analysis/in4a.c	/^int main()$/;"	f
+main	3_syntax_and_semantic_analysis/in5.c	/^int main()$/;"	f
 main	3_syntax_and_semantic_analysis/y.tab.cpp	/^int main(int argc,char *argv[]){$/;"	f
 mulex	3_syntax_and_semantic_analysis/Democodes/simplecalc_modified/simpleParser.y	/^mulex:$/;"	l
 next	1_symbol_table/main.cpp	/^        Symbol_info *next;$/;"	m	class:Symbol_info	file:
@@ -1570,8 +1574,8 @@ yyless	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	1599;"	d	fil
 yyless	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	1600;"	d	file:
 yyless	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	169;"	d	file:
 yyless	3_syntax_and_semantic_analysis/lex.yy.cpp	170;"	d	file:
-yyless	3_syntax_and_semantic_analysis/lex.yy.cpp	2213;"	d	file:
-yyless	3_syntax_and_semantic_analysis/lex.yy.cpp	2214;"	d	file:
+yyless	3_syntax_and_semantic_analysis/lex.yy.cpp	2227;"	d	file:
+yyless	3_syntax_and_semantic_analysis/lex.yy.cpp	2228;"	d	file:
 yylex_destroy	2_lexical_analysis/lex.yy.cpp	/^int yylex_destroy  (void)$/;"	f
 yylex_destroy	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	/^int yylex_destroy  (void)$/;"	f
 yylex_destroy	3_syntax_and_semantic_analysis/lex.yy.cpp	/^int yylex_destroy  (void)$/;"	f
@@ -1628,7 +1632,7 @@ yyrestart	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	/^    voi
 yyrestart	3_syntax_and_semantic_analysis/lex.yy.cpp	/^    void yyrestart  (FILE * input_file )$/;"	f
 yyrline	3_syntax_and_semantic_analysis/Democodes/conflict/y.tab.c	/^static const yytype_uint8 yyrline[] =$/;"	v	file:
 yyrline	3_syntax_and_semantic_analysis/Democodes/simplecalc/y.tab.c	/^static const yytype_uint8 yyrline[] =$/;"	v	file:
-yyrline	3_syntax_and_semantic_analysis/y.tab.cpp	/^static const yytype_uint8 yyrline[] =$/;"	v	file:
+yyrline	3_syntax_and_semantic_analysis/y.tab.cpp	/^static const yytype_uint16 yyrline[] =$/;"	v	file:
 yyset_debug	2_lexical_analysis/lex.yy.cpp	/^void yyset_debug (int  _bdebug )$/;"	f
 yyset_debug	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	/^void yyset_debug (int  _bdebug )$/;"	f
 yyset_debug	3_syntax_and_semantic_analysis/lex.yy.cpp	/^void yyset_debug (int  _bdebug )$/;"	f
@@ -1670,7 +1674,7 @@ yytable_value_is_error	3_syntax_and_semantic_analysis/Democodes/simplecalc/y.tab
 yytable_value_is_error	3_syntax_and_semantic_analysis/y.tab.cpp	654;"	d	file:
 yyterminate	2_lexical_analysis/lex.yy.cpp	799;"	d	file:
 yyterminate	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	599;"	d	file:
-yyterminate	3_syntax_and_semantic_analysis/lex.yy.cpp	872;"	d	file:
+yyterminate	3_syntax_and_semantic_analysis/lex.yy.cpp	877;"	d	file:
 yytext	2_lexical_analysis/lex.yy.cpp	/^char *yytext;$/;"	v
 yytext	3_syntax_and_semantic_analysis/Democodes/simplecalc/lex.yy.c	/^char *yytext;$/;"	v
 yytext	3_syntax_and_semantic_analysis/lex.yy.cpp	/^char *yytext;$/;"	v

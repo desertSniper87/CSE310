@@ -79,9 +79,13 @@ err_id 			{digit}+{id}
 
 "]"				{return RSQBRAC;}
 
-","               {
+","             {
     printf("Found COMMA\n");
     return COMMA;}
+
+"="             {
+    printf("ASSIGNOP found\n");
+    return ASSIGNOP;}
 
 "char"			{ return  CHAR; }
 
@@ -228,37 +232,37 @@ err_id 			{digit}+{id}
 }
 
 {addop} {
-	/*insert("ADDOP", yytext);*/
-	/*printf("line no: %d\n",line_count);*/
-	/*fprintf(tokenout,"\n<ADDOP, %s>\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: Token <ADDOP> lexeme <%s> found\n",line_count,yytext);*/
+    insert("ADDOP", yytext);
+    printf("line no: %d\n",line_count);
+    fprintf(tokenout,"\n<ADDOP, %s>\n",yytext);
+    fprintf(logout,"\nLine no %d: Token <ADDOP> lexeme <%s> found\n",line_count,yytext);
 }
 
 {mulop} {
-	/*insert("MULOP", yytext);*/
-	/*printf("line no: %d\n",line_count);*/
-	/*fprintf(tokenout,"\n<MULOP, %s>\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: Token <MULOP> lexeme <%s> found\n",line_count,yytext);*/
+    insert("MULOP", yytext);
+    printf("line no: %d\n",line_count);
+    fprintf(tokenout,"\n<MULOP, %s>\n",yytext);
+    fprintf(logout,"\nLine no %d: Token <MULOP> lexeme <%s> found\n",line_count,yytext);
 }
 
 {relop} {
-	/*insert("RELOP", yytext);*/
-	/*printf("line no: %d\n",line_count);*/
-	/*fprintf(tokenout,"\n<RELOP, %s>\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: Token <RELOP> lexeme <%s> found\n",line_count,yytext);*/
+    insert("RELOP", yytext);
+    printf("line no: %d\n",line_count);
+    fprintf(tokenout,"\n<RELOP, %s>\n",yytext);
+    fprintf(logout,"\nLine no %d: Token <RELOP> lexeme <%s> found\n",line_count,yytext);
 }
 
 {assignop} {
-	/*insert("ASSIGNOP", yytext);*/
-	/*printf("line no: %d\n",line_count);*/
-	/*fprintf(tokenout,"\n<ASSIGNOP, %s>\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: Token <ASSIGNOP> lexeme <%s> found\n",line_count,yytext);*/
+    insert("ASSIGNOP", yytext);
+    printf("line no: %d\n",line_count);
+    fprintf(tokenout,"\n<ASSIGNOP, %s>\n",yytext);
+    fprintf(logout,"\nLine no %d: Token <ASSIGNOP> lexeme <%s> found\n",line_count,yytext);
 }
 
 
 {dotdot} {
 	insert("DOTDOT", yytext);
-	/*printf("line no: %d\n",line_count);*/
+    printf("line no: %d\n",line_count);
 }	
 {hash}  {
 	insert("#",yytext);
@@ -267,8 +271,8 @@ err_id 			{digit}+{id}
 {delim}+ {}
 
 {err_dotdot} {
-	/*printf("Illegal usage of decimal\n");*/
-	/*fprintf(logout,"\nLine no %d: Illegal usage of decimal <%s> found\n",line_count,yytext);*/
+    printf("Illegal usage of decimal\n");
+    fprintf(logout,"\nLine no %d: Illegal usage of decimal <%s> found\n",line_count,yytext);
 }
 
 {err_id} {
