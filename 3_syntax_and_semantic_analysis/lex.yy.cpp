@@ -720,6 +720,11 @@ char *yytext;
 int line_count = 1;
 Symbol_table table;
 
+extern FILE *logout;
+extern FILE *tokenout;
+extern FILE *parseLog;
+/*parselog = fopen("log.txt", w)*/
+
 int hash_buckets = 7;
 
 void insert(const char* token, char* yytext) {
@@ -727,7 +732,7 @@ void insert(const char* token, char* yytext) {
 	/*printf("%s ", token);*/
 	table.insert(token, yytext, hash_buckets);
 }
-#line 731 "lex.yy.cpp"
+#line 736 "lex.yy.cpp"
 
 #define INITIAL 0
 
@@ -948,10 +953,10 @@ YY_DECL
 		}
 
 	{
-#line 59 "lex.l"
+#line 64 "lex.l"
 
 
-#line 955 "lex.yy.cpp"
+#line 960 "lex.yy.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -1011,301 +1016,303 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 61 "lex.l"
+#line 66 "lex.l"
 {return LCURL;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 63 "lex.l"
+#line 68 "lex.l"
 {return RCURL;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 65 "lex.l"
+#line 70 "lex.l"
 {
     printf("found LPAREN\n");
     return LPAREN;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 69 "lex.l"
+#line 74 "lex.l"
 {
     printf("found RPAREN\n");
     return RPAREN;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 73 "lex.l"
+#line 78 "lex.l"
 {return LSQBRAC;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 75 "lex.l"
+#line 80 "lex.l"
 {return RSQBRAC;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 77 "lex.l"
-{return COMMA;}
+#line 82 "lex.l"
+{
+    printf("Found COMMA\n");
+    return COMMA;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 79 "lex.l"
+#line 86 "lex.l"
 { return  CHAR; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 81 "lex.l"
+#line 88 "lex.l"
 { return  CONST; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 83 "lex.l"
+#line 90 "lex.l"
 { return  DOUBLE; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 85 "lex.l"
+#line 92 "lex.l"
 { return  ELSE; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 87 "lex.l"
+#line 94 "lex.l"
 { return  ENUM; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 89 "lex.l"
+#line 96 "lex.l"
 { return  EXTERN; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 91 "lex.l"
+#line 98 "lex.l"
 { return  FLOAT; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 93 "lex.l"
+#line 100 "lex.l"
 { return  FOR; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 95 "lex.l"
+#line 102 "lex.l"
 { return  IF; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 97 "lex.l"
+#line 104 "lex.l"
 {
     printf("found INT\n");
     return  INT; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 101 "lex.l"
+#line 108 "lex.l"
 { return  LONG; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 103 "lex.l"
+#line 110 "lex.l"
 { return  RETURN; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 105 "lex.l"
+#line 112 "lex.l"
 { return  SHORT; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 107 "lex.l"
+#line 114 "lex.l"
 { return  SIGNED; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 109 "lex.l"
+#line 116 "lex.l"
 { return  STATIC; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 111 "lex.l"
+#line 118 "lex.l"
 { return  STRUCT; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 113 "lex.l"
+#line 120 "lex.l"
 { return  TYPEDEF; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 115 "lex.l"
+#line 122 "lex.l"
 { return  UNION; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 117 "lex.l"
+#line 124 "lex.l"
 { return  UNSIGNED; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 119 "lex.l"
+#line 126 "lex.l"
 { return  VOID; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 121 "lex.l"
+#line 128 "lex.l"
 { return  VOLATILE; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 123 "lex.l"
+#line 130 "lex.l"
 { return  WHILE; }
 	YY_BREAK
 case 30:
 /* rule 30 can match eol */
 YY_RULE_SETUP
-#line 125 "lex.l"
+#line 132 "lex.l"
 {
 	line_count++;
-    /*table.print(logout);*/
+    table.print(logout);
 }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 130 "lex.l"
+#line 137 "lex.l"
 {
 	insert("STR",yytext);
 	printf("str: %s\n", yytext);
 	printf("line no: %d\n",line_count);
-	/*fprintf(tokenout,"\n<STRING, %s>\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d:Token <STRING> lexeme <%s> found\n",line_count,yytext);*/
+    fprintf(tokenout,"\n<STRING, %s>\n",yytext);
+    fprintf(logout,"\nLine no %d:Token <STRING> lexeme <%s> found\n",line_count,yytext);
     return STRING;
 }
 	YY_BREAK
 case 32:
 /* rule 32 can match eol */
 YY_RULE_SETUP
-#line 140 "lex.l"
+#line 147 "lex.l"
 {
-    /*fprintf(tokenout,"\n<STRING, %s>\n",yytext);*/
-    /*fprintf(logout,"\n ERROR string with newline found\nLine no %d:Token <STRING> lexeme <%s> found\n",line_count,yytext);*/
+    fprintf(tokenout,"\n<STRING, %s>\n",yytext);
+    fprintf(logout,"\n ERROR string with newline found\nLine no %d:Token <STRING> lexeme <%s> found\n",line_count,yytext);
 }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 145 "lex.l"
+#line 152 "lex.l"
 {
 	insert("CHAR",yytext);
-	/*printf("str: %s\n", yytext);*/
-	/*printf("line no: %d\n",line_count);*/
-	/*fprintf(tokenout,"\n<CHAR, %s>\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);*/
+    printf("str: %s\n", yytext);
+    printf("line no: %d\n",line_count);
+    fprintf(tokenout,"\n<CHAR, %s>\n",yytext);
+    fprintf(logout,"\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
 }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 153 "lex.l"
+#line 160 "lex.l"
 {
 	insert("CHAR",yytext);
-	/*printf("str: %s\n", yytext);*/
-	/*printf("line no: %d\n",line_count);*/
-	/*fprintf(logout,"\nWARNING: Multi character constant found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);*/
-	/*fprintf(tokenout,"\n<CHAR, %s>\n",yytext);*/
+    printf("str: %s\n", yytext);
+    printf("line no: %d\n",line_count);
+    fprintf(logout,"\nWARNING: Multi character constant found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
+    fprintf(tokenout,"\n<CHAR, %s>\n",yytext);
 }
 	YY_BREAK
 case 35:
 /* rule 35 can match eol */
 YY_RULE_SETUP
-#line 161 "lex.l"
+#line 168 "lex.l"
 {
-	/*printf("str: %s\n", yytext);*/
-	/*printf("line no: %d\n",line_count);*/
-	/*fprintf(logout,"\nERROR: Character with newline found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);*/
+    printf("str: %s\n", yytext);
+    printf("line no: %d\n",line_count);
+    fprintf(logout,"\nERROR: Character with newline found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
 }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 167 "lex.l"
+#line 174 "lex.l"
 {
-	/*printf("str: %s\n", yytext);*/
-	/*printf("line no: %d\n",line_count);*/
-	/*fprintf(logout,"\nERROR: Empty character found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);*/
+    printf("str: %s\n", yytext);
+    printf("line no: %d\n",line_count);
+    fprintf(logout,"\nERROR: Empty character found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
 }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 173 "lex.l"
+#line 180 "lex.l"
 {
 	insert("KEYWORD",yytext);
-	//printf("keyword");
-	/*fprintf(tokenout,"\n<KEYWORD, %s>\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: Token <KEYWORD> lexeme <%s> found\n",line_count,yytext);*/
+	printf("keyword");
+	fprintf(tokenout,"\n<KEYWORD, %s>\n",yytext);
+	fprintf(logout,"\nLine no %d: Token <KEYWORD> lexeme <%s> found\n",line_count,yytext);
     return KEYWORD;
 	
 }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 182 "lex.l"
+#line 189 "lex.l"
 {
 	insert("header",yytext);
-	/*fprintf(tokenout,"\n<HEADER %s>\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: Token <HEADER> lexeme <%s> found\n",line_count,yytext);*/
+    fprintf(tokenout,"\n<HEADER %s>\n",yytext);
+    fprintf(logout,"\nLine no %d: Token <HEADER> lexeme <%s> found\n",line_count,yytext);
     return HEADER;
 }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 190 "lex.l"
+#line 197 "lex.l"
 {
 	insert("ID",yytext);
-	/*printf("id: %s\n", yytext); */
-	/*fprintf(tokenout,"<ID, %s>\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: Token <ID> lexeme <%s> found\n",line_count,yytext);*/
+    printf("id: %s\n", yytext); 
+    fprintf(tokenout,"<ID, %s>\n",yytext);
+    fprintf(logout,"\nLine no %d: Token <ID> lexeme <%s> found\n",line_count,yytext);
     printf("found ID.\n");
     return ID;
 }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 199 "lex.l"
+#line 206 "lex.l"
 {
-	/*printf("\nSingleline comment found: %s\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: SINGLELINECOMMENT <%s> found\n",line_count,yytext);*/
+    printf("\nSingleline comment found: %s\n",yytext);
+    fprintf(logout,"\nLine no %d: SINGLELINECOMMENT <%s> found\n",line_count,yytext);
 }
 	YY_BREAK
 case 41:
 /* rule 41 can match eol */
 YY_RULE_SETUP
-#line 204 "lex.l"
+#line 211 "lex.l"
 {
-	/*printf("\nMultiline comment found: %s\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: MULTILINECOMMENT <%s> found\n",line_count,yytext);*/
+    printf("\nMultiline comment found: %s\n",yytext);
+    fprintf(logout,"\nLine no %d: MULTILINECOMMENT <%s> found\n",line_count,yytext);
 }
 	YY_BREAK
 case 42:
 /* rule 42 can match eol */
 YY_RULE_SETUP
-#line 209 "lex.l"
+#line 216 "lex.l"
 {
-	/*printf("\nMultiline comment found: %s\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: Unterminated MULTILINECOMMENT <%s> found\n",line_count,yytext);*/
+    printf("\nMultiline comment found: %s\n",yytext);
+    fprintf(logout,"\nLine no %d: Unterminated MULTILINECOMMENT <%s> found\n",line_count,yytext);
 }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 214 "lex.l"
+#line 221 "lex.l"
 {
 	insert("NUMBER",yytext);
-	/*printf("number:%s\n",yytext);*/
-	/*printf("line no: %d\n",line_count);*/
-	/*fprintf(tokenout,"<NUMBER, %s>\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: Token <NUMBER> lexeme <%s> found\n",line_count,yytext);*/
+    printf("number:%s\n",yytext);
+    printf("line no: %d\n",line_count);
+    fprintf(tokenout,"<NUMBER, %s>\n",yytext);
+    fprintf(logout,"\nLine no %d: Token <NUMBER> lexeme <%s> found\n",line_count,yytext);
     return CONST_INT;
 }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 223 "lex.l"
+#line 230 "lex.l"
 {
 	/*insert("ADDOP", yytext);*/
 	/*printf("line no: %d\n",line_count);*/
@@ -1315,7 +1322,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 230 "lex.l"
+#line 237 "lex.l"
 {
 	/*insert("MULOP", yytext);*/
 	/*printf("line no: %d\n",line_count);*/
@@ -1325,7 +1332,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 237 "lex.l"
+#line 244 "lex.l"
 {
 	/*insert("RELOP", yytext);*/
 	/*printf("line no: %d\n",line_count);*/
@@ -1335,7 +1342,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 244 "lex.l"
+#line 251 "lex.l"
 {
 	/*insert("ASSIGNOP", yytext);*/
 	/*printf("line no: %d\n",line_count);*/
@@ -1345,7 +1352,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 252 "lex.l"
+#line 259 "lex.l"
 {
 	insert("DOTDOT", yytext);
 	/*printf("line no: %d\n",line_count);*/
@@ -1353,19 +1360,19 @@ YY_RULE_SETUP
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 256 "lex.l"
+#line 263 "lex.l"
 {
 	insert("#",yytext);
 }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 260 "lex.l"
+#line 267 "lex.l"
 {}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 262 "lex.l"
+#line 269 "lex.l"
 {
 	/*printf("Illegal usage of decimal\n");*/
 	/*fprintf(logout,"\nLine no %d: Illegal usage of decimal <%s> found\n",line_count,yytext);*/
@@ -1373,7 +1380,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 267 "lex.l"
+#line 274 "lex.l"
 {
 	/*printf("Illegal id\n");*/
 	/*fprintf(logout,"\nLine no %d: Illegal usage of id <%s> found\n",line_count,yytext);*/
@@ -1382,7 +1389,7 @@ YY_RULE_SETUP
 case 53:
 /* rule 53 can match eol */
 YY_RULE_SETUP
-#line 272 "lex.l"
+#line 279 "lex.l"
 {
 	/*printf("Illegal id\n");*/
 	/*fprintf(logout,"\nLine no %d: Printf statement<%s> found\n",line_count,yytext);*/
@@ -1390,7 +1397,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 277 "lex.l"
+#line 284 "lex.l"
 {
     printf("found Semicolon");
     return SEMICOLON;
@@ -1398,10 +1405,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 282 "lex.l"
+#line 289 "lex.l"
 ECHO;
 	YY_BREAK
-#line 1405 "lex.yy.cpp"
+#line 1412 "lex.yy.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2405,7 +2412,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 282 "lex.l"
+#line 289 "lex.l"
 
 
 

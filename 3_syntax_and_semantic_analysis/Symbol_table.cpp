@@ -120,6 +120,7 @@ void Symbol_table::insert(string s1,string s2, int hash_buckets)        {
 void Symbol_table::print(FILE *outfile) {
     //ofstream outfile;
     //outfile.open("log.txt", ios::app);
+    fprintf(outfile, "Printing table:\n");
 
     for(int i=0;i<7;i++)
     {

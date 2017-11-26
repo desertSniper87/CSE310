@@ -1,0 +1,10 @@
+type_specifier -> INT
+type_specifier -> INT
+declaration_list -> ID 
+var_declaration -> type_specifier declaration_list SEMICOLON
+statement -> var_declaration  
+statements -> statement  
+compound_statement -> LCURL statements RCURL  
+func_definition -> type_specifier ID LPAREN parameter_list RPAREN compound_statement  
+unit -> func_definition
+program -> unit

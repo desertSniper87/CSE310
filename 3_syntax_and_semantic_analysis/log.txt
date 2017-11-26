@@ -1,4 +1,24 @@
-ID Inserted in scope table: 1 at position 6, 0
 
-NUMBER Inserted in: Table 1 at position 6, 0
+Line no 1: Token <ID> lexeme <main> found
+Printing table:
+6 --> <main ID>  
+
+Printing table:
+6 --> <main ID>  
+
+
+Line no 3: Token <ID> lexeme <s> found
+Printing table:
+3 --> <s ID>  
+6 --> <main ID>  
+
+Printing table:
+3 --> <s ID>  
+6 --> <main ID>  
+
+Printing table:
+3 --> <s ID>  
+6 --> <main ID>  
+
+Printing table:
 

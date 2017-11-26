@@ -12,6 +12,11 @@
 int line_count = 1;
 Symbol_table table;
 
+extern FILE *logout;
+extern FILE *tokenout;
+extern FILE *parseLog;
+/*parselog = fopen("log.txt", w)*/
+
 int hash_buckets = 7;
 
 void insert(const char* token, char* yytext) {
@@ -19,7 +24,7 @@ void insert(const char* token, char* yytext) {
 	/*printf("%s ", token);*/
 	table.insert(token, yytext, hash_buckets);
 }
-%}
+%}        
 
 newLine			\n
 delim 			[  \t]
@@ -74,7 +79,9 @@ err_id 			{digit}+{id}
 
 "]"				{return RSQBRAC;}
 
-,               {return COMMA;}
+","               {
+    printf("Found COMMA\n");
+    return COMMA;}
 
 "char"			{ return  CHAR; }
 
@@ -124,99 +131,99 @@ err_id 			{digit}+{id}
 
 {newLine} {
 	line_count++;
-    /*table.print(logout);*/
+    table.print(logout);
 }
 
 {string} {
 	insert("STR",yytext);
 	printf("str: %s\n", yytext);
 	printf("line no: %d\n",line_count);
-	/*fprintf(tokenout,"\n<STRING, %s>\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d:Token <STRING> lexeme <%s> found\n",line_count,yytext);*/
+    fprintf(tokenout,"\n<STRING, %s>\n",yytext);
+    fprintf(logout,"\nLine no %d:Token <STRING> lexeme <%s> found\n",line_count,yytext);
     return STRING;
 }
 
 
 {err_str_nl} {
-    /*fprintf(tokenout,"\n<STRING, %s>\n",yytext);*/
-    /*fprintf(logout,"\n ERROR string with newline found\nLine no %d:Token <STRING> lexeme <%s> found\n",line_count,yytext);*/
+    fprintf(tokenout,"\n<STRING, %s>\n",yytext);
+    fprintf(logout,"\n ERROR string with newline found\nLine no %d:Token <STRING> lexeme <%s> found\n",line_count,yytext);
 }
 
 {char} {
 	insert("CHAR",yytext);
-	/*printf("str: %s\n", yytext);*/
-	/*printf("line no: %d\n",line_count);*/
-	/*fprintf(tokenout,"\n<CHAR, %s>\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);*/
+    printf("str: %s\n", yytext);
+    printf("line no: %d\n",line_count);
+    fprintf(tokenout,"\n<CHAR, %s>\n",yytext);
+    fprintf(logout,"\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
 }
 
 {err_multi_char} {
 	insert("CHAR",yytext);
-	/*printf("str: %s\n", yytext);*/
-	/*printf("line no: %d\n",line_count);*/
-	/*fprintf(logout,"\nWARNING: Multi character constant found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);*/
-	/*fprintf(tokenout,"\n<CHAR, %s>\n",yytext);*/
+    printf("str: %s\n", yytext);
+    printf("line no: %d\n",line_count);
+    fprintf(logout,"\nWARNING: Multi character constant found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
+    fprintf(tokenout,"\n<CHAR, %s>\n",yytext);
 }
 
 {err_char_nl} {
-	/*printf("str: %s\n", yytext);*/
-	/*printf("line no: %d\n",line_count);*/
-	/*fprintf(logout,"\nERROR: Character with newline found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);*/
+    printf("str: %s\n", yytext);
+    printf("line no: %d\n",line_count);
+    fprintf(logout,"\nERROR: Character with newline found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
 }
 
 {empty_char} {
-	/*printf("str: %s\n", yytext);*/
-	/*printf("line no: %d\n",line_count);*/
-	/*fprintf(logout,"\nERROR: Empty character found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);*/
+    printf("str: %s\n", yytext);
+    printf("line no: %d\n",line_count);
+    fprintf(logout,"\nERROR: Empty character found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
 }
 
 {keyword} {
 	insert("KEYWORD",yytext);
-	//printf("keyword");
-	/*fprintf(tokenout,"\n<KEYWORD, %s>\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: Token <KEYWORD> lexeme <%s> found\n",line_count,yytext);*/
+	printf("keyword");
+	fprintf(tokenout,"\n<KEYWORD, %s>\n",yytext);
+	fprintf(logout,"\nLine no %d: Token <KEYWORD> lexeme <%s> found\n",line_count,yytext);
     return KEYWORD;
 	
 }
 
 {header} {
 	insert("header",yytext);
-	/*fprintf(tokenout,"\n<HEADER %s>\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: Token <HEADER> lexeme <%s> found\n",line_count,yytext);*/
+    fprintf(tokenout,"\n<HEADER %s>\n",yytext);
+    fprintf(logout,"\nLine no %d: Token <HEADER> lexeme <%s> found\n",line_count,yytext);
     return HEADER;
 }
 
 
 {id} {
 	insert("ID",yytext);
-	/*printf("id: %s\n", yytext); */
-	/*fprintf(tokenout,"<ID, %s>\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: Token <ID> lexeme <%s> found\n",line_count,yytext);*/
+    printf("id: %s\n", yytext); 
+    fprintf(tokenout,"<ID, %s>\n",yytext);
+    fprintf(logout,"\nLine no %d: Token <ID> lexeme <%s> found\n",line_count,yytext);
     printf("found ID.\n");
     return ID;
 }
 
 {sin_comment} {
-	/*printf("\nSingleline comment found: %s\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: SINGLELINECOMMENT <%s> found\n",line_count,yytext);*/
+    printf("\nSingleline comment found: %s\n",yytext);
+    fprintf(logout,"\nLine no %d: SINGLELINECOMMENT <%s> found\n",line_count,yytext);
 }
 
 {mul_comment} {
-	/*printf("\nMultiline comment found: %s\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: MULTILINECOMMENT <%s> found\n",line_count,yytext);*/
+    printf("\nMultiline comment found: %s\n",yytext);
+    fprintf(logout,"\nLine no %d: MULTILINECOMMENT <%s> found\n",line_count,yytext);
 }
 
 {mul_comment_err} {
-	/*printf("\nMultiline comment found: %s\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: Unterminated MULTILINECOMMENT <%s> found\n",line_count,yytext);*/
+    printf("\nMultiline comment found: %s\n",yytext);
+    fprintf(logout,"\nLine no %d: Unterminated MULTILINECOMMENT <%s> found\n",line_count,yytext);
 }
 
 {number} {
 	insert("NUMBER",yytext);
-	/*printf("number:%s\n",yytext);*/
-	/*printf("line no: %d\n",line_count);*/
-	/*fprintf(tokenout,"<NUMBER, %s>\n",yytext);*/
-	/*fprintf(logout,"\nLine no %d: Token <NUMBER> lexeme <%s> found\n",line_count,yytext);*/
+    printf("number:%s\n",yytext);
+    printf("line no: %d\n",line_count);
+    fprintf(tokenout,"<NUMBER, %s>\n",yytext);
+    fprintf(logout,"\nLine no %d: Token <NUMBER> lexeme <%s> found\n",line_count,yytext);
     return CONST_INT;
 }
 
