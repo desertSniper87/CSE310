@@ -12,7 +12,7 @@
 int line_count = 1;
 Symbol_table table;
 
-extern FILE *logout;
+extern FILE *parseLog;
 extern FILE *tokenout;
 extern FILE *parseLog;
 /*parselog = fopen("log.txt", w)*/
@@ -31,9 +31,9 @@ delim 			[  \t]
 digit			[0-9]
 unsigned		{digit}+
 exponent		[eE][+-]?{unsigned}
-number			[-+]?({unsigned}|{unsigned}\.{unsigned}?|{unsigned}?\.{unsigned}){exponent}?
+number			{digit}*(\.{digit}+)
 letter			[A-Za-z]
-keyword         program|if|not|end|begin|else|then|do|while|function|Procedure|integer|real|var|oh|array|write|include|int|char|float|string|printf
+/*keyword         program|if|not|end|begin|else|then|do|while|function|Procedure|integer|real|oh|array|write|include|int|char|float|string|printf*/
 prnt_stmt       [printf](\.|\n)*{semicolon}
 header			{id}\.h
 sin_comment		\/\/.*
@@ -50,8 +50,8 @@ err_char_nl     ^\'(\\.|[^'])*\n
 id				(_|{letter})({letter}|{digit}|_)*
 addop			[\+-]|or
 mulop			[\*\/]|div|mod|and
-relop			=|<>|<|<=|>=|>
-assignop		:=
+relop			==|<>|<|<=|>=|>
+assignop		=
 dotdot			\.\.
 brace			[\[\]\(\)]
 other			[,:]		
@@ -83,9 +83,6 @@ err_id 			{digit}+{id}
     printf("Found COMMA\n");
     return COMMA;}
 
-"="             {
-    printf("ASSIGNOP found\n");
-    return ASSIGNOP;}
 
 "char"			{ return  CHAR; }
 
@@ -135,7 +132,11 @@ err_id 			{digit}+{id}
 
 {newLine} {
 	line_count++;
-    table.print(logout);
+}
+
+"\n\n" {
+    line_count = line_count + 2;
+    table.print(parseLog);
 }
 
 {string} {
@@ -143,14 +144,14 @@ err_id 			{digit}+{id}
 	printf("str: %s\n", yytext);
 	printf("line no: %d\n",line_count);
     fprintf(tokenout,"\n<STRING, %s>\n",yytext);
-    fprintf(logout,"\nLine no %d:Token <STRING> lexeme <%s> found\n",line_count,yytext);
+    fprintf(parseLog,"\nLine no %d:Token <STRING> lexeme <%s> found\n",line_count,yytext);
     return STRING;
 }
 
 
 {err_str_nl} {
     fprintf(tokenout,"\n<STRING, %s>\n",yytext);
-    fprintf(logout,"\n ERROR string with newline found\nLine no %d:Token <STRING> lexeme <%s> found\n",line_count,yytext);
+    fprintf(parseLog,"\n ERROR string with newline found\nLine no %d:Token <STRING> lexeme <%s> found\n",line_count,yytext);
 }
 
 {char} {
@@ -158,42 +159,40 @@ err_id 			{digit}+{id}
     printf("str: %s\n", yytext);
     printf("line no: %d\n",line_count);
     fprintf(tokenout,"\n<CHAR, %s>\n",yytext);
-    fprintf(logout,"\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
+    fprintf(parseLog,"\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
 }
 
 {err_multi_char} {
 	insert("CHAR",yytext);
     printf("str: %s\n", yytext);
     printf("line no: %d\n",line_count);
-    fprintf(logout,"\nWARNING: Multi character constant found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
+    fprintf(parseLog,"\nWARNING: Multi character constant found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
     fprintf(tokenout,"\n<CHAR, %s>\n",yytext);
 }
 
 {err_char_nl} {
     printf("str: %s\n", yytext);
     printf("line no: %d\n",line_count);
-    fprintf(logout,"\nERROR: Character with newline found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
+    fprintf(parseLog,"\nERROR: Character with newline found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
 }
 
 {empty_char} {
     printf("str: %s\n", yytext);
     printf("line no: %d\n",line_count);
-    fprintf(logout,"\nERROR: Empty character found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
+    fprintf(parseLog,"\nERROR: Empty character found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
 }
 
-{keyword} {
-	insert("KEYWORD",yytext);
-	printf("keyword");
-	fprintf(tokenout,"\n<KEYWORD, %s>\n",yytext);
-	fprintf(logout,"\nLine no %d: Token <KEYWORD> lexeme <%s> found\n",line_count,yytext);
-    return KEYWORD;
+	/*insert("KEYWORD",yytext);*/
+	/*printf("keyword");*/
+	/*fprintf(tokenout,"\n<KEYWORD, %s>\n",yytext);*/
+	/*fprintf(parseLog,"\nLine no %d: Token <KEYWORD> lexeme <%s> found\n",line_count,yytext);*/
+    /*return KEYWORD;*/
 	
-}
 
 {header} {
 	insert("header",yytext);
     fprintf(tokenout,"\n<HEADER %s>\n",yytext);
-    fprintf(logout,"\nLine no %d: Token <HEADER> lexeme <%s> found\n",line_count,yytext);
+    fprintf(parseLog,"\nLine no %d: Token <HEADER> lexeme <%s> found\n",line_count,yytext);
     return HEADER;
 }
 
@@ -202,24 +201,24 @@ err_id 			{digit}+{id}
 	insert("ID",yytext);
     printf("id: %s\n", yytext); 
     fprintf(tokenout,"<ID, %s>\n",yytext);
-    fprintf(logout,"\nLine no %d: Token <ID> lexeme <%s> found\n",line_count,yytext);
+    fprintf(parseLog,"\nLine no %d: Token <ID> lexeme <%s> found\n",line_count,yytext);
     printf("found ID.\n");
     return ID;
 }
 
 {sin_comment} {
     printf("\nSingleline comment found: %s\n",yytext);
-    fprintf(logout,"\nLine no %d: SINGLELINECOMMENT <%s> found\n",line_count,yytext);
+    fprintf(parseLog,"\nLine no %d: SINGLELINECOMMENT <%s> found\n",line_count,yytext);
 }
 
 {mul_comment} {
     printf("\nMultiline comment found: %s\n",yytext);
-    fprintf(logout,"\nLine no %d: MULTILINECOMMENT <%s> found\n",line_count,yytext);
+    fprintf(parseLog,"\nLine no %d: MULTILINECOMMENT <%s> found\n",line_count,yytext);
 }
 
 {mul_comment_err} {
     printf("\nMultiline comment found: %s\n",yytext);
-    fprintf(logout,"\nLine no %d: Unterminated MULTILINECOMMENT <%s> found\n",line_count,yytext);
+    fprintf(parseLog,"\nLine no %d: Unterminated MULTILINECOMMENT <%s> found\n",line_count,yytext);
 }
 
 {number} {
@@ -227,7 +226,16 @@ err_id 			{digit}+{id}
     printf("number:%s\n",yytext);
     printf("line no: %d\n",line_count);
     fprintf(tokenout,"<NUMBER, %s>\n",yytext);
-    fprintf(logout,"\nLine no %d: Token <NUMBER> lexeme <%s> found\n",line_count,yytext);
+    fprintf(parseLog,"\nLine no %d: Token <NUMBER> lexeme <%s> found\n",line_count,yytext);
+    return FLOAT;
+}
+
+{unsigned} {
+	insert("UNSIGNED",yytext);
+    printf("unsigned:%s\n",yytext);
+    printf("line no: %d\n",line_count);
+    fprintf(tokenout,"<UNSIGNED, %s>\n",yytext);
+    fprintf(parseLog,"\nLine no %d: Token <UNSIGNED> lexeme <%s> found\n",line_count,yytext);
     return CONST_INT;
 }
 
@@ -235,28 +243,32 @@ err_id 			{digit}+{id}
     insert("ADDOP", yytext);
     printf("line no: %d\n",line_count);
     fprintf(tokenout,"\n<ADDOP, %s>\n",yytext);
-    fprintf(logout,"\nLine no %d: Token <ADDOP> lexeme <%s> found\n",line_count,yytext);
+    fprintf(parseLog,"\nLine no %d: Token <ADDOP> lexeme <%s> found\n",line_count,yytext);
+    return ADDOP;
 }
 
 {mulop} {
     insert("MULOP", yytext);
     printf("line no: %d\n",line_count);
     fprintf(tokenout,"\n<MULOP, %s>\n",yytext);
-    fprintf(logout,"\nLine no %d: Token <MULOP> lexeme <%s> found\n",line_count,yytext);
+    fprintf(parseLog,"\nLine no %d: Token <MULOP> lexeme <%s> found\n",line_count,yytext);
+    return MULOP;
 }
 
 {relop} {
     insert("RELOP", yytext);
     printf("line no: %d\n",line_count);
     fprintf(tokenout,"\n<RELOP, %s>\n",yytext);
-    fprintf(logout,"\nLine no %d: Token <RELOP> lexeme <%s> found\n",line_count,yytext);
+    fprintf(parseLog,"\nLine no %d: Token <RELOP> lexeme <%s> found\n",line_count,yytext);
 }
 
 {assignop} {
     insert("ASSIGNOP", yytext);
     printf("line no: %d\n",line_count);
+    printf("ASSIGNOP found\n");
     fprintf(tokenout,"\n<ASSIGNOP, %s>\n",yytext);
-    fprintf(logout,"\nLine no %d: Token <ASSIGNOP> lexeme <%s> found\n",line_count,yytext);
+    fprintf(parseLog,"\nLine no %d: Token <ASSIGNOP> lexeme <%s> found\n",line_count,yytext);
+    return ASSIGNOP;
 }
 
 
@@ -272,17 +284,17 @@ err_id 			{digit}+{id}
 
 {err_dotdot} {
     printf("Illegal usage of decimal\n");
-    fprintf(logout,"\nLine no %d: Illegal usage of decimal <%s> found\n",line_count,yytext);
+    fprintf(parseLog,"\nLine no %d: Illegal usage of decimal <%s> found\n",line_count,yytext);
 }
 
 {err_id} {
 	/*printf("Illegal id\n");*/
-	/*fprintf(logout,"\nLine no %d: Illegal usage of id <%s> found\n",line_count,yytext);*/
+	/*fprintf(parseLog,"\nLine no %d: Illegal usage of id <%s> found\n",line_count,yytext);*/
 }
 
 {prnt_stmt} {
 	/*printf("Illegal id\n");*/
-	/*fprintf(logout,"\nLine no %d: Printf statement<%s> found\n",line_count,yytext);*/
+	/*fprintf(parseLog,"\nLine no %d: Printf statement<%s> found\n",line_count,yytext);*/
 }
 
 {semicolon} {

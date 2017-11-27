@@ -13,6 +13,6 @@ g++ -c -w -o main.o Symbol_table.cpp
 echo "Creating compiler"
 g++ -o compiler lexer.o parser.o main.o -L /usr/lib -lfl -ly
 echo "Inputting file..."
-./compiler < in5.c
+./compiler < sample_input_1.c
 #echo "Done... Removing files"
 #rm compiler lex.yy.cpp parser.o main.o 

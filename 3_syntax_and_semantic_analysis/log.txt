@@ -1,35 +1,293 @@
+Program start: Line Count: 1
+GRAMMER RULE: type_specifier -> INT
 
-Line no 1: Token <ID> lexeme <main> found
-Printing table:
-6 --> <main ID>  
+Line no 1: Token <ID> lexeme <x> found
+GRAMMER RULE: declaration_list -> ID 
 
-Printing table:
-6 --> <main ID>  
+Line no 1: Token <ID> lexeme <y> found
+GRAMMER RULE: declaration_list -> declaration_list COMMA ID 
 
+Line no 1: Token <ID> lexeme <z> found
+GRAMMER RULE: declaration_list -> declaration_list COMMA ID 
+GRAMMER RULE: var_declaration -> type_specifier declaration_list SEMICOLON
+GRAMMER RULE: unit -> var_declaration
+GRAMMER RULE: program -> unit
 
-Line no 3: Token <ID> lexeme <n> found
-
-Line no 3: Token <ID> lexeme <x> found
-Printing table:
-1 --> <x ID>  
-5 --> <n ID>  
-6 --> <main ID>  
-
-
-Line no 4: Token <ID> lexeme <factorial> found
-Printing table:
-1 --> <x ID>  
-2 --> <factorial ID>  
-5 --> <n ID>  
-6 --> <main ID>  
-
+Line no 1: Token <ID> lexeme <a> found
+GRAMMER RULE: declaration_list -> ID 
+GRAMMER RULE: var_declaration -> type_specifier declaration_list SEMICOLON
+GRAMMER RULE: unit -> var_declaration
+GRAMMER RULE: program -> program unit
 Printing table:
 1 --> <x ID>  
-2 --> <factorial ID>  
-5 --> <n ID>  
-6 --> <main ID>  
+2 --> <y ID>  
+3 --> <z ID>  
+6 --> <a ID>  
 
 
-Line no 6: Token <KEYWORD> lexeme <printf> found
+Line no 3: Token <ID> lexeme <foo> found
+GRAMMER RULE: func_declaration -> type_specifier ID LPAREN parameter_list RPAREN SEMICOLON  
+GRAMMER RULE: unit -> func_declaration
+GRAMMER RULE: program -> program unit
 Printing table:
+1 --> <x ID>  
+2 --> <y ID>   <foo ID>  
+3 --> <z ID>  
+6 --> <a ID>  
 
+GRAMMER RULE: type_specifier -> INT
+
+Line no 5: Token <ID> lexeme <var> found
+GRAMMER RULE: type_specifier -> INT
+
+Line no 5: Token <ID> lexeme <a> found
+GRAMMER RULE: parameter_list -> type_specifier ID  
+GRAMMER RULE: type_specifier -> INT
+
+Line no 5: Token <ID> lexeme <b> found
+GRAMMER RULE: parameter_list  -> parameter_list COMMA type_specifier ID  
+
+Line no 6: Token <ID> lexeme <a> found
+
+Line no 6: Token <ADDOP> lexeme <+> found
+GRAMMER RULE: variable -> ID 		  
+GRAMMER RULE:  factor  -> variable   
+GRAMMER RULE: unary_expression -> factor   
+GRAMMER RULE:  term ->	unary_expression  
+GRAMMER RULE: simple_expression -> term   
+
+Line no 6: Token <ID> lexeme <b> found
+GRAMMER RULE: variable -> ID 		  
+GRAMMER RULE:  factor  -> variable   
+GRAMMER RULE: unary_expression -> factor   
+GRAMMER RULE:  term ->	unary_expression  
+GRAMMER RULE: simple_expression -> simple_expression ADDOP term   
+GRAMMER RULE: rel_expression -> simple_expression   
+GRAMMER RULE: logic_expression -> rel_expression 	  
+GRAMMER RULE: expression -> logic_expression	  
+GRAMMER RULE: statement -> RETURN expression SEMICOLON  
+GRAMMER RULE: statements -> statement  
+GRAMMER RULE: compound_statement -> LCURL statements RCURL  
+GRAMMER RULE: func_definition -> type_specifier ID LPAREN parameter_list RPAREN compound_statement  
+GRAMMER RULE: unit -> func_definition
+GRAMMER RULE: program -> program unit
+Printing table:
+0 --> <b ID>  
+1 --> <x ID>   <+ ADDOP>  
+2 --> <y ID>   <foo ID>   <var ID>  
+3 --> <z ID>  
+6 --> <a ID>  
+
+
+Line no 9: Token <ID> lexeme <foo> found
+
+Line no 10: Token <ID> lexeme <x> found
+
+Line no 10: Token <ASSIGNOP> lexeme <=> found
+GRAMMER RULE: variable -> ID 		  
+
+Line no 10: Token <UNSIGNED> lexeme <2> found
+GRAMMER RULE: factor -> CONST_INT   
+GRAMMER RULE: unary_expression -> factor   
+GRAMMER RULE:  term ->	unary_expression  
+GRAMMER RULE: simple_expression -> term   
+GRAMMER RULE: rel_expression -> simple_expression   
+GRAMMER RULE: logic_expression -> rel_expression 	  
+GRAMMER RULE: expression -> variable ASSIGNOP logic_expression 	  
+GRAMMER RULE: expression_statement -> expression SEMICOLON   
+GRAMMER RULE: statement -> expression_statement  
+GRAMMER RULE: statements -> statement  
+
+Line no 11: Token <ID> lexeme <y> found
+
+Line no 11: Token <ASSIGNOP> lexeme <=> found
+GRAMMER RULE: variable -> ID 		  
+
+Line no 11: Token <ID> lexeme <x> found
+
+Line no 11: Token <ADDOP> lexeme <-> found
+GRAMMER RULE: variable -> ID 		  
+GRAMMER RULE:  factor  -> variable   
+GRAMMER RULE: unary_expression -> factor   
+GRAMMER RULE:  term ->	unary_expression  
+GRAMMER RULE: simple_expression -> term   
+
+Line no 11: Token <UNSIGNED> lexeme <5> found
+GRAMMER RULE: factor -> CONST_INT   
+GRAMMER RULE: unary_expression -> factor   
+GRAMMER RULE:  term ->	unary_expression  
+GRAMMER RULE: simple_expression -> simple_expression ADDOP term   
+GRAMMER RULE: rel_expression -> simple_expression   
+GRAMMER RULE: logic_expression -> rel_expression 	  
+GRAMMER RULE: expression -> variable ASSIGNOP logic_expression 	  
+GRAMMER RULE: expression_statement -> expression SEMICOLON   
+GRAMMER RULE: statement -> expression_statement  
+GRAMMER RULE: statements -> statements statement  
+GRAMMER RULE: compound_statement -> LCURL statements RCURL  
+GRAMMER RULE: func_definition -> type_specifier ID LPAREN parameter_list RPAREN compound_statement  
+GRAMMER RULE: unit -> func_definition
+GRAMMER RULE: program -> program unit
+Printing table:
+0 --> <b ID>  
+1 --> <x ID>   <+ ADDOP>   <2 UNSIGNED>  
+2 --> <y ID>   <foo ID>   <var ID>  
+3 --> <z ID>   <- ADDOP>  
+4 --> <5 UNSIGNED>  
+5 --> <= ASSIGNOP>  
+6 --> <a ID>  
+
+GRAMMER RULE: type_specifier -> INT
+
+Line no 14: Token <ID> lexeme <main> found
+GRAMMER RULE: type_specifier -> INT
+
+Line no 15: Token <ID> lexeme <a> found
+
+Line no 15: Token <UNSIGNED> lexeme <2> found
+GRAMMER RULE: declaration_list -> ID LSQBRAC CONST_INT RSQBRAC 
+
+Line no 15: Token <ID> lexeme <c> found
+GRAMMER RULE: declaration_list -> declaration_list COMMA ID 
+
+Line no 15: Token <ID> lexeme <i> found
+GRAMMER RULE: declaration_list -> declaration_list COMMA ID 
+
+Line no 15: Token <ID> lexeme <j> found
+GRAMMER RULE: declaration_list -> declaration_list COMMA ID 
+GRAMMER RULE: var_declaration -> type_specifier declaration_list SEMICOLON
+GRAMMER RULE: statement -> var_declaration  
+GRAMMER RULE: statements -> statement  
+
+Line no 15: Token <ID> lexeme <d> found
+GRAMMER RULE: declaration_list -> ID 
+GRAMMER RULE: var_declaration -> type_specifier declaration_list SEMICOLON
+GRAMMER RULE: statement -> var_declaration  
+GRAMMER RULE: statements -> statements statement  
+
+Line no 16: Token <ID> lexeme <a> found
+
+Line no 16: Token <UNSIGNED> lexeme <0> found
+GRAMMER RULE: factor -> CONST_INT   
+GRAMMER RULE: unary_expression -> factor   
+GRAMMER RULE:  term ->	unary_expression  
+GRAMMER RULE: simple_expression -> term   
+GRAMMER RULE: rel_expression -> simple_expression   
+GRAMMER RULE: logic_expression -> rel_expression 	  
+GRAMMER RULE: expression -> logic_expression	  
+GRAMMER RULE: variable -> ID LSQBRAC expression RSQBRAC   
+
+Line no 16: Token <ASSIGNOP> lexeme <=> found
+
+Line no 16: Token <UNSIGNED> lexeme <1> found
+GRAMMER RULE: factor -> CONST_INT   
+GRAMMER RULE: unary_expression -> factor   
+GRAMMER RULE:  term ->	unary_expression  
+GRAMMER RULE: simple_expression -> term   
+GRAMMER RULE: rel_expression -> simple_expression   
+GRAMMER RULE: logic_expression -> rel_expression 	  
+GRAMMER RULE: expression -> variable ASSIGNOP logic_expression 	  
+GRAMMER RULE: expression_statement -> expression SEMICOLON   
+GRAMMER RULE: statement -> expression_statement  
+GRAMMER RULE: statements -> statements statement  
+
+Line no 17: Token <ID> lexeme <a> found
+
+Line no 17: Token <UNSIGNED> lexeme <1> found
+GRAMMER RULE: factor -> CONST_INT   
+GRAMMER RULE: unary_expression -> factor   
+GRAMMER RULE:  term ->	unary_expression  
+GRAMMER RULE: simple_expression -> term   
+GRAMMER RULE: rel_expression -> simple_expression   
+GRAMMER RULE: logic_expression -> rel_expression 	  
+GRAMMER RULE: expression -> logic_expression	  
+GRAMMER RULE: variable -> ID LSQBRAC expression RSQBRAC   
+
+Line no 17: Token <ASSIGNOP> lexeme <=> found
+
+Line no 17: Token <UNSIGNED> lexeme <5> found
+GRAMMER RULE: factor -> CONST_INT   
+GRAMMER RULE: unary_expression -> factor   
+GRAMMER RULE:  term ->	unary_expression  
+GRAMMER RULE: simple_expression -> term   
+GRAMMER RULE: rel_expression -> simple_expression   
+GRAMMER RULE: logic_expression -> rel_expression 	  
+GRAMMER RULE: expression -> variable ASSIGNOP logic_expression 	  
+GRAMMER RULE: expression_statement -> expression SEMICOLON   
+GRAMMER RULE: statement -> expression_statement  
+GRAMMER RULE: statements -> statements statement  
+
+Line no 18: Token <ID> lexeme <i> found
+
+Line no 18: Token <ASSIGNOP> lexeme <=> found
+GRAMMER RULE: variable -> ID 		  
+
+Line no 18: Token <ID> lexeme <a> found
+
+Line no 18: Token <UNSIGNED> lexeme <0> found
+GRAMMER RULE: factor -> CONST_INT   
+GRAMMER RULE: unary_expression -> factor   
+GRAMMER RULE:  term ->	unary_expression  
+GRAMMER RULE: simple_expression -> term   
+GRAMMER RULE: rel_expression -> simple_expression   
+GRAMMER RULE: logic_expression -> rel_expression 	  
+GRAMMER RULE: expression -> logic_expression	  
+GRAMMER RULE: variable -> ID LSQBRAC expression RSQBRAC   
+
+Line no 18: Token <ADDOP> lexeme <+> found
+GRAMMER RULE:  factor  -> variable   
+GRAMMER RULE: unary_expression -> factor   
+GRAMMER RULE:  term ->	unary_expression  
+GRAMMER RULE: simple_expression -> term   
+
+Line no 18: Token <ID> lexeme <a> found
+
+Line no 18: Token <UNSIGNED> lexeme <1> found
+GRAMMER RULE: factor -> CONST_INT   
+GRAMMER RULE: unary_expression -> factor   
+GRAMMER RULE:  term ->	unary_expression  
+GRAMMER RULE: simple_expression -> term   
+GRAMMER RULE: rel_expression -> simple_expression   
+GRAMMER RULE: logic_expression -> rel_expression 	  
+GRAMMER RULE: expression -> logic_expression	  
+GRAMMER RULE: variable -> ID LSQBRAC expression RSQBRAC   
+GRAMMER RULE:  factor  -> variable   
+GRAMMER RULE: unary_expression -> factor   
+GRAMMER RULE:  term ->	unary_expression  
+GRAMMER RULE: simple_expression -> simple_expression ADDOP term   
+GRAMMER RULE: rel_expression -> simple_expression   
+GRAMMER RULE: logic_expression -> rel_expression 	  
+GRAMMER RULE: expression -> variable ASSIGNOP logic_expression 	  
+GRAMMER RULE: expression_statement -> expression SEMICOLON   
+GRAMMER RULE: statement -> expression_statement  
+GRAMMER RULE: statements -> statements statement  
+
+Line no 19: Token <ID> lexeme <j> found
+
+Line no 19: Token <ASSIGNOP> lexeme <=> found
+GRAMMER RULE: variable -> ID 		  
+
+Line no 19: Token <UNSIGNED> lexeme <2> found
+GRAMMER RULE: factor -> CONST_INT   
+GRAMMER RULE: unary_expression -> factor   
+GRAMMER RULE:  term ->	unary_expression  
+
+Line no 19: Token <MULOP> lexeme <*> found
+
+Line no 19: Token <UNSIGNED> lexeme <3> found
+GRAMMER RULE: factor -> CONST_INT   
+GRAMMER RULE: unary_expression -> factor   
+GRAMMER RULE: term -> term MULOP unary_expression  
+
+Line no 19: Token <ADDOP> lexeme <+> found
+GRAMMER RULE: simple_expression -> term   
+
+Line no 19: Token <UNSIGNED> lexeme <5> found
+GRAMMER RULE: factor -> CONST_INT   
+GRAMMER RULE: unary_expression -> factor   
+GRAMMER RULE:  term ->	unary_expression  
+
+Line no 19: Token <UNSIGNED> lexeme <3> found
+GRAMMER RULE: simple_expression -> term   
+GRAMMER RULE: rel_expression -> simple_expression   
+GRAMMER RULE: logic_expression -> rel_expression 	  
+GRAMMER RULE: expression -> logic_expression	  
