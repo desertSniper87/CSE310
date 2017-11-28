@@ -50,61 +50,31 @@ extern int yydebug;
     FLOAT = 260,
     CHAR = 261,
     COMMA = 262,
-    TYPEDEF = 263,
-    LCURL = 264,
-    RCURL = 265,
-    ID = 266,
-    LSQBRAC = 267,
-    CONST = 268,
-    RSQBRAC = 269,
-    FOR = 270,
-    LPAREN = 271,
-    RPAREN = 272,
-    IF = 273,
-    STATIC = 274,
-    ELSE = 275,
-    WHILE = 276,
-    PRINTLN = 277,
-    RETURN = 278,
-    ASSIGNOP = 279,
-    LOGICOP = 280,
-    REGISTER = 281,
-    RELOP = 282,
-    ADDOP = 283,
-    MULOP = 284,
-    NOT = 285,
-    INCOP = 286,
-    DECOP = 287,
-    CONST_CHAR = 288,
-    CONST_INT = 289,
-    CONST_FLOAT = 290,
-    MAIN = 291,
-    TYPE_NAME = 292,
-    VOLATILE = 293,
-    AUTO = 294,
-    KEYWORD = 295,
-    VOID = 296,
-    SHORT = 297,
-    LONG = 298,
-    DOUBLE = 299,
-    SIGNED = 300,
-    UNSIGNED = 301,
-    EXTERN = 302,
-    ENUM = 303,
-    IDENTIFIER = 304,
-    STRUCT = 305,
-    UNION = 306,
-    HEADER = 307,
-    NUMBER = 308,
-    STRING = 309,
-    OR_OP = 310,
-    AND_OP = 311,
-    EQ_OP = 312,
-    NE_OP = 313,
-    LEFT_OP = 314,
-    GE_OP = 315,
-    LE_OP = 316,
-    RIGHT_OP = 317
+    LCURL = 263,
+    RCURL = 264,
+    ID = 265,
+    LSQBRAC = 266,
+    RSQBRAC = 267,
+    FOR = 268,
+    LPAREN = 269,
+    RPAREN = 270,
+    IF = 271,
+    ELSE = 272,
+    WHILE = 273,
+    PRINTLN = 274,
+    RETURN = 275,
+    ASSIGNOP = 276,
+    LOGICOP = 277,
+    RELOP = 278,
+    ADDOP = 279,
+    MULOP = 280,
+    NOT = 281,
+    INCOP = 282,
+    DECOP = 283,
+    CONST_INT = 284,
+    CONST_FLOAT = 285,
+    CONST_CHAR = 286,
+    VOID = 287
   };
 #endif
 /* Tokens.  */
@@ -113,61 +83,31 @@ extern int yydebug;
 #define FLOAT 260
 #define CHAR 261
 #define COMMA 262
-#define TYPEDEF 263
-#define LCURL 264
-#define RCURL 265
-#define ID 266
-#define LSQBRAC 267
-#define CONST 268
-#define RSQBRAC 269
-#define FOR 270
-#define LPAREN 271
-#define RPAREN 272
-#define IF 273
-#define STATIC 274
-#define ELSE 275
-#define WHILE 276
-#define PRINTLN 277
-#define RETURN 278
-#define ASSIGNOP 279
-#define LOGICOP 280
-#define REGISTER 281
-#define RELOP 282
-#define ADDOP 283
-#define MULOP 284
-#define NOT 285
-#define INCOP 286
-#define DECOP 287
-#define CONST_CHAR 288
-#define CONST_INT 289
-#define CONST_FLOAT 290
-#define MAIN 291
-#define TYPE_NAME 292
-#define VOLATILE 293
-#define AUTO 294
-#define KEYWORD 295
-#define VOID 296
-#define SHORT 297
-#define LONG 298
-#define DOUBLE 299
-#define SIGNED 300
-#define UNSIGNED 301
-#define EXTERN 302
-#define ENUM 303
-#define IDENTIFIER 304
-#define STRUCT 305
-#define UNION 306
-#define HEADER 307
-#define NUMBER 308
-#define STRING 309
-#define OR_OP 310
-#define AND_OP 311
-#define EQ_OP 312
-#define NE_OP 313
-#define LEFT_OP 314
-#define GE_OP 315
-#define LE_OP 316
-#define RIGHT_OP 317
+#define LCURL 263
+#define RCURL 264
+#define ID 265
+#define LSQBRAC 266
+#define RSQBRAC 267
+#define FOR 268
+#define LPAREN 269
+#define RPAREN 270
+#define IF 271
+#define ELSE 272
+#define WHILE 273
+#define PRINTLN 274
+#define RETURN 275
+#define ASSIGNOP 276
+#define LOGICOP 277
+#define RELOP 278
+#define ADDOP 279
+#define MULOP 280
+#define NOT 281
+#define INCOP 282
+#define DECOP 283
+#define CONST_INT 284
+#define CONST_FLOAT 285
+#define CONST_CHAR 286
+#define VOID 287
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

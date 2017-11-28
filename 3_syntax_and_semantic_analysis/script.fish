@@ -2,6 +2,7 @@
 
 echo "Analyzing grammer.y..."
 bison -d -y -o y.tab.cpp parser.y --debug --verbose
+#bison -d -y -o y.tab.cpp parser_temp.y --debug --verbose
 echo "Creating parser object from y.tab.cpp..."
 g++ -fpermissive -w -c -o parser.o y.tab.cpp
 echo "Lexing lex.l..."

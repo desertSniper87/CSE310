@@ -433,16 +433,15 @@ Line 18: statement : expression_statement
 
 Line 18: statements : statements statement
 
+
+
+======Line 19 Start======
 Line 19: variable : ID
 j
-
 Line 19: factor : CONST_INT
 2
-
 Line 19: unary_expression : factor
-
 Line 19: term : unary_expression
-
 Line 19: factor : CONST_INT
 3
 
@@ -492,7 +491,7 @@ Line 19: rel_expression : simple_expression
 
 Line 19: logic_expression : rel_expression LOGICOP rel_expression
 
-Line 19: expression : logic_expression
+Line 19: expression : logic_expression ##  BUG
 
 Line 19: factor : LPAREN expression RPAREN
 

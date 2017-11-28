@@ -45,6 +45,7 @@ string getLabel()	//put type = "b" for byte
 void yyerror(char *s)
 {
     fprintf(stderr,"At Line %d, ERROR-> %s\n",line_count,s);
+    fprintf(parseLog,"At Line %d, ERROR-> %s\n",line_count,s);
     return;
 }
 
@@ -54,14 +55,12 @@ void adele(){
 
 %}
 
-%token SEMICOLON INT FLOAT CHAR COMMA TYPEDEF LCURL RCURL 
-%token ID LSQBRAC CONST RSQBRAC FOR LPAREN RPAREN IF STATIC
-%token ELSE WHILE PRINTLN RETURN ASSIGNOP LOGICOP REGISTER
-%token RELOP ADDOP MULOP NOT INCOP DECOP CONST_CHAR
-%token CONST_INT CONST_FLOAT MAIN TYPE_NAME VOLATILE AUTO KEYWORD
-%token VOID SHORT LONG DOUBLE SIGNED UNSIGNED EXTERN
-%token ENUM IDENTIFIER STRUCT UNION HEADER NUMBER STRING
-%token OR_OP AND_OP EQ_OP NE_OP LEFT_OP GE_OP LE_OP RIGHT_OP
+%token SEMICOLON INT FLOAT CHAR COMMA LCURL RCURL 
+%token ID LSQBRAC RSQBRAC FOR LPAREN RPAREN IF 
+%token ELSE WHILE PRINTLN RETURN ASSIGNOP LOGICOP 
+%token RELOP ADDOP MULOP NOT INCOP DECOP 
+%token CONST_INT CONST_FLOAT CONST_CHAR
+%token VOID
 
 %%
 start : program;
@@ -146,7 +145,13 @@ type_specifier	: INT
                     fprintf(parseLog, "GRAMMER RULE: type_specifier -> INT\n"); 
                 }
                 | FLOAT
+                {
+                    fprintf(parseLog, "GRAMMER RULE: type_specifier -> FLOAT\n"); 
+                }
                 | VOID
+                {
+                    fprintf(parseLog, "GRAMMER RULE: type_specifier -> VOID\n"); 
+                }
                 ;
 
 declaration_list : declaration_list COMMA ID
@@ -171,59 +176,59 @@ statements : statement
                  {
                      fprintf(parseLog, "GRAMMER RULE: statements -> statement  \n"); 
                  }
-           | statements statement
+                 | statements statement
                  {
                      fprintf(parseLog, "GRAMMER RULE: statements -> statements statement  \n"); 
                  }
-       ;
+                 ;
 
 statement : var_declaration
                  {
                      fprintf(parseLog, "GRAMMER RULE: statement -> var_declaration  \n"); 
                  }
-          | expression_statement
+                 | expression_statement
                  {
                      fprintf(parseLog, "GRAMMER RULE: statement -> expression_statement  \n"); 
                  }
-      | compound_statement
+                 | compound_statement
                  {
                      fprintf(parseLog, "GRAMMER RULE: statement -> compound_statement  \n"); 
                  }
-      | FOR LPAREN expression_statement expression_statement expression RPAREN statement
+                 | FOR LPAREN expression_statement expression_statement expression RPAREN statement
                  {
                      fprintf(parseLog, "GRAMMER RULE: statement -> FOR LPAREN expression_statement expression_statement expression RPAREN statement  \n"); 
                  }
-      | IF LPAREN expression RPAREN statement
+                 | IF LPAREN expression RPAREN statement
                  {
                      fprintf(parseLog, "GRAMMER RULE: statement -> IF LPAREN expression RPAREN statement  \n"); 
                  }
-      | IF LPAREN expression RPAREN statement ELSE statement
+                 | IF LPAREN expression RPAREN statement ELSE statement
                  {
                      fprintf(parseLog, "GRAMMER RULE: statement -> IF LPAREN expression RPAREN statement ELSE statement  \n"); 
                  }
-      | WHILE LPAREN expression RPAREN statement
+                 | WHILE LPAREN expression RPAREN statement
                  {
                      fprintf(parseLog, "GRAMMER RULE: statement -> WHILE LPAREN expression RPAREN statement  \n"); 
                  }
-      | PRINTLN LPAREN ID RPAREN SEMICOLON
+                 | PRINTLN LPAREN ID RPAREN SEMICOLON
                  {
                      fprintf(parseLog, "GRAMMER RULE: statement -> PRINTLN LPAREN ID RPAREN SEMICOLON  \n"); 
                  }
-      | RETURN expression SEMICOLON
+                 | RETURN expression SEMICOLON
                  {
                      fprintf(parseLog, "GRAMMER RULE: statement -> RETURN expression SEMICOLON  \n"); 
                  }
-      ;
+                 ;
 
 expression_statement 	: SEMICOLON			
-                 {
-                     fprintf(parseLog, "GRAMMER RULE: expression_statement -> SEMICOLON  \n"); 
-                 }
-                      | expression SEMICOLON 
-                 {
-                     fprintf(parseLog, "GRAMMER RULE: expression_statement -> expression SEMICOLON   \n"); 
-                 }
-            ;
+                        {
+                            fprintf(parseLog, "GRAMMER RULE: expression_statement -> SEMICOLON  \n"); 
+                        }
+                        | expression SEMICOLON 
+                        {
+                            fprintf(parseLog, "GRAMMER RULE: expression_statement -> expression SEMICOLON   \n"); 
+                        }
+                        ;
 
 variable : ID 		
                  {
@@ -239,7 +244,7 @@ expression : logic_expression
                  {
                      fprintf(parseLog, "GRAMMER RULE: expression -> logic_expression	  \n"); 
                  }
-           | variable ASSIGNOP logic_expression 	
+               | variable ASSIGNOP logic_expression 	
                  {
                      fprintf(parseLog, "GRAMMER RULE: expression -> variable ASSIGNOP logic_expression 	  \n"); 
                  }
@@ -315,18 +320,18 @@ factor	: variable
         {
             fprintf(parseLog, "GRAMMER RULE: factor -> CONST_INT   \n"); 
         }
-    | CONST_FLOAT
-                 {
-                     fprintf(parseLog, "GRAMMER RULE: factor -> CONST_FLOAT  \n"); 
-                 }
-    | CONST_CHAR
-                 {
-                     fprintf(parseLog, "GRAMMER RULE: factor -> CONST_CHAR  \n"); 
-                 }
-    | variable INCOP 
-                 {
-                     fprintf(parseLog, "GRAMMER RULE: factor -> variable INCOP   \n"); 
-                 }
+        | CONST_FLOAT
+        {
+            fprintf(parseLog, "GRAMMER RULE: factor -> CONST_FLOAT  \n"); 
+        }
+        | CONST_CHAR
+        {
+            fprintf(parseLog, "GRAMMER RULE: factor -> CONST_CHAR  \n"); 
+        }
+        | variable INCOP 
+        {
+            fprintf(parseLog, "GRAMMER RULE: factor -> variable INCOP   \n"); 
+        }
     | variable DECOP
                  {
                      fprintf(parseLog, "GRAMMER RULE: factor -> variable DECOP  \n"); 
@@ -352,13 +357,11 @@ int main(int argc,char *argv[]){
     tokenout= fopen("token.txt","w");
     parseLog = fopen("log.txt", "w");
     fprintf(parseLog, "Program start: Line Count: 1\n");
-    fclose(tokenout);
     yyparse();
+    fclose(tokenout);
     fclose(parseLog);
     printf ("\nTotal line Count: %d\n", line_count);
     /*parser_table.print(logout);*/
-    fclose(logout);
 
 return 0;
 }
-
