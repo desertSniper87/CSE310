@@ -85,4 +85,8 @@
 
 <MULOP, *>
 <UNSIGNED, 2>
+<ID, a>
+
+<RELOP, ==>
+<UNSIGNED, 2>
 <UNSIGNED, 0>

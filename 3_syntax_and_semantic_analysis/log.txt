@@ -418,7 +418,44 @@ GRAMMER RULE: expression_statement -> expression SEMICOLON
 GRAMMER RULE: statement -> expression_statement  
 GRAMMER RULE: statements -> statements statement  
 
-Line no 21: Token <UNSIGNED> lexeme <0> found
+Line no 22: Token <LPAREN> lexeme <(> found
+
+Line no 22: Token <ID> lexeme <a> found
+
+Line no 22: Token <RELOP> lexeme <==> found
+GRAMMER RULE: variable -> ID 		  
+GRAMMER RULE:  factor  -> variable   
+GRAMMER RULE: unary_expression -> factor   
+GRAMMER RULE:  term ->	unary_expression  
+GRAMMER RULE: simple_expression -> term   
+
+Line no 22: Token <UNSIGNED> lexeme <2> found
+GRAMMER RULE: factor -> CONST_INT   
+GRAMMER RULE: unary_expression -> factor   
+GRAMMER RULE:  term ->	unary_expression  
+
+Line no 22: Token <RPAREN> lexeme <)> found
+GRAMMER RULE: simple_expression -> term   
+GRAMMER RULE: rel_expression -> simple_expression RELOP simple_expression	  
+GRAMMER RULE: logic_expression -> rel_expression 	  
+GRAMMER RULE: expression -> logic_expression	  
+GRAMMER RULE: compound_statement -> LCURL RCURL  
+GRAMMER RULE: statement -> compound_statement  
+GRAMMER RULE: compound_statement -> LCURL RCURL  
+GRAMMER RULE: statement -> compound_statement  
+GRAMMER RULE: statement -> IF LPAREN expression RPAREN statement ELSE statement  
+GRAMMER RULE: statements -> statements statement  
+Printing table:
+0 --> <b ID>   <i ID>   <1 UNSIGNED>   <* MULOP>   <8 UNSIGNED>   <3.5 NUMBER>  
+1 --> <x ID>   <+ ADDOP>   <2 UNSIGNED>   <c ID>   <j ID>  
+2 --> <y ID>   <foo ID>   <var ID>   <d ID>   <3 UNSIGNED>   <% MULOP>   <|| LOGICOP>   <== RELOP>  
+3 --> <z ID>   <- ADDOP>   <4 UNSIGNED>  
+4 --> <5 UNSIGNED>   << RELOP>   <&& LOGICOP>  
+5 --> <= ASSIGNOP>  
+6 --> <a ID>   <main ID>   <0 UNSIGNED>  
+
+
+Line no 26: Token <UNSIGNED> lexeme <0> found
 GRAMMER RULE: factor -> CONST_INT   
 GRAMMER RULE: unary_expression -> factor   
 GRAMMER RULE:  term ->	unary_expression  
