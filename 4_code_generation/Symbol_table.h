@@ -9,6 +9,7 @@ class Symbol_info   {
     public:
         string symbol, symbol_type;
         Symbol_info *next;
+        string code;
 
 };
 

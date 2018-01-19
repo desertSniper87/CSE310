@@ -447,25 +447,4 @@ GRAMMER RULE: statement -> IF LPAREN expression RPAREN statement ELSE statement
 GRAMMER RULE: statements -> statements statement  
 Printing table:
 0 --> <b ID>   <i ID>   <1 UNSIGNED>   <* MULOP>   <8 UNSIGNED>   <3.5 NUMBER>  
-1 --> <x ID>   <+ ADDOP>   <2 UNSIGNED>   <c ID>   <j ID>  
-2 --> <y ID>   <foo ID>   <var ID>   <d ID>   <3 UNSIGNED>   <% MULOP>   <|| LOGICOP>   <== RELOP>  
-3 --> <z ID>   <- ADDOP>   <4 UNSIGNED>  
-4 --> <5 UNSIGNED>   << RELOP>   <&& LOGICOP>  
-5 --> <= ASSIGNOP>  
-6 --> <a ID>   <main ID>   <0 UNSIGNED>  
-
-
-Line no 26: Token <UNSIGNED> lexeme <0> found
-GRAMMER RULE: factor -> CONST_INT   
-GRAMMER RULE: unary_expression -> factor   
-GRAMMER RULE:  term ->	unary_expression  
-GRAMMER RULE: simple_expression -> term   
-GRAMMER RULE: rel_expression -> simple_expression   
-GRAMMER RULE: logic_expression -> rel_expression 	  
-GRAMMER RULE: expression -> logic_expression	  
-GRAMMER RULE: statement -> RETURN expression SEMICOLON  
-GRAMMER RULE: statements -> statements statement  
-GRAMMER RULE: compound_statement -> LCURL statements RCURL  
-GRAMMER RULE: func_definition -> type_specifier ID LPAREN parameter_list RPAREN compound_statement  
-GRAMMER RULE: unit -> func_definition
-GRAMMER RULE: program -> program unit
+1 --> <x ID

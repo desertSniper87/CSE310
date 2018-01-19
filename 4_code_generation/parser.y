@@ -79,6 +79,7 @@ void adele(){
 }
 
 %}
+%error-verbose
 
 %token SEMICOLON INT FLOAT CHAR COMMA LCURL RCURL 
 %token ID LSQBRAC RSQBRAC FOR LPAREN RPAREN IF 
@@ -88,7 +89,13 @@ void adele(){
 %token VOID
 
 %%
-start : program;
+start : program
+      {
+            ofstream fout;
+            fout.open("code.asm");
+            fout<< $1->code;
+      }
+    ;
 
 program : program unit 
         {
@@ -152,10 +159,12 @@ parameter_list  : parameter_list COMMA type_specifier ID
 compound_statement : LCURL statements RCURL
                  {
                      fprintf(parseLog, "GRAMMER RULE: compound_statement -> LCURL statements RCURL  \n"); 
+                    $$ = $2;
                  }
                    | LCURL RCURL
                  {
                      fprintf(parseLog, "GRAMMER RULE: compound_statement -> LCURL RCURL  \n"); 
+                     //TODO Make new symbolInfo
                  }
             ;
 
@@ -200,10 +209,15 @@ declaration_list : declaration_list COMMA ID
 statements : statement
                  {
                      fprintf(parseLog, "GRAMMER RULE: statements -> statement  \n"); 
+                     $$ = $1;
+
                  }
                  | statements statement
                  {
                      fprintf(parseLog, "GRAMMER RULE: statements -> statements statement  \n"); 
+                     $$ = $1;
+                     $$->code += $2->code;
+                     delete $2;
                  }
                  ;
 

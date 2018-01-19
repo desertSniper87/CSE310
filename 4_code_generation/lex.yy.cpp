@@ -923,7 +923,7 @@ case 3:
 YY_RULE_SETUP
 #line 68 "lex.l"
 {
-    printf("found LPAREN\n");
+    /*printf("found LPAREN\n");*/
     fprintf(parseLog,"\nLine no %d: Token <LPAREN> lexeme <%s> found\n",line_count,yytext);
     return LPAREN;}
 	YY_BREAK
@@ -931,7 +931,7 @@ case 4:
 YY_RULE_SETUP
 #line 73 "lex.l"
 {
-    printf("found RPAREN\n");
+    /*printf("found RPAREN\n");*/
     fprintf(parseLog,"\nLine no %d: Token <RPAREN> lexeme <%s> found\n",line_count,yytext);
     return RPAREN;}
 	YY_BREAK
@@ -939,7 +939,7 @@ case 5:
 YY_RULE_SETUP
 #line 78 "lex.l"
 {
-    printf("found INCOP\n");
+    /*printf("found INCOP\n");*/
     fprintf(parseLog,"\nLine no %d: Token <INCOP> lexeme <%s> found\n",line_count,yytext);
     return INCOP;}
 	YY_BREAK
@@ -947,7 +947,7 @@ case 6:
 YY_RULE_SETUP
 #line 83 "lex.l"
 {
-    printf("found DECOP\n");
+    /*printf("found DECOP\n");*/
     fprintf(parseLog,"\nLine no %d: Token <DECOP> lexeme <%s> found\n",line_count,yytext);
     return DECOP;}
 	YY_BREAK
@@ -965,7 +965,7 @@ case 9:
 YY_RULE_SETUP
 #line 92 "lex.l"
 {
-    printf("Found COMMA\n");
+    /*printf("Found COMMA\n");*/
     return COMMA;}
 	YY_BREAK
 case 10:
@@ -997,7 +997,7 @@ case 15:
 YY_RULE_SETUP
 #line 107 "lex.l"
 {
-    printf("found INT\n");
+    /*printf("found INT\n");*/
     return  INT; }
 	YY_BREAK
 case 16:
@@ -1037,8 +1037,8 @@ YY_RULE_SETUP
 #line 126 "lex.l"
 {
 	insert("STR",yytext);
-	printf("str: %s\n", yytext);
-	printf("line no: %d\n",line_count);
+	/*printf("str: %s\n", yytext);*/
+	/*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"\n<STRING, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d:Token <STRING> lexeme <%s> found\n",line_count,yytext);
     /*return STRING;*/
@@ -1058,8 +1058,8 @@ YY_RULE_SETUP
 #line 141 "lex.l"
 {
 	insert("CHAR",yytext);
-    printf("str: %s\n", yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("str: %s\n", yytext);*/
+    /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"\n<CHAR, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
 }
@@ -1069,8 +1069,8 @@ YY_RULE_SETUP
 #line 149 "lex.l"
 {
 	insert("CHAR",yytext);
-    printf("str: %s\n", yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("str: %s\n", yytext);*/
+    /*printf("line no: %d\n",line_count);*/
     fprintf(parseLog,"\nWARNING: Multi character constant found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
     fprintf(tokenout,"\n<CHAR, %s>\n",yytext);
 }
@@ -1080,8 +1080,8 @@ case 25:
 YY_RULE_SETUP
 #line 157 "lex.l"
 {
-    printf("str: %s\n", yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("str: %s\n", yytext);*/
+    /*printf("line no: %d\n",line_count);*/
     fprintf(parseLog,"\nERROR: Character with newline found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
 }
 	YY_BREAK
@@ -1089,8 +1089,8 @@ case 26:
 YY_RULE_SETUP
 #line 163 "lex.l"
 {
-    printf("str: %s\n", yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("str: %s\n", yytext);*/
+    /*printf("line no: %d\n",line_count);*/
     fprintf(parseLog,"\nERROR: Empty character found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
 }
 	YY_BREAK
@@ -1108,10 +1108,10 @@ YY_RULE_SETUP
 #line 182 "lex.l"
 {
 	insert("ID",yytext);
-    printf("id: %s\n", yytext); 
+    /*printf("id: %s\n", yytext); */
     fprintf(tokenout,"<ID, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <ID> lexeme <%s> found\n",line_count,yytext);
-    printf("found ID.\n");
+    /*printf("found ID.\n");*/
     return ID;
 }
 	YY_BREAK
@@ -1119,7 +1119,7 @@ case 28:
 YY_RULE_SETUP
 #line 191 "lex.l"
 {
-    printf("\nSingleline comment found: %s\n",yytext);
+    /*printf("\nSingleline comment found: %s\n",yytext);*/
     fprintf(parseLog,"\nLine no %d: SINGLELINECOMMENT <%s> found\n",line_count,yytext);
 }
 	YY_BREAK
@@ -1128,7 +1128,7 @@ case 29:
 YY_RULE_SETUP
 #line 196 "lex.l"
 {
-    printf("\nMultiline comment found: %s\n",yytext);
+    /*printf("\nMultiline comment found: %s\n",yytext);*/
     fprintf(parseLog,"\nLine no %d: MULTILINECOMMENT <%s> found\n",line_count,yytext);
 }
 	YY_BREAK
@@ -1137,7 +1137,7 @@ case 30:
 YY_RULE_SETUP
 #line 201 "lex.l"
 {
-    printf("\nMultiline comment found: %s\n",yytext);
+    /*printf("\nMultiline comment found: %s\n",yytext);*/
     fprintf(parseLog,"\nLine no %d: Unterminated MULTILINECOMMENT <%s> found\n",line_count,yytext);
 }
 	YY_BREAK
@@ -1146,8 +1146,8 @@ YY_RULE_SETUP
 #line 206 "lex.l"
 {
 	insert("NUMBER",yytext);
-    printf("number:%s\n",yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("number:%s\n",yytext);*/
+    /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"<NUMBER, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <NUMBER> lexeme <%s> found\n",line_count,yytext);
     return CONST_FLOAT;
@@ -1158,8 +1158,8 @@ YY_RULE_SETUP
 #line 215 "lex.l"
 {
 	insert("UNSIGNED",yytext);
-    printf("unsigned:%s\n",yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("unsigned:%s\n",yytext);*/
+    /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"<UNSIGNED, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <UNSIGNED> lexeme <%s> found\n",line_count,yytext);
     return CONST_INT;
@@ -1170,7 +1170,7 @@ YY_RULE_SETUP
 #line 224 "lex.l"
 {
     insert("ADDOP", yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"\n<ADDOP, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <ADDOP> lexeme <%s> found\n",line_count,yytext);
     return ADDOP;
@@ -1181,7 +1181,7 @@ YY_RULE_SETUP
 #line 232 "lex.l"
 {
     insert("MULOP", yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"\n<MULOP, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <MULOP> lexeme <%s> found\n",line_count,yytext);
     return MULOP;
@@ -1193,7 +1193,7 @@ YY_RULE_SETUP
 {
     /*relop is relational operator*/
     insert("RELOP", yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"\n<RELOP, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <RELOP> lexeme <%s> found\n",line_count,yytext);
     return RELOP;
@@ -1204,7 +1204,7 @@ YY_RULE_SETUP
 #line 249 "lex.l"
 {
     insert("LOGICOP", yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"\n<LOGICOP, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <LOGICOP> lexeme <%s> found\n",line_count,yytext);
     return LOGICOP;
@@ -1215,8 +1215,8 @@ YY_RULE_SETUP
 #line 257 "lex.l"
 {
     insert("ASSIGNOP", yytext);
-    printf("line no: %d\n",line_count);
-    printf("ASSIGNOP found\n");
+    /*printf("line no: %d\n",line_count);*/
+    /*printf("ASSIGNOP found\n");*/
     fprintf(tokenout,"\n<ASSIGNOP, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <ASSIGNOP> lexeme <%s> found\n",line_count,yytext);
     return ASSIGNOP;
@@ -1227,7 +1227,7 @@ YY_RULE_SETUP
 #line 267 "lex.l"
 {
 	insert("DOTDOT", yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("line no: %d\n",line_count);*/
 }	
 	YY_BREAK
 case 39:
@@ -1246,7 +1246,7 @@ case 41:
 YY_RULE_SETUP
 #line 277 "lex.l"
 {
-    printf("Illegal usage of decimal\n");
+    /*printf("Illegal usage of decimal\n");*/
     fprintf(parseLog,"\nLine no %d: Illegal usage of decimal <%s> found\n",line_count,yytext);
 }
 	YY_BREAK
@@ -1271,7 +1271,7 @@ case 44:
 YY_RULE_SETUP
 #line 292 "lex.l"
 {
-    printf("found Semicolon");
+    /*printf("found Semicolon");*/
     return SEMICOLON;
 }
 	YY_BREAK

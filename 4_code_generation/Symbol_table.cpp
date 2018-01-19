@@ -61,11 +61,12 @@ void Symbol_table::remove(int count,string s) {
 void Symbol_table::insert(string s1,string s2, int hash_buckets)        {
     /// should return a hash key where to insert
     /// cur is the position of has in the table
-    printf("Considering insertion of %s, %s\n", s1.c_str(), s2.c_str());
+    //printf("Considering insertion of %s, %s\n", s1.c_str(), s2.c_str());
     int key = hash_key(s2, 7);
-    if (lookup(key, s2))
-        printf("\nThe symbol %s already exists in position %d\n", s2.c_str(), key);
-    else {
+    //if (lookup(key, s2))
+        //printf("\nThe symbol %s already exists in position %d\n", s2.c_str(), key);
+    //else {
+    if (!lookup(key, s2))   {
         int count;
         count= hash_key(s2, hash_buckets);
 
@@ -83,6 +84,7 @@ void Symbol_table::insert(string s1,string s2, int hash_buckets)        {
                     Symbol_info *newOb=new Symbol_info;
                     newOb->symbol=s2;
                     newOb->symbol_type=s1;
+                    newOb->code="";
                     cur->next=newOb;
 
                     cur->next->next=NULL;

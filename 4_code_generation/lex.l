@@ -66,22 +66,22 @@ err_id 			{digit}+{id}
 "}"				{return RCURL;}
 
 "("				{
-    printf("found LPAREN\n");
+    /*printf("found LPAREN\n");*/
     fprintf(parseLog,"\nLine no %d: Token <LPAREN> lexeme <%s> found\n",line_count,yytext);
     return LPAREN;}
 
 ")"				{
-    printf("found RPAREN\n");
+    /*printf("found RPAREN\n");*/
     fprintf(parseLog,"\nLine no %d: Token <RPAREN> lexeme <%s> found\n",line_count,yytext);
     return RPAREN;}
 
 "++"				{
-    printf("found INCOP\n");
+    /*printf("found INCOP\n");*/
     fprintf(parseLog,"\nLine no %d: Token <INCOP> lexeme <%s> found\n",line_count,yytext);
     return INCOP;}
 
 "--"				{
-    printf("found DECOP\n");
+    /*printf("found DECOP\n");*/
     fprintf(parseLog,"\nLine no %d: Token <DECOP> lexeme <%s> found\n",line_count,yytext);
     return DECOP;}
 
@@ -90,7 +90,7 @@ err_id 			{digit}+{id}
 "]"				{return RSQBRAC;}
 
 ","             {
-    printf("Found COMMA\n");
+    /*printf("Found COMMA\n");*/
     return COMMA;}
 
 
@@ -105,7 +105,7 @@ err_id 			{digit}+{id}
 "if"			{ return  IF; }
 
 "int"			{
-    printf("found INT\n");
+    /*printf("found INT\n");*/
     return  INT; }
 
 "return"		{ return  RETURN; }
@@ -125,8 +125,8 @@ err_id 			{digit}+{id}
 
 {string} {
 	insert("STR",yytext);
-	printf("str: %s\n", yytext);
-	printf("line no: %d\n",line_count);
+	/*printf("str: %s\n", yytext);*/
+	/*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"\n<STRING, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d:Token <STRING> lexeme <%s> found\n",line_count,yytext);
     /*return STRING;*/
@@ -140,29 +140,29 @@ err_id 			{digit}+{id}
 
 {char} {
 	insert("CHAR",yytext);
-    printf("str: %s\n", yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("str: %s\n", yytext);*/
+    /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"\n<CHAR, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
 }
 
 {err_multi_char} {
 	insert("CHAR",yytext);
-    printf("str: %s\n", yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("str: %s\n", yytext);*/
+    /*printf("line no: %d\n",line_count);*/
     fprintf(parseLog,"\nWARNING: Multi character constant found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
     fprintf(tokenout,"\n<CHAR, %s>\n",yytext);
 }
 
 {err_char_nl} {
-    printf("str: %s\n", yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("str: %s\n", yytext);*/
+    /*printf("line no: %d\n",line_count);*/
     fprintf(parseLog,"\nERROR: Character with newline found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
 }
 
 {empty_char} {
-    printf("str: %s\n", yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("str: %s\n", yytext);*/
+    /*printf("line no: %d\n",line_count);*/
     fprintf(parseLog,"\nERROR: Empty character found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
 }
 
@@ -181,32 +181,32 @@ err_id 			{digit}+{id}
 
 {id} {
 	insert("ID",yytext);
-    printf("id: %s\n", yytext); 
+    /*printf("id: %s\n", yytext); */
     fprintf(tokenout,"<ID, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <ID> lexeme <%s> found\n",line_count,yytext);
-    printf("found ID.\n");
+    /*printf("found ID.\n");*/
     return ID;
 }
 
 {sin_comment} {
-    printf("\nSingleline comment found: %s\n",yytext);
+    /*printf("\nSingleline comment found: %s\n",yytext);*/
     fprintf(parseLog,"\nLine no %d: SINGLELINECOMMENT <%s> found\n",line_count,yytext);
 }
 
 {mul_comment} {
-    printf("\nMultiline comment found: %s\n",yytext);
+    /*printf("\nMultiline comment found: %s\n",yytext);*/
     fprintf(parseLog,"\nLine no %d: MULTILINECOMMENT <%s> found\n",line_count,yytext);
 }
 
 {mul_comment_err} {
-    printf("\nMultiline comment found: %s\n",yytext);
+    /*printf("\nMultiline comment found: %s\n",yytext);*/
     fprintf(parseLog,"\nLine no %d: Unterminated MULTILINECOMMENT <%s> found\n",line_count,yytext);
 }
 
 {number} {
 	insert("NUMBER",yytext);
-    printf("number:%s\n",yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("number:%s\n",yytext);*/
+    /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"<NUMBER, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <NUMBER> lexeme <%s> found\n",line_count,yytext);
     return CONST_FLOAT;
@@ -214,8 +214,8 @@ err_id 			{digit}+{id}
 
 {unsigned} {
 	insert("UNSIGNED",yytext);
-    printf("unsigned:%s\n",yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("unsigned:%s\n",yytext);*/
+    /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"<UNSIGNED, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <UNSIGNED> lexeme <%s> found\n",line_count,yytext);
     return CONST_INT;
@@ -223,7 +223,7 @@ err_id 			{digit}+{id}
 
 {addop} {
     insert("ADDOP", yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"\n<ADDOP, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <ADDOP> lexeme <%s> found\n",line_count,yytext);
     return ADDOP;
@@ -231,7 +231,7 @@ err_id 			{digit}+{id}
 
 {mulop} {
     insert("MULOP", yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"\n<MULOP, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <MULOP> lexeme <%s> found\n",line_count,yytext);
     return MULOP;
@@ -240,7 +240,7 @@ err_id 			{digit}+{id}
 {relop} {
     /*relop is relational operator*/
     insert("RELOP", yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"\n<RELOP, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <RELOP> lexeme <%s> found\n",line_count,yytext);
     return RELOP;
@@ -248,7 +248,7 @@ err_id 			{digit}+{id}
 
 {logicop} {
     insert("LOGICOP", yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"\n<LOGICOP, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <LOGICOP> lexeme <%s> found\n",line_count,yytext);
     return LOGICOP;
@@ -256,8 +256,8 @@ err_id 			{digit}+{id}
 
 {assignop} {
     insert("ASSIGNOP", yytext);
-    printf("line no: %d\n",line_count);
-    printf("ASSIGNOP found\n");
+    /*printf("line no: %d\n",line_count);*/
+    /*printf("ASSIGNOP found\n");*/
     fprintf(tokenout,"\n<ASSIGNOP, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <ASSIGNOP> lexeme <%s> found\n",line_count,yytext);
     return ASSIGNOP;
@@ -266,7 +266,7 @@ err_id 			{digit}+{id}
 
 {dotdot} {
 	insert("DOTDOT", yytext);
-    printf("line no: %d\n",line_count);
+    /*printf("line no: %d\n",line_count);*/
 }	
 {hash}  {
 	insert("#",yytext);
@@ -275,7 +275,7 @@ err_id 			{digit}+{id}
 {delim}+ {}
 
 {err_dotdot} {
-    printf("Illegal usage of decimal\n");
+    /*printf("Illegal usage of decimal\n");*/
     fprintf(parseLog,"\nLine no %d: Illegal usage of decimal <%s> found\n",line_count,yytext);
 }
 
@@ -290,7 +290,7 @@ err_id 			{digit}+{id}
 }
 
 {semicolon} {
-    printf("found Semicolon");
+    /*printf("found Semicolon");*/
     return SEMICOLON;
 }
 
