@@ -73,6 +73,7 @@
 FILE *logout;
 FILE *tokenout;
 FILE *parseLog;
+FILE *asmout;
 
 Symbol_table parser_table;
 stringstream ss;
@@ -144,7 +145,7 @@ void adele(){
 }
 
 
-#line 148 "y.tab.cpp" /* yacc.c:339  */
+#line 149 "y.tab.cpp" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -259,7 +260,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 263 "y.tab.cpp" /* yacc.c:358  */
+#line 264 "y.tab.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -559,13 +560,13 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    92,    92,   100,   104,   110,   114,   118,   124,   130,
-     136,   140,   144,   148,   152,   156,   159,   163,   169,   175,
-     179,   183,   189,   193,   197,   201,   207,   211,   217,   221,
-     225,   229,   233,   237,   241,   245,   249,   255,   259,   265,
-     269,   275,   279,   285,   289,   295,   299,   305,   309,   315,
-     319,   325,   329,   333,   339,   343,   347,   351,   355,   359,
-     363,   367,   373,   377,   381
+       0,    95,    95,   101,   105,   113,   117,   121,   127,   133,
+     139,   143,   147,   151,   155,   159,   162,   167,   174,   180,
+     184,   188,   194,   198,   202,   206,   212,   218,   227,   231,
+     236,   241,   246,   258,   262,   266,   270,   277,   282,   289,
+     296,   309,   315,   332,   337,   356,   360,   366,   370,   376,
+     380,   386,   391,   400,   407,   422,   426,   431,   436,   441,
+     446,   451,   458,   462,   466
 };
 #endif
 
@@ -1424,497 +1425,579 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 93 "parser.y" /* yacc.c:1646  */
+#line 96 "parser.y" /* yacc.c:1646  */
     {
-            ofstream fout;
-            fout.open("code.asm");
-            fout<< (yyvsp[0])->code;
+            fprintf(asmout, (yyvsp[0])->code.c_str());
       }
-#line 1434 "y.tab.cpp" /* yacc.c:1646  */
+#line 1433 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 101 "parser.y" /* yacc.c:1646  */
+#line 102 "parser.y" /* yacc.c:1646  */
     {
             fprintf(parseLog, "GRAMMER RULE: program -> program unit\n"); 
         }
-#line 1442 "y.tab.cpp" /* yacc.c:1646  */
+#line 1441 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 105 "parser.y" /* yacc.c:1646  */
+#line 106 "parser.y" /* yacc.c:1646  */
     {
+            (yyval) = (yyvsp[0]);
+            (yyval)->print_info();
             fprintf(parseLog, "GRAMMER RULE: program -> unit\n"); 
         }
-#line 1450 "y.tab.cpp" /* yacc.c:1646  */
+#line 1451 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 111 "parser.y" /* yacc.c:1646  */
+#line 114 "parser.y" /* yacc.c:1646  */
     {
             fprintf(parseLog, "GRAMMER RULE: unit -> var_declaration\n"); 
      }
-#line 1458 "y.tab.cpp" /* yacc.c:1646  */
+#line 1459 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 115 "parser.y" /* yacc.c:1646  */
+#line 118 "parser.y" /* yacc.c:1646  */
     {
             fprintf(parseLog, "GRAMMER RULE: unit -> func_declaration\n"); 
      }
-#line 1466 "y.tab.cpp" /* yacc.c:1646  */
+#line 1467 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 119 "parser.y" /* yacc.c:1646  */
+#line 122 "parser.y" /* yacc.c:1646  */
     {
             fprintf(parseLog, "GRAMMER RULE: unit -> func_definition\n"); 
      }
-#line 1474 "y.tab.cpp" /* yacc.c:1646  */
+#line 1475 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 125 "parser.y" /* yacc.c:1646  */
+#line 128 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: func_declaration -> type_specifier ID LPAREN parameter_list RPAREN SEMICOLON  \n"); 
                  }
-#line 1482 "y.tab.cpp" /* yacc.c:1646  */
+#line 1483 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 131 "parser.y" /* yacc.c:1646  */
+#line 134 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: func_definition -> type_specifier ID LPAREN parameter_list RPAREN compound_statement  \n"); 
                  }
-#line 1490 "y.tab.cpp" /* yacc.c:1646  */
+#line 1491 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 137 "parser.y" /* yacc.c:1646  */
+#line 140 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: parameter_list  -> parameter_list COMMA type_specifier ID  \n"); 
                  }
-#line 1498 "y.tab.cpp" /* yacc.c:1646  */
+#line 1499 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 141 "parser.y" /* yacc.c:1646  */
+#line 144 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: parameter_list -> parameter_list COMMA type_specifier	   \n"); 
                  }
-#line 1506 "y.tab.cpp" /* yacc.c:1646  */
+#line 1507 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 145 "parser.y" /* yacc.c:1646  */
+#line 148 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: parameter_list -> type_specifier ID  \n"); 
                  }
-#line 1514 "y.tab.cpp" /* yacc.c:1646  */
+#line 1515 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 149 "parser.y" /* yacc.c:1646  */
+#line 152 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: parameter_list -> unit  \n"); 
                  }
-#line 1522 "y.tab.cpp" /* yacc.c:1646  */
+#line 1523 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 153 "parser.y" /* yacc.c:1646  */
+#line 156 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: parameter_list -> type_specifier  \n"); 
                  }
-#line 1530 "y.tab.cpp" /* yacc.c:1646  */
+#line 1531 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 160 "parser.y" /* yacc.c:1646  */
+#line 163 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: compound_statement -> LCURL statements RCURL  \n"); 
+                    (yyval) = (yyvsp[-1]);
                  }
-#line 1538 "y.tab.cpp" /* yacc.c:1646  */
+#line 1540 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 164 "parser.y" /* yacc.c:1646  */
+#line 168 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: compound_statement -> LCURL RCURL  \n"); 
+                     //TODO Make new symbolInfo
                  }
-#line 1546 "y.tab.cpp" /* yacc.c:1646  */
+#line 1549 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 170 "parser.y" /* yacc.c:1646  */
+#line 175 "parser.y" /* yacc.c:1646  */
     {
                     fprintf(parseLog, "GRAMMER RULE: var_declaration -> type_specifier declaration_list SEMICOLON\n"); 
                 }
-#line 1554 "y.tab.cpp" /* yacc.c:1646  */
+#line 1557 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 176 "parser.y" /* yacc.c:1646  */
+#line 181 "parser.y" /* yacc.c:1646  */
     {
                     fprintf(parseLog, "GRAMMER RULE: type_specifier -> INT\n"); 
                 }
-#line 1562 "y.tab.cpp" /* yacc.c:1646  */
+#line 1565 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 180 "parser.y" /* yacc.c:1646  */
+#line 185 "parser.y" /* yacc.c:1646  */
     {
                     fprintf(parseLog, "GRAMMER RULE: type_specifier -> FLOAT\n"); 
                 }
-#line 1570 "y.tab.cpp" /* yacc.c:1646  */
+#line 1573 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 184 "parser.y" /* yacc.c:1646  */
+#line 189 "parser.y" /* yacc.c:1646  */
     {
                     fprintf(parseLog, "GRAMMER RULE: type_specifier -> VOID\n"); 
                 }
-#line 1578 "y.tab.cpp" /* yacc.c:1646  */
+#line 1581 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 190 "parser.y" /* yacc.c:1646  */
+#line 195 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: declaration_list -> declaration_list COMMA ID \n"); 
                  }
-#line 1586 "y.tab.cpp" /* yacc.c:1646  */
+#line 1589 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 194 "parser.y" /* yacc.c:1646  */
+#line 199 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: declaration_list -> declaration_list COMMA ID LSQBRAC CONST_INT RSQBRAC \n"); 
                  }
-#line 1594 "y.tab.cpp" /* yacc.c:1646  */
+#line 1597 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 198 "parser.y" /* yacc.c:1646  */
+#line 203 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: declaration_list -> ID \n"); 
                  }
-#line 1602 "y.tab.cpp" /* yacc.c:1646  */
+#line 1605 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 202 "parser.y" /* yacc.c:1646  */
+#line 207 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: declaration_list -> ID LSQBRAC CONST_INT RSQBRAC \n"); 
                  }
-#line 1610 "y.tab.cpp" /* yacc.c:1646  */
+#line 1613 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 208 "parser.y" /* yacc.c:1646  */
+#line 213 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: statements -> statement  \n"); 
+                     (yyval) = (yyvsp[0]);
+
                  }
-#line 1618 "y.tab.cpp" /* yacc.c:1646  */
+#line 1623 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 212 "parser.y" /* yacc.c:1646  */
+#line 219 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: statements -> statements statement  \n"); 
-                 }
-#line 1626 "y.tab.cpp" /* yacc.c:1646  */
-    break;
-
-  case 28:
-#line 218 "parser.y" /* yacc.c:1646  */
-    {
-                     fprintf(parseLog, "GRAMMER RULE: statement -> var_declaration  \n"); 
+                     (yyval) = (yyvsp[-1]);
+                     (yyval)->code += (yyvsp[0])->code;
+                     delete (yyvsp[0]);
                  }
 #line 1634 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
-  case 29:
-#line 222 "parser.y" /* yacc.c:1646  */
+  case 28:
+#line 228 "parser.y" /* yacc.c:1646  */
     {
-                     fprintf(parseLog, "GRAMMER RULE: statement -> expression_statement  \n"); 
+                     fprintf(parseLog, "GRAMMER RULE: statement -> var_declaration  \n"); 
                  }
 #line 1642 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
+  case 29:
+#line 232 "parser.y" /* yacc.c:1646  */
+    {
+                     fprintf(parseLog, "GRAMMER RULE: statement -> expression_statement  \n"); 
+                     (yyval) = (yyvsp[0]);
+                 }
+#line 1651 "y.tab.cpp" /* yacc.c:1646  */
+    break;
+
   case 30:
-#line 226 "parser.y" /* yacc.c:1646  */
+#line 237 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: statement -> compound_statement  \n"); 
+                     (yyval) = (yyvsp[0]);
                  }
-#line 1650 "y.tab.cpp" /* yacc.c:1646  */
+#line 1660 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 230 "parser.y" /* yacc.c:1646  */
+#line 242 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: statement -> FOR LPAREN expression_statement expression_statement expression RPAREN statement  \n"); 
+                     // TODO Some code in Line 96 of the template
                  }
-#line 1658 "y.tab.cpp" /* yacc.c:1646  */
+#line 1669 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 234 "parser.y" /* yacc.c:1646  */
+#line 247 "parser.y" /* yacc.c:1646  */
     {
-                     fprintf(parseLog, "GRAMMER RULE: statement -> IF LPAREN expression RPAREN statement  \n"); 
+                    fprintf(parseLog, "GRAMMER RULE: statement -> IF LPAREN expression RPAREN statement  \n"); 
+					(yyval)=(yyvsp[-2]);
+					
+					char *label=newLabel();
+					(yyval)->code+="mov ax, "+(yyvsp[-2])->getSymbol()+"\n";
+					(yyval)->code+="cmp ax, 0\n";
+					(yyval)->code+="je "+string(label)+"\n";
+					(yyval)->code+=(yyvsp[0])->code;
+					(yyval)->code+=string(label)+":\n";
                  }
-#line 1666 "y.tab.cpp" /* yacc.c:1646  */
+#line 1685 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 238 "parser.y" /* yacc.c:1646  */
+#line 259 "parser.y" /* yacc.c:1646  */
     {
-                     fprintf(parseLog, "GRAMMER RULE: statement -> IF LPAREN expression RPAREN statement ELSE statement  \n"); 
+                    fprintf(parseLog, "GRAMMER RULE: statement -> IF LPAREN expression RPAREN statement ELSE statement  \n"); 
                  }
-#line 1674 "y.tab.cpp" /* yacc.c:1646  */
+#line 1693 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 242 "parser.y" /* yacc.c:1646  */
+#line 263 "parser.y" /* yacc.c:1646  */
     {
-                     fprintf(parseLog, "GRAMMER RULE: statement -> WHILE LPAREN expression RPAREN statement  \n"); 
+                    fprintf(parseLog, "GRAMMER RULE: statement -> WHILE LPAREN expression RPAREN statement  \n"); 
                  }
-#line 1682 "y.tab.cpp" /* yacc.c:1646  */
+#line 1701 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 246 "parser.y" /* yacc.c:1646  */
+#line 267 "parser.y" /* yacc.c:1646  */
     {
-                     fprintf(parseLog, "GRAMMER RULE: statement -> PRINTLN LPAREN ID RPAREN SEMICOLON  \n"); 
+                    fprintf(parseLog, "GRAMMER RULE: statement -> PRINTLN LPAREN ID RPAREN SEMICOLON  \n"); 
                  }
-#line 1690 "y.tab.cpp" /* yacc.c:1646  */
+#line 1709 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 250 "parser.y" /* yacc.c:1646  */
+#line 271 "parser.y" /* yacc.c:1646  */
     {
-                     fprintf(parseLog, "GRAMMER RULE: statement -> RETURN expression SEMICOLON  \n"); 
+                    (yyval) = (yyvsp[-2]);
+                    fprintf(parseLog, "GRAMMER RULE: statement -> RETURN expression SEMICOLON  \n"); 
                  }
-#line 1698 "y.tab.cpp" /* yacc.c:1646  */
+#line 1718 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 256 "parser.y" /* yacc.c:1646  */
+#line 278 "parser.y" /* yacc.c:1646  */
     {
+                            (yyval) = new Symbol_info(";", "SEMICOLON");
                             fprintf(parseLog, "GRAMMER RULE: expression_statement -> SEMICOLON  \n"); 
                         }
-#line 1706 "y.tab.cpp" /* yacc.c:1646  */
+#line 1727 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 260 "parser.y" /* yacc.c:1646  */
+#line 283 "parser.y" /* yacc.c:1646  */
     {
+                            (yyval) = (yyvsp[-1]);
                             fprintf(parseLog, "GRAMMER RULE: expression_statement -> expression SEMICOLON   \n"); 
                         }
-#line 1714 "y.tab.cpp" /* yacc.c:1646  */
+#line 1736 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 266 "parser.y" /* yacc.c:1646  */
+#line 290 "parser.y" /* yacc.c:1646  */
     {
-                     fprintf(parseLog, "GRAMMER RULE: variable -> ID 		  \n"); 
+                    (yyval)= new Symbol_info((yyvsp[0]));
+                    (yyval)->code="";
+                    (yyval)->setType("notarray");
+                    fprintf(parseLog, "GRAMMER RULE: variable -> ID 		  \n"); 
                  }
-#line 1722 "y.tab.cpp" /* yacc.c:1646  */
+#line 1747 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 270 "parser.y" /* yacc.c:1646  */
+#line 297 "parser.y" /* yacc.c:1646  */
     {
-                     fprintf(parseLog, "GRAMMER RULE: variable -> ID LSQBRAC expression RSQBRAC   \n"); 
-                 }
-#line 1730 "y.tab.cpp" /* yacc.c:1646  */
-    break;
+                    (yyval)= new Symbol_info((yyvsp[-3]));
+                    (yyval)->setType("array");
 
-  case 41:
-#line 276 "parser.y" /* yacc.c:1646  */
-    {
-                     fprintf(parseLog, "GRAMMER RULE: expression -> logic_expression	  \n"); 
-                 }
-#line 1738 "y.tab.cpp" /* yacc.c:1646  */
-    break;
-
-  case 42:
-#line 280 "parser.y" /* yacc.c:1646  */
-    {
-                     fprintf(parseLog, "GRAMMER RULE: expression -> variable ASSIGNOP logic_expression 	  \n"); 
-                 }
-#line 1746 "y.tab.cpp" /* yacc.c:1646  */
-    break;
-
-  case 43:
-#line 286 "parser.y" /* yacc.c:1646  */
-    {
-                     fprintf(parseLog, "GRAMMER RULE: logic_expression -> rel_expression 	  \n"); 
-                 }
-#line 1754 "y.tab.cpp" /* yacc.c:1646  */
-    break;
-
-  case 44:
-#line 290 "parser.y" /* yacc.c:1646  */
-    {
-                     fprintf(parseLog, "GRAMMER RULE: logic_expression -> rel_expression LOGICOP rel_expression 	  \n"); 
+                    (yyval)->code=(yyvsp[-1])->code+"mov bx, " +(yyvsp[-1])->getSymbol() +"\nadd bx, bx\n";
+                    
+                    delete (yyvsp[-1]);
+                    (yyval)->print_info();
+                    fprintf(parseLog, "GRAMMER RULE: variable -> ID LSQBRAC expression RSQBRAC   \n"); 
                  }
 #line 1762 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
+  case 41:
+#line 310 "parser.y" /* yacc.c:1646  */
+    {
+               (yyval) = (yyvsp[0]);
+               (yyval)->print_info();
+               fprintf(parseLog, "GRAMMER RULE: expression -> logic_expression	  \n"); 
+           }
+#line 1772 "y.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 42:
+#line 316 "parser.y" /* yacc.c:1646  */
+    {
+				(yyval)=(yyvsp[-2]);
+				(yyval)->code=(yyvsp[0])->code+(yyvsp[-2])->code;
+				(yyval)->code+="mov ax, "+(yyvsp[0])->getSymbol()+"\n";
+				if((yyval)->getType()=="notarray"){ 
+					(yyval)->code+= "mov "+(yyvsp[-2])->getSymbol()+", ax\n";
+				}
+				
+				else{
+					(yyval)->code+= "mov  "+(yyvsp[-2])->getSymbol()+"[bx], ax\n";
+				}
+				delete (yyvsp[0]);
+                fprintf(parseLog, "GRAMMER RULE: expression -> variable ASSIGNOP logic_expression 	  \n"); 
+           }
+#line 1791 "y.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 43:
+#line 333 "parser.y" /* yacc.c:1646  */
+    {
+                    (yyval) = (yyvsp[0]);
+                    fprintf(parseLog, "GRAMMER RULE: logic_expression -> rel_expression 	  \n"); 
+                 }
+#line 1800 "y.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 44:
+#line 338 "parser.y" /* yacc.c:1646  */
+    {
+					(yyval)=(yyvsp[-2]);
+					(yyval)->code+=(yyvsp[0])->code;
+					
+					if((yyvsp[-1])->getSymbol()=="&&"){
+						/* 
+						Check whether both operands value is 1. If both are one set value of a temporary variable to 1
+						otherwise 0
+						*/
+					}
+					else if((yyvsp[-1])->getSymbol()=="||"){
+						
+					}
+					delete (yyvsp[0]);
+                    fprintf(parseLog, "GRAMMER RULE: logic_expression -> rel_expression LOGICOP rel_expression 	  \n"); 
+                 }
+#line 1821 "y.tab.cpp" /* yacc.c:1646  */
+    break;
+
   case 45:
-#line 296 "parser.y" /* yacc.c:1646  */
+#line 357 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: rel_expression -> simple_expression   \n"); 
                  }
-#line 1770 "y.tab.cpp" /* yacc.c:1646  */
+#line 1829 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 300 "parser.y" /* yacc.c:1646  */
+#line 361 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: rel_expression -> simple_expression RELOP simple_expression	  \n"); 
                  }
-#line 1778 "y.tab.cpp" /* yacc.c:1646  */
+#line 1837 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 306 "parser.y" /* yacc.c:1646  */
+#line 367 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: simple_expression -> term   \n"); 
                  }
-#line 1786 "y.tab.cpp" /* yacc.c:1646  */
+#line 1845 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 310 "parser.y" /* yacc.c:1646  */
+#line 371 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: simple_expression -> simple_expression ADDOP term   \n"); 
                  }
-#line 1794 "y.tab.cpp" /* yacc.c:1646  */
+#line 1853 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 316 "parser.y" /* yacc.c:1646  */
+#line 377 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE:  term ->	unary_expression  \n"); 
                  }
-#line 1802 "y.tab.cpp" /* yacc.c:1646  */
+#line 1861 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 320 "parser.y" /* yacc.c:1646  */
+#line 381 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: term -> term MULOP unary_expression  \n"); 
                  }
-#line 1810 "y.tab.cpp" /* yacc.c:1646  */
+#line 1869 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 326 "parser.y" /* yacc.c:1646  */
+#line 387 "parser.y" /* yacc.c:1646  */
     {
-                     fprintf(parseLog, "GRAMMER RULE: unary_expression -> ADDOP unary_expression    \n"); 
+                    (yyval)=(yyvsp[0]);
+                    fprintf(parseLog, "GRAMMER RULE: unary_expression -> ADDOP unary_expression    \n"); 
                  }
-#line 1818 "y.tab.cpp" /* yacc.c:1646  */
+#line 1878 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 330 "parser.y" /* yacc.c:1646  */
+#line 392 "parser.y" /* yacc.c:1646  */
     {
-                     fprintf(parseLog, "GRAMMER RULE: unary_expression -> NOT unary_expression   \n"); 
+                    (yyval)=(yyvsp[0]);
+                    char *temp=newTemp();
+                    (yyval)->code="mov ax, " + (yyvsp[0])->getSymbol() + "\n";
+                    (yyval)->code+="not ax\n";
+                    (yyval)->code+="mov "+string(temp)+", ax";
+                    fprintf(parseLog, "GRAMMER RULE: unary_expression -> NOT unary_expression   \n"); 
                  }
-#line 1826 "y.tab.cpp" /* yacc.c:1646  */
+#line 1891 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 334 "parser.y" /* yacc.c:1646  */
+#line 401 "parser.y" /* yacc.c:1646  */
     {
-                     fprintf(parseLog, "GRAMMER RULE: unary_expression -> factor   \n"); 
+                    (yyval) = (yyvsp[0]);
+                    fprintf(parseLog, "GRAMMER RULE: unary_expression -> factor   \n"); 
                  }
-#line 1834 "y.tab.cpp" /* yacc.c:1646  */
+#line 1900 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 340 "parser.y" /* yacc.c:1646  */
+#line 408 "parser.y" /* yacc.c:1646  */
     {
-        fprintf(parseLog, "GRAMMER RULE:  factor  -> variable   \n"); 
+			(yyval)= (yyvsp[0]);
+			if((yyval)->getType()=="notarray"){
+			    continue;	//TODO Do something
+			}
+			
+			else{
+				char *temp= newTemp();
+				(yyval)->code+="mov ax, " + (yyvsp[0])->getSymbol() + "[bx]\n";
+				(yyval)->code+= "mov " + string(temp) + ", ax\n";
+				(yyval)->setSymbol(temp);
+            }
+            fprintf(parseLog, "GRAMMER RULE:  factor  -> variable   \n"); 
         }
-#line 1842 "y.tab.cpp" /* yacc.c:1646  */
+#line 1919 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 344 "parser.y" /* yacc.c:1646  */
+#line 423 "parser.y" /* yacc.c:1646  */
     {
             fprintf(parseLog, "GRAMMER RULE: factor-> ID LPAREN argument_list RPAREN  \n"); 
         }
-#line 1850 "y.tab.cpp" /* yacc.c:1646  */
+#line 1927 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 348 "parser.y" /* yacc.c:1646  */
+#line 427 "parser.y" /* yacc.c:1646  */
     {
-            fprintf(parseLog, "GRAMMER RULE: factor -> LPAREN expression RPAREN  \n"); 
+           (yyval) = (yyvsp[-1]); 
+           fprintf(parseLog, "GRAMMER RULE: factor -> LPAREN expression RPAREN  \n"); 
         }
-#line 1858 "y.tab.cpp" /* yacc.c:1646  */
+#line 1936 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 352 "parser.y" /* yacc.c:1646  */
+#line 432 "parser.y" /* yacc.c:1646  */
     {
+            (yyval) = (yyvsp[0]);
             fprintf(parseLog, "GRAMMER RULE: factor -> CONST_INT   \n"); 
         }
-#line 1866 "y.tab.cpp" /* yacc.c:1646  */
+#line 1945 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 356 "parser.y" /* yacc.c:1646  */
+#line 437 "parser.y" /* yacc.c:1646  */
     {
+            (yyval) = (yyvsp[0]);
             fprintf(parseLog, "GRAMMER RULE: factor -> CONST_FLOAT  \n"); 
         }
-#line 1874 "y.tab.cpp" /* yacc.c:1646  */
+#line 1954 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 360 "parser.y" /* yacc.c:1646  */
+#line 442 "parser.y" /* yacc.c:1646  */
     {
+            (yyval) = (yyvsp[0]);
             fprintf(parseLog, "GRAMMER RULE: factor -> CONST_CHAR  \n"); 
         }
-#line 1882 "y.tab.cpp" /* yacc.c:1646  */
+#line 1963 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 364 "parser.y" /* yacc.c:1646  */
+#line 447 "parser.y" /* yacc.c:1646  */
     {
+            // TODO Perform increment
             fprintf(parseLog, "GRAMMER RULE: factor -> variable INCOP   \n"); 
         }
-#line 1890 "y.tab.cpp" /* yacc.c:1646  */
+#line 1972 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 368 "parser.y" /* yacc.c:1646  */
+#line 452 "parser.y" /* yacc.c:1646  */
     {
-                     fprintf(parseLog, "GRAMMER RULE: factor -> variable DECOP  \n"); 
-                 }
-#line 1898 "y.tab.cpp" /* yacc.c:1646  */
+            // TODO 
+            fprintf(parseLog, "GRAMMER RULE: factor -> variable DECOP  \n"); 
+        }
+#line 1981 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 374 "parser.y" /* yacc.c:1646  */
+#line 459 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: argument_list -> argument_list COMMA logic_expression  \n"); 
                  }
-#line 1906 "y.tab.cpp" /* yacc.c:1646  */
+#line 1989 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 378 "parser.y" /* yacc.c:1646  */
+#line 463 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: argument_list -> logic_expression  \n"); 
                  }
-#line 1914 "y.tab.cpp" /* yacc.c:1646  */
+#line 1997 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1918 "y.tab.cpp" /* yacc.c:1646  */
+#line 2001 "y.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2142,17 +2225,19 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 385 "parser.y" /* yacc.c:1906  */
+#line 470 "parser.y" /* yacc.c:1906  */
 
 
 int main(int argc,char *argv[]){
     adele();
     tokenout= fopen("token.txt","w");
     parseLog = fopen("log.txt", "w");
+    asmout = fopen("code.asm", "w");
     fprintf(parseLog, "Program start: Line Count: 1\n");
     yyparse();
     fclose(tokenout);
     fclose(parseLog);
+    fclose(asmout);
     printf ("\nTotal line Count: %d\n", line_count);
     /*parser_table.print(logout);*/
 

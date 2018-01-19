@@ -3,6 +3,10 @@
 #include <malloc.h>
 #include <sstream>
 #include <cstdio>
+
+#ifndef SYMBOLINFO_H_INCLUDED
+#define SYMBOLINFO_H_INCLUDED
+
 using namespace std;
 
 class Symbol_info   {
@@ -11,7 +15,63 @@ class Symbol_info   {
         Symbol_info *next;
         string code;
 
+        Symbol_info(){
+            symbol="";
+            symbol_type="";
+            code="";
+        }
+
+        Symbol_info(char *symbol, char *type){
+            this->symbol=string(symbol);
+            this->symbol_type=string(type);
+            code="";
+        }
+
+        Symbol_info(string symbol, string type){
+            symbol=symbol;
+            symbol_type=type;
+            code="";
+        }
+
+        Symbol_info(const Symbol_info *sym){
+         	symbol=sym->symbol;
+         	symbol_type=sym->symbol_type;
+         	code=sym->code;
+        }
+
+        string getSymbol(){
+            return symbol;
+        }
+
+        string getType(){
+            return symbol_type;
+        }
+        
+        void setSymbol(char *symbol_name){
+            symbol = string(symbol_name);
+        }
+
+        void setSymbol(string symbol_name){
+            symbol = symbol_name;
+        }
+
+        void setType(char *type){
+            symbol_type= string(type);
+        }
+
+        void setType(string type){
+            symbol_type= type;
+        }
+
+        void print_info(){
+            string s = this->symbol;
+            string t = this->symbol_type;
+
+            printf("Symbol name: %s, Symbol type: %s\n", s.c_str(), t.c_str());
+        }
 };
+
+#endif
 
 class Symbol_table {
     public:

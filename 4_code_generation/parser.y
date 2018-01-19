@@ -8,6 +8,7 @@
 FILE *logout;
 FILE *tokenout;
 FILE *parseLog;
+FILE *asmout;
 
 Symbol_table parser_table;
 stringstream ss;
@@ -88,12 +89,12 @@ void adele(){
 %token CONST_INT CONST_FLOAT CONST_CHAR
 %token VOID
 
+%nonassoc ELSE
+
 %%
 start : program
       {
-            ofstream fout;
-            fout.open("code.asm");
-            fout<< $1->code;
+            fprintf(asmout, $1->code.c_str());
       }
     ;
 
@@ -103,6 +104,8 @@ program : program unit
         }
         |   unit
         {
+            $$ = $1;
+            $$->print_info();
             fprintf(parseLog, "GRAMMER RULE: program -> unit\n"); 
         }
     ;
@@ -228,74 +231,125 @@ statement : var_declaration
                  | expression_statement
                  {
                      fprintf(parseLog, "GRAMMER RULE: statement -> expression_statement  \n"); 
+                     $$ = $1;
                  }
                  | compound_statement
                  {
                      fprintf(parseLog, "GRAMMER RULE: statement -> compound_statement  \n"); 
+                     $$ = $1;
                  }
                  | FOR LPAREN expression_statement expression_statement expression RPAREN statement
                  {
                      fprintf(parseLog, "GRAMMER RULE: statement -> FOR LPAREN expression_statement expression_statement expression RPAREN statement  \n"); 
+                     // TODO Some code in Line 96 of the template
                  }
                  | IF LPAREN expression RPAREN statement
                  {
-                     fprintf(parseLog, "GRAMMER RULE: statement -> IF LPAREN expression RPAREN statement  \n"); 
+                    fprintf(parseLog, "GRAMMER RULE: statement -> IF LPAREN expression RPAREN statement  \n"); 
+					$$=$3;
+					
+					char *label=newLabel();
+					$$->code+="mov ax, "+$3->getSymbol()+"\n";
+					$$->code+="cmp ax, 0\n";
+					$$->code+="je "+string(label)+"\n";
+					$$->code+=$5->code;
+					$$->code+=string(label)+":\n";
                  }
                  | IF LPAREN expression RPAREN statement ELSE statement
                  {
-                     fprintf(parseLog, "GRAMMER RULE: statement -> IF LPAREN expression RPAREN statement ELSE statement  \n"); 
+                    fprintf(parseLog, "GRAMMER RULE: statement -> IF LPAREN expression RPAREN statement ELSE statement  \n"); 
                  }
                  | WHILE LPAREN expression RPAREN statement
                  {
-                     fprintf(parseLog, "GRAMMER RULE: statement -> WHILE LPAREN expression RPAREN statement  \n"); 
+                    fprintf(parseLog, "GRAMMER RULE: statement -> WHILE LPAREN expression RPAREN statement  \n"); 
                  }
                  | PRINTLN LPAREN ID RPAREN SEMICOLON
                  {
-                     fprintf(parseLog, "GRAMMER RULE: statement -> PRINTLN LPAREN ID RPAREN SEMICOLON  \n"); 
+                    fprintf(parseLog, "GRAMMER RULE: statement -> PRINTLN LPAREN ID RPAREN SEMICOLON  \n"); 
                  }
                  | RETURN expression SEMICOLON
                  {
-                     fprintf(parseLog, "GRAMMER RULE: statement -> RETURN expression SEMICOLON  \n"); 
+                    $$ = $1;
+                    fprintf(parseLog, "GRAMMER RULE: statement -> RETURN expression SEMICOLON  \n"); 
                  }
                  ;
 
 expression_statement 	: SEMICOLON			
                         {
+                            $$ = new Symbol_info(";", "SEMICOLON");
                             fprintf(parseLog, "GRAMMER RULE: expression_statement -> SEMICOLON  \n"); 
                         }
                         | expression SEMICOLON 
                         {
+                            $$ = $1;
                             fprintf(parseLog, "GRAMMER RULE: expression_statement -> expression SEMICOLON   \n"); 
                         }
                         ;
 
 variable : ID 		
                  {
-                     fprintf(parseLog, "GRAMMER RULE: variable -> ID 		  \n"); 
+                    $$= new Symbol_info($1);
+                    $$->code="";
+                    $$->setType("notarray");
+                    fprintf(parseLog, "GRAMMER RULE: variable -> ID 		  \n"); 
                  }
          | ID LSQBRAC expression RSQBRAC 
                  {
-                     fprintf(parseLog, "GRAMMER RULE: variable -> ID LSQBRAC expression RSQBRAC   \n"); 
+                    $$= new Symbol_info($1);
+                    $$->setType("array");
+
+                    $$->code=$3->code+"mov bx, " +$3->getSymbol() +"\nadd bx, bx\n";
+                    
+                    delete $3;
+                    $$->print_info();
+                    fprintf(parseLog, "GRAMMER RULE: variable -> ID LSQBRAC expression RSQBRAC   \n"); 
                  }
      ;
 
 expression : logic_expression	
-                 {
-                     fprintf(parseLog, "GRAMMER RULE: expression -> logic_expression	  \n"); 
-                 }
-               | variable ASSIGNOP logic_expression 	
-                 {
-                     fprintf(parseLog, "GRAMMER RULE: expression -> variable ASSIGNOP logic_expression 	  \n"); 
-                 }
+           {
+               $$ = $1;
+               $$->print_info();
+               fprintf(parseLog, "GRAMMER RULE: expression -> logic_expression	  \n"); 
+           }
+           | variable ASSIGNOP logic_expression 	
+           {
+				$$=$1;
+				$$->code=$3->code+$1->code;
+				$$->code+="mov ax, "+$3->getSymbol()+"\n";
+				if($$->getType()=="notarray"){ 
+					$$->code+= "mov "+$1->getSymbol()+", ax\n";
+				}
+				
+				else{
+					$$->code+= "mov  "+$1->getSymbol()+"[bx], ax\n";
+				}
+				delete $3;
+                fprintf(parseLog, "GRAMMER RULE: expression -> variable ASSIGNOP logic_expression 	  \n"); 
+           }
        ;
 
 logic_expression : rel_expression 	
                  {
-                     fprintf(parseLog, "GRAMMER RULE: logic_expression -> rel_expression 	  \n"); 
+                    $$ = $1;
+                    fprintf(parseLog, "GRAMMER RULE: logic_expression -> rel_expression 	  \n"); 
                  }
                  | rel_expression LOGICOP rel_expression 	
                  {
-                     fprintf(parseLog, "GRAMMER RULE: logic_expression -> rel_expression LOGICOP rel_expression 	  \n"); 
+					$$=$1;
+					$$->code+=$3->code;
+					
+					if($2->getSymbol()=="&&"){
+						/* 
+						Check whether both operands value is 1. If both are one set value of a temporary variable to 1
+						otherwise 0
+						*/
+					}
+					else if($2->getSymbol()=="||"){
+						
+					}
+					delete $3;
+                    fprintf(parseLog, "GRAMMER RULE: logic_expression -> rel_expression LOGICOP rel_expression 	  \n"); 
                  }
          ;
 
@@ -331,21 +385,39 @@ term :	unary_expression
 
 unary_expression : ADDOP unary_expression  
                  {
-                     fprintf(parseLog, "GRAMMER RULE: unary_expression -> ADDOP unary_expression    \n"); 
+                    $$=$2;
+                    fprintf(parseLog, "GRAMMER RULE: unary_expression -> ADDOP unary_expression    \n"); 
                  }
                  | NOT unary_expression 
                  {
-                     fprintf(parseLog, "GRAMMER RULE: unary_expression -> NOT unary_expression   \n"); 
+                    $$=$2;
+                    char *temp=newTemp();
+                    $$->code="mov ax, " + $2->getSymbol() + "\n";
+                    $$->code+="not ax\n";
+                    $$->code+="mov "+string(temp)+", ax";
+                    fprintf(parseLog, "GRAMMER RULE: unary_expression -> NOT unary_expression   \n"); 
                  }
                  | factor 
                  {
-                     fprintf(parseLog, "GRAMMER RULE: unary_expression -> factor   \n"); 
+                    $$ = $1;
+                    fprintf(parseLog, "GRAMMER RULE: unary_expression -> factor   \n"); 
                  }
                  ;
 
 factor	: variable 
         {
-        fprintf(parseLog, "GRAMMER RULE:  factor  -> variable   \n"); 
+			$$= $1;
+			if($$->getType()=="notarray"){
+			    continue;	//TODO Do something
+			}
+			
+			else{
+				char *temp= newTemp();
+				$$->code+="mov ax, " + $1->getSymbol() + "[bx]\n";
+				$$->code+= "mov " + string(temp) + ", ax\n";
+				$$->setSymbol(temp);
+            }
+            fprintf(parseLog, "GRAMMER RULE:  factor  -> variable   \n"); 
         }
         | ID LPAREN argument_list RPAREN
         {
@@ -353,28 +425,34 @@ factor	: variable
         }
         | LPAREN expression RPAREN
         {
-            fprintf(parseLog, "GRAMMER RULE: factor -> LPAREN expression RPAREN  \n"); 
+           $$ = $2; 
+           fprintf(parseLog, "GRAMMER RULE: factor -> LPAREN expression RPAREN  \n"); 
         }
         | CONST_INT 
         {
+            $$ = $1;
             fprintf(parseLog, "GRAMMER RULE: factor -> CONST_INT   \n"); 
         }
         | CONST_FLOAT
         {
+            $$ = $1;
             fprintf(parseLog, "GRAMMER RULE: factor -> CONST_FLOAT  \n"); 
         }
         | CONST_CHAR
         {
+            $$ = $1;
             fprintf(parseLog, "GRAMMER RULE: factor -> CONST_CHAR  \n"); 
         }
         | variable INCOP 
         {
+            // TODO Perform increment
             fprintf(parseLog, "GRAMMER RULE: factor -> variable INCOP   \n"); 
         }
-    | variable DECOP
-                 {
-                     fprintf(parseLog, "GRAMMER RULE: factor -> variable DECOP  \n"); 
-                 }
+        | variable DECOP
+        {
+            // TODO 
+            fprintf(parseLog, "GRAMMER RULE: factor -> variable DECOP  \n"); 
+        }
     ;
 
 argument_list : argument_list COMMA logic_expression
@@ -395,10 +473,12 @@ int main(int argc,char *argv[]){
     adele();
     tokenout= fopen("token.txt","w");
     parseLog = fopen("log.txt", "w");
+    asmout = fopen("code.asm", "w");
     fprintf(parseLog, "Program start: Line Count: 1\n");
     yyparse();
     fclose(tokenout);
     fclose(parseLog);
+    fclose(asmout);
     printf ("\nTotal line Count: %d\n", line_count);
     /*parser_table.print(logout);*/
 

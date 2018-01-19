@@ -1,7 +1,7 @@
 int main(){
-    int a,b,i;
+    int a,b,x;
     b=0;
-    for(i=0;i<4;i++){
+    for(x=0;x<4;x++){
         a=3;
         while(a--){
             b++;
