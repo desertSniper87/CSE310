@@ -30,6 +30,8 @@ extern char yytext[];
 extern int column;
 ofstream assembly;
 
+string var_code = "";
+
 char *newLabel()
 {
 	char *lb= new char[4];
@@ -94,36 +96,30 @@ void adele(){
 %%
 start : program
       {
-            fprintf(asmout, ($1->code).c_str());
+            fprintf(asmout, var_code.c_str());
       }
     ;
 
 program : program unit 
         {
-            $$ = $1;
-            $$->code += $2->code;
             fprintf(parseLog, "GRAMMER RULE: program -> program unit\n"); 
         }
         |   unit
         {
-            $$ = $1;
             fprintf(parseLog, "GRAMMER RULE: program -> unit\n"); 
         }
     ;
 
 unit : var_declaration
      {
-            $$  = $1;
             fprintf(parseLog, "GRAMMER RULE: unit -> var_declaration\n"); 
      }
      | func_declaration
      {
-            $$ = $1;
             fprintf(parseLog, "GRAMMER RULE: unit -> func_declaration\n"); 
      }
      | func_definition
      {
-            $$ = $1;
             fprintf(parseLog, "GRAMMER RULE: unit -> func_definition\n"); 
      }
      ;
@@ -136,24 +132,30 @@ func_declaration : type_specifier ID LPAREN parameter_list RPAREN SEMICOLON
 
 func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statement
                  {
-                    $$=new Symbol_info();
-                    $$->code+="PROC "+$2->symbol+"\n";
+                    var_code+="PROC "+$2->symbol+"\n";
 
                     if($2->symbol!="main")
                     {
-                        $$->code+="PUSH AX\n";
-                        $$->code+="PUSH BX\n";
-                        $$->code+="PUSH CX\n";
-                        $$->code+="PUSH DX\n";
+                        var_code+= "PUSH AX\n";
+                        var_code+= "PUSH BX\n";
+                        var_code+= "PUSH CX\n";
+                        var_code+= "PUSH DX\n";
                     }
+                    /*if($2->symbol!="main")*/
+                    /*{*/
+                        /*$$->code+="PUSH AX\n";*/
+                        /*$$->code+="PUSH BX\n";*/
+                        /*$$->code+="PUSH CX\n";*/
+                        /*$$->code+="PUSH DX\n";*/
+                    /*}*/
 
                     $$->code += $6->code ;
 
                     if($2->symbol!="main") {
-                        $$->code+="POP DX\n";
-                        $$->code+="POP CX\n";
-                        $$->code+="POP BX\n";
-                        $$->code+="POP AX\n";
+                        var_code+= "POP DX\n";
+                        var_code+= "POP CX\n";
+                        var_code+= "POP BX\n";
+                        var_code+= "POP AX\n";
                     }
 
                     //Source of problem
@@ -186,7 +188,6 @@ parameter_list  : parameter_list COMMA type_specifier ID
 
 compound_statement : LCURL statements RCURL
                  {
-                    $$ = $2;
                     fprintf(parseLog, "GRAMMER RULE: compound_statement -> LCURL statements RCURL  \n"); 
                  }
                    | LCURL RCURL
@@ -199,7 +200,6 @@ compound_statement : LCURL statements RCURL
 
 var_declaration : type_specifier declaration_list SEMICOLON
                 {
-                    $$ = $1;
                     fprintf(parseLog, "GRAMMER RULE: var_declaration -> type_specifier declaration_list SEMICOLON\n"); 
                 }
                 ;
@@ -242,33 +242,27 @@ declaration_list : declaration_list COMMA ID
 
 statements : statement
                  {
-                     $$ = $1;
                      fprintf(parseLog, "GRAMMER RULE: statements -> statement  \n"); 
 
                  }
                  | statements statement
                  {
                      fprintf(parseLog, "GRAMMER RULE: statements -> statements statement  \n"); 
-                     $$ = $1;
-                     $$->code += $2->code;
                      delete $2;
                  }
                  ;
 
 statement : var_declaration
                  {
-                    $$=new Symbol_info($1);
-                    fprintf(parseLog, "GRAMMER RULE: statement -> var_declaration  \n"); 
+                     fprintf(parseLog, "GRAMMER RULE: statement -> var_declaration  \n"); 
                  }
                  | expression_statement
                  {
                      fprintf(parseLog, "GRAMMER RULE: statement -> expression_statement  \n"); 
-                     $$ = $1;
                  }
                  | compound_statement
                  {
                      fprintf(parseLog, "GRAMMER RULE: statement -> compound_statement  \n"); 
-                     $$ = $1;
                  }
                  | FOR LPAREN expression_statement expression_statement expression RPAREN statement
                  {
@@ -278,14 +272,12 @@ statement : var_declaration
                  | IF LPAREN expression RPAREN statement
                  {
                     fprintf(parseLog, "GRAMMER RULE: statement -> IF LPAREN expression RPAREN statement  \n"); 
-					$$=$3;
 					
 					char *label=newLabel();
-					$$->code+="mov ax, "+$3->getSymbol()+"\n";
-					$$->code+="cmp ax, 0\n";
-					$$->code+="je "+string(label)+"\n";
-					$$->code+=$5->code;
-					$$->code+=string(label)+":\n";
+					var_code+="mov ax, "+$3->getSymbol()+"\n";
+					var_code+="cmp ax, 0\n";
+					var_code+="je "+string(label)+"\n";
+					var_code+=string(label)+":\n";
                  }
                  | IF LPAREN expression RPAREN statement ELSE statement
                  {
@@ -301,7 +293,6 @@ statement : var_declaration
                  }
                  | RETURN expression SEMICOLON
                  {
-                    $$ = $1;
                     fprintf(parseLog, "GRAMMER RULE: statement -> RETURN expression SEMICOLON  \n"); 
                  }
                  ;
@@ -313,7 +304,6 @@ expression_statement 	: SEMICOLON
                         }
                         | expression SEMICOLON 
                         {
-                            $$ = $1;
                             fprintf(parseLog, "GRAMMER RULE: expression_statement -> expression SEMICOLON   \n"); 
                         }
                         ;
@@ -338,46 +328,28 @@ variable : ID
 
 expression : logic_expression	
            {
-               $$ = $1;
                fprintf(parseLog, "GRAMMER RULE: expression -> logic_expression	  \n"); 
            }
            | variable ASSIGNOP logic_expression 	
            {
                 // Source of BUG #2
-				$$=$1;
-				$$->code+=$3->code;
-				$$->code+="mov ax, "+$3->getSymbol()+"\n";
+				var_code+="mov ax, ";
 				if($$->getType()=="notarray"){ 
-					$$->code+= "mov "+$1->getSymbol()+", ax\n";
 				}
 				
 				else{
-					$$->code+= "mov  "+$1->getSymbol()+"[bx], ax\n";
 				}
-				delete $3;
                 fprintf(parseLog, "GRAMMER RULE: expression -> variable ASSIGNOP logic_expression 	  \n"); 
            }
        ;
 
 logic_expression : rel_expression 	
                  {
-                    $$ = $1;
                     fprintf(parseLog, "GRAMMER RULE: logic_expression -> rel_expression 	  \n"); 
                  }
                  | rel_expression LOGICOP rel_expression 	
                  {
-					$$=$1;
-					$$->code+=$3->code;
 					
-					if($2->getSymbol()=="&&"){
-						/* 
-						Check whether both operands value is 1. If both are one set value of a temporary variable to 1
-						otherwise 0
-						*/
-					}
-					else if($2->getSymbol()=="||"){
-						
-					}
 					delete $3;
                     fprintf(parseLog, "GRAMMER RULE: logic_expression -> rel_expression LOGICOP rel_expression 	  \n"); 
                  }
@@ -385,15 +357,12 @@ logic_expression : rel_expression
 
 rel_expression	: simple_expression 
                  {
-                     $$=$1;
                      fprintf(parseLog, "GRAMMER RULE: rel_expression -> simple_expression   \n"); 
                  }
                | simple_expression RELOP simple_expression	
                  {
-                    $$=$1;
-                    $$->code+=$3->code;
-                    $$->code+="mov ax, " + $1->getSymbol()+"\n";
-                    $$->code+="cmp ax, " + $3->getSymbol()+"\n";
+                    var_code+="mov ax, "; 
+                    var_code+="cmp ax, "; 
                     char *temp=newTemp();
                     char *label1=newLabel();
                     char *label2=newLabel();
@@ -425,12 +394,10 @@ rel_expression	: simple_expression
 
 simple_expression : term 
                  {
-                     $$ = $1;
                      fprintf(parseLog, "GRAMMER RULE: simple_expression -> term   \n"); 
                  }
                   | simple_expression ADDOP term 
                  {
-                    $$=$1;
                     $$->code+=$3->code;
                     
                     // move one of the operands to a register, perform addition or subtraction with the other operand and move the result in a temporary variable  
@@ -450,7 +417,6 @@ simple_expression : term
 
 term :	unary_expression
                  {
-                    $$ = $1;
                     fprintf(parseLog, "GRAMMER RULE:  term ->	unary_expression  \n"); 
                  }
      |  term MULOP unary_expression
@@ -534,7 +500,6 @@ factor	: variable
         }
         | CONST_INT 
         {
-            $$ = $1;
             fprintf(parseLog, "GRAMMER RULE: factor -> CONST_INT   \n"); 
         }
         | CONST_FLOAT
