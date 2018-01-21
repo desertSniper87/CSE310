@@ -48,19 +48,19 @@ class Symbol_info   {
         }
         
         void setSymbol(char *symbol_name){
-            symbol = string(symbol_name);
+            this->symbol = string(symbol_name);
         }
 
         void setSymbol(string symbol_name){
-            symbol = symbol_name;
+            this->symbol = symbol_name;
         }
 
         void setType(char *type){
-            symbol_type= string(type);
+            this->symbol_type= string(type);
         }
 
         void setType(string type){
-            symbol_type= type;
+            this->symbol_type= type;
         }
 
         void print_info(){

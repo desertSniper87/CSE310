@@ -1,10 +1,4 @@
 ID Inserted in scope table: 1 at position 6, 0
 
-ID Inserted in: Table 1 at position 6, 0
-
-ID Inserted in scope table: 1 at position 0, 0
-
 ID Inserted in scope table: 1 at position 1, 0
-
-ASSIGNOP Inserted in scope table: 1 at position 5, 0
 

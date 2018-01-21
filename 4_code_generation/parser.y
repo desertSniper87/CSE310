@@ -100,11 +100,13 @@ start : program
 
 program : program unit 
         {
+            $$ = new Symbol_info($1);
+            $$->code += $2->code;
             fprintf(parseLog, "GRAMMER RULE: program -> program unit\n"); 
         }
         |   unit
         {
-            $$ = $1;
+            $$ = new Symbol_info($1);
             $$->print_info();
             fprintf(parseLog, "GRAMMER RULE: program -> unit\n"); 
         }
@@ -112,14 +114,17 @@ program : program unit
 
 unit : var_declaration
      {
+            $$ = $1;
             fprintf(parseLog, "GRAMMER RULE: unit -> var_declaration\n"); 
      }
      | func_declaration
      {
+            $$ = $1;
             fprintf(parseLog, "GRAMMER RULE: unit -> func_declaration\n"); 
      }
      | func_definition
      {
+            $$ = $1;
             fprintf(parseLog, "GRAMMER RULE: unit -> func_definition\n"); 
      }
      ;
@@ -132,41 +137,48 @@ func_declaration : type_specifier ID LPAREN parameter_list RPAREN SEMICOLON
 
 func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statement
                  {
-                     fprintf(parseLog, "GRAMMER RULE: func_definition -> type_specifier ID LPAREN parameter_list RPAREN compound_statement  \n"); 
+                    $$->code = $6->code + $4->code;
+                    char *temp= newTemp();
+                    $$->code+="mov ax, " + $1->getSymbol() + "[bx]\n";
+                    $$->code+= "mov " + string(temp) + ", ax\n";
+                    $$->setSymbol(temp);
+                    //Source of problem
+                    fprintf(parseLog, "GRAMMER RULE: func_definition -> type_specifier ID LPAREN parameter_list RPAREN compound_statement  \n"); 
                  }
                 ;
 
 parameter_list  : parameter_list COMMA type_specifier ID
-                 {
-                     fprintf(parseLog, "GRAMMER RULE: parameter_list  -> parameter_list COMMA type_specifier ID  \n"); 
-                 }
+                {
+                    fprintf(parseLog, "GRAMMER RULE: parameter_list  -> parameter_list COMMA type_specifier ID  \n"); 
+                }
                 | parameter_list COMMA type_specifier	 
-                 {
-                     fprintf(parseLog, "GRAMMER RULE: parameter_list -> parameter_list COMMA type_specifier	   \n"); 
-                 }
+                {
+                  fprintf(parseLog, "GRAMMER RULE: parameter_list -> parameter_list COMMA type_specifier	   \n"); 
+                }
                 | type_specifier ID
-                 {
-                     fprintf(parseLog, "GRAMMER RULE: parameter_list -> type_specifier ID  \n"); 
-                 }
+                {
+                    fprintf(parseLog, "GRAMMER RULE: parameter_list -> type_specifier ID  \n"); 
+                }
                 | unit
-                 {
-                     fprintf(parseLog, "GRAMMER RULE: parameter_list -> unit  \n"); 
-                 }
+                {
+                    fprintf(parseLog, "GRAMMER RULE: parameter_list -> unit  \n"); 
+                }
                 | type_specifier
-                 {
-                     fprintf(parseLog, "GRAMMER RULE: parameter_list -> type_specifier  \n"); 
-                 }
+                {
+                  fprintf(parseLog, "GRAMMER RULE: parameter_list -> type_specifier  \n"); 
+                }
                 |
                 ;
 
 compound_statement : LCURL statements RCURL
                  {
-                     fprintf(parseLog, "GRAMMER RULE: compound_statement -> LCURL statements RCURL  \n"); 
                     $$ = $2;
+                    fprintf(parseLog, "GRAMMER RULE: compound_statement -> LCURL statements RCURL  \n"); 
                  }
                    | LCURL RCURL
                  {
                      fprintf(parseLog, "GRAMMER RULE: compound_statement -> LCURL RCURL  \n"); 
+                     $$ = new Symbol_info();
                      //TODO Make new symbolInfo
                  }
             ;
@@ -179,14 +191,17 @@ var_declaration : type_specifier declaration_list SEMICOLON
 
 type_specifier	: INT
                 {
+                    $$ = new Symbol_info("int", "KEYWORD");
                     fprintf(parseLog, "GRAMMER RULE: type_specifier -> INT\n"); 
                 }
                 | FLOAT
                 {
+                    $$ = new Symbol_info("float", "KEYWORD");
                     fprintf(parseLog, "GRAMMER RULE: type_specifier -> FLOAT\n"); 
                 }
                 | VOID
                 {
+                    $$ = new Symbol_info("void", "KEYWORD");
                     fprintf(parseLog, "GRAMMER RULE: type_specifier -> VOID\n"); 
                 }
                 ;
@@ -355,37 +370,104 @@ logic_expression : rel_expression
 
 rel_expression	: simple_expression 
                  {
+                     $$=$1;
                      fprintf(parseLog, "GRAMMER RULE: rel_expression -> simple_expression   \n"); 
                  }
                | simple_expression RELOP simple_expression	
                  {
-                     fprintf(parseLog, "GRAMMER RULE: rel_expression -> simple_expression RELOP simple_expression	  \n"); 
+                    $$=$1;
+                    $$->code+=$3->code;
+                    $$->code+="mov ax, " + $1->getSymbol()+"\n";
+                    $$->code+="cmp ax, " + $3->getSymbol()+"\n";
+                    char *temp=newTemp();
+                    char *label1=newLabel();
+                    char *label2=newLabel();
+                    if($2->getSymbol()=="<"){
+                        $$->code+="jl " + string(label1)+"\n";
+                    }
+                    else if($2->getSymbol()=="<="){
+                    //TODO
+                    }
+                    else if($2->getSymbol()==">"){
+                    }
+                    else if($2->getSymbol()==">="){
+                    }
+                    else if($2->getSymbol()=="=="){
+                    }
+                    else{
+                    }
+                    
+                    $$->code+="mov "+string(temp) +", 0\n";
+                    $$->code+="jmp "+string(label2) +"\n";
+                    $$->code+=string(label1)+":\nmov "+string(temp)+", 1\n";
+                    $$->code+=string(label2)+":\n";
+                    $$->setSymbol(temp);
+                    delete $3;
+
+                    fprintf(parseLog, "GRAMMER RULE: rel_expression -> simple_expression RELOP simple_expression	  \n"); 
                  }
         ;
 
 simple_expression : term 
                  {
+                     $$ = $1;
                      fprintf(parseLog, "GRAMMER RULE: simple_expression -> term   \n"); 
                  }
                   | simple_expression ADDOP term 
                  {
-                     fprintf(parseLog, "GRAMMER RULE: simple_expression -> simple_expression ADDOP term   \n"); 
+                    $$=$1;
+                    $$->code+=$3->code;
+                    
+                    // move one of the operands to a register, perform addition or subtraction with the other operand and move the result in a temporary variable  
+                    
+                    if($2->getSymbol()=="+"){
+                    
+                    }
+                    else{
+                    
+                    }
+                    delete $3;
+                    cout << endl;
+
+                    fprintf(parseLog, "GRAMMER RULE: simple_expression -> simple_expression ADDOP term   \n"); 
                  }
           ;
 
 term :	unary_expression
                  {
-                     fprintf(parseLog, "GRAMMER RULE:  term ->	unary_expression  \n"); 
+                    $$ = $1;
+                    fprintf(parseLog, "GRAMMER RULE:  term ->	unary_expression  \n"); 
                  }
      |  term MULOP unary_expression
                  {
-                     fprintf(parseLog, "GRAMMER RULE: term -> term MULOP unary_expression  \n"); 
+                    $$=$1;
+                    $$->code += $3->code;
+                    $$->code += "mov ax, "+ $1->getSymbol()+"\n";
+                    $$->code += "mov bx, "+ $3->getSymbol() +"\n";
+                    char *temp=newTemp();
+                    if($2->getSymbol()=="*"){
+                        $$->code += "mul bx\n";
+                        $$->code += "mov "+ string(temp) + ", ax\n";
+                    }
+                    else if($2->getSymbol()=="/"){
+                        // TODO
+                        // clear dx, perform 'div bx' and mov ax to temp
+                    }
+                    else{
+                        // clear dx, perform 'div bx' and mov dx to temp
+                    }
+                    $$->setSymbol(temp);
+                    cout << endl << $$->code << endl;
+                    delete $3;
+                    
+                    fprintf(parseLog, "GRAMMER RULE: term -> term MULOP unary_expression  \n"); 
                  }
      ;
 
 unary_expression : ADDOP unary_expression  
                  {
                     $$=$2;
+                    //TODO Perform NEG operation if the symbol of ADDOP is '-'
                     fprintf(parseLog, "GRAMMER RULE: unary_expression -> ADDOP unary_expression    \n"); 
                  }
                  | NOT unary_expression 
@@ -408,7 +490,7 @@ factor	: variable
         {
 			$$= $1;
 			if($$->getType()=="notarray"){
-			    continue;	//TODO Do something
+			    //TODO Do something
 			}
 			
 			else{
@@ -421,6 +503,13 @@ factor	: variable
         }
         | ID LPAREN argument_list RPAREN
         {
+            $$ = $3;
+
+            char *temp= newTemp();
+            $$->code+="mov ax, " + $1->getSymbol() + "[bx]\n";
+            $$->code+= "mov " + string(temp) + ", ax\n";
+            $$->setSymbol(temp);
+
             fprintf(parseLog, "GRAMMER RULE: factor-> ID LPAREN argument_list RPAREN  \n"); 
         }
         | LPAREN expression RPAREN
@@ -457,10 +546,13 @@ factor	: variable
 
 argument_list : argument_list COMMA logic_expression
                  {
+                     $$ = $1;
+                     $$->code += $2->code;
                      fprintf(parseLog, "GRAMMER RULE: argument_list -> argument_list COMMA logic_expression  \n"); 
                  }
               | logic_expression
                  {
+                     $$ = $1;
                      fprintf(parseLog, "GRAMMER RULE: argument_list -> logic_expression  \n"); 
                  }
           |
