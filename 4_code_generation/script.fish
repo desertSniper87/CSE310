@@ -12,7 +12,7 @@ g++ -fpermissive -c -w -o lexer.o lex.yy.cpp
 echo "Compiling Symbol_table.cpp..."
 g++ -c -w -o main.o Symbol_table.cpp
 echo "Creating compiler"
-g++ -o compiler lexer.o parser.o main.o -L /usr/lib -lfl -ly
+g++ -Q -v -da -o compiler lexer.o parser.o main.o -L /usr/lib -lfl -ly
 echo "Inputting file..."
 ./compiler < $argv
 #./compiler < Input/loop.c
