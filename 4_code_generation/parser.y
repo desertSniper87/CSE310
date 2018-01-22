@@ -5,6 +5,11 @@
 #include "bits/stdc++.h"
 #include "iostream"
 
+#include "stdlib.h"
+#include "string.h"
+
+using namespace std;
+
 FILE *logout;
 FILE *tokenout;
 FILE *parseLog;
@@ -28,7 +33,8 @@ extern "C"
 }
 extern char yytext[];
 extern int column;
-ofstream assembly;
+
+extern YYSTYPE yylval;
 
 char *newLabel()
 {
@@ -137,24 +143,27 @@ func_declaration : type_specifier ID LPAREN parameter_list RPAREN SEMICOLON
 func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statement
                  {
                     $$=new Symbol_info();
-                    $$->code+="PROC "+$2->symbol+"\n";
+                    // Need to work on this
+                    /*$$->symbol += $1->symbol;*/
+                    /*$$->symbol_type += $1-> symbol_type;*/
+                    /*$$->code+="PROC "+$2->symbol+"\n";*/
 
-                    if($2->symbol!="main")
-                    {
+                    /*if($2->symbol!="main")*/
+                    /*{*/
                         $$->code+="PUSH AX\n";
                         $$->code+="PUSH BX\n";
                         $$->code+="PUSH CX\n";
                         $$->code+="PUSH DX\n";
-                    }
+                    /*}*/
 
                     $$->code += $6->code ;
 
-                    if($2->symbol!="main") {
+                    /*if($2->symbol!="main") {*/
                         $$->code+="POP DX\n";
                         $$->code+="POP CX\n";
                         $$->code+="POP BX\n";
                         $$->code+="POP AX\n";
-                    }
+                    /*}*/
 
                     //Source of problem
                     fprintf(parseLog, "GRAMMER RULE: func_definition -> type_specifier ID LPAREN parameter_list RPAREN compound_statement  \n"); 
@@ -187,6 +196,7 @@ parameter_list  : parameter_list COMMA type_specifier ID
 compound_statement : LCURL statements RCURL
                  {
                     $$ = $2;
+                    /*$$ = $2;*/
                     fprintf(parseLog, "GRAMMER RULE: compound_statement -> LCURL statements RCURL  \n"); 
                  }
                    | LCURL RCURL
@@ -199,7 +209,8 @@ compound_statement : LCURL statements RCURL
 
 var_declaration : type_specifier declaration_list SEMICOLON
                 {
-                    $$ = $1;
+                    $$ = $2;
+                    /*$$-> symbol_type = $1-> symbol_type;*/
                     fprintf(parseLog, "GRAMMER RULE: var_declaration -> type_specifier declaration_list SEMICOLON\n"); 
                 }
                 ;
@@ -221,8 +232,10 @@ type_specifier	: INT
                 }
                 ;
 
+
 declaration_list : declaration_list COMMA ID
                  {
+                    // These are the source of all problems
                      //TODO something in line 289
                      fprintf(parseLog, "GRAMMER RULE: declaration_list -> declaration_list COMMA ID \n"); 
                  }
@@ -232,6 +245,7 @@ declaration_list : declaration_list COMMA ID
                  }
                  | ID
                  {
+                    $$ = new Symbol_info($1);
                     fprintf(parseLog, "GRAMMER RULE: declaration_list -> ID \n"); 
                  }
                  | ID LSQBRAC CONST_INT RSQBRAC
@@ -257,18 +271,18 @@ statements : statement
 
 statement : var_declaration
                  {
-                    $$=new Symbol_info($1);
+                    $$=$1;
                     fprintf(parseLog, "GRAMMER RULE: statement -> var_declaration  \n"); 
                  }
                  | expression_statement
                  {
-                     fprintf(parseLog, "GRAMMER RULE: statement -> expression_statement  \n"); 
                      $$ = $1;
+                     fprintf(parseLog, "GRAMMER RULE: statement -> expression_statement  \n"); 
                  }
                  | compound_statement
                  {
+                     $$ = new Symbol_info($1);
                      fprintf(parseLog, "GRAMMER RULE: statement -> compound_statement  \n"); 
-                     $$ = $1;
                  }
                  | FOR LPAREN expression_statement expression_statement expression RPAREN statement
                  {
@@ -592,6 +606,7 @@ int main(int argc,char *argv[]){
     fclose(asmout);
     printf ("\nTotal line Count: %d\n", line_count);
     /*parser_table.print(logout);*/
+    
 
 return 0;
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/fish 
 
 echo "Analyzing grammer.y..."
-bison -d -y -o y.tab.cpp parser.y --debug --verbose
+bison -d -y -v -o y.tab.cpp parser.y --debug --verbose
 #bison -d -y -o y.tab.cpp parser_temp.y --debug --verbose
 echo "Creating parser object from y.tab.cpp..."
 g++ -fpermissive -w -c -o parser.o y.tab.cpp
@@ -14,7 +14,7 @@ g++ -c -w -o main.o Symbol_table.cpp
 echo "Creating compiler"
 g++ -o compiler lexer.o parser.o main.o -L /usr/lib -lfl -ly
 echo "Inputting file..."
-#./compiler < incode1.c
-./compiler < Input/loop.c
+./compiler < $argv
+#./compiler < Input/loop.c
 #echo "Done... Removing files"
 #rm compiler lex.yy.cpp parser.o main.o 

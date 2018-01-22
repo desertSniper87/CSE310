@@ -1,7 +1,12 @@
 %{
+#include <iostream>
 #include <stdio.h>
 #include "Symbol_table.h"
 #include "y.tab.hpp"
+#include <string.h>
+#include <stdlib.h>
+
+using namespace std;
 
 
 /*extern "C"*/
@@ -16,6 +21,9 @@ extern FILE *parseLog;
 extern FILE *tokenout;
 extern FILE *parseLog;
 /*parselog = fopen("log.txt", w)*/
+
+extern YYSTYPE yylval;
+void yyerror(char *); 
 
 int hash_buckets = 7;
 
@@ -192,10 +200,10 @@ err_id 			{digit}+{id}
 
 {id} {
 	insert("ID",yytext);
-    /*printf("id: %s\n", yytext); */
+    printf("id: %s\n", yytext); 
     fprintf(tokenout,"<ID, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <ID> lexeme <%s> found\n",line_count,yytext);
-    /*printf("found ID.\n");*/
+    printf("found ID.\n");
 
     Symbol_info *s= new  Symbol_info(yytext, (char *)"ID");
     yylval = (YYSTYPE)s;
@@ -335,3 +343,6 @@ err_id 			{digit}+{id}
 
 %%
 
+int yywrap(void)    {
+    return 1;
+}

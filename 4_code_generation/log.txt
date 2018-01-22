@@ -1,4 +1,2 @@
-ID Inserted in scope table: 1 at position 6, 0
-
 ID Inserted in scope table: 1 at position 1, 0
 

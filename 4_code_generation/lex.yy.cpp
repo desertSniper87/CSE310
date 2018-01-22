@@ -601,9 +601,14 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "lex.l"
 #line 2 "lex.l"
+#include <iostream>
 #include <stdio.h>
 #include "Symbol_table.h"
 #include "y.tab.hpp"
+#include <string.h>
+#include <stdlib.h>
+
+using namespace std;
 
 
 /*extern "C"*/
@@ -619,6 +624,9 @@ extern FILE *tokenout;
 extern FILE *parseLog;
 /*parselog = fopen("log.txt", w)*/
 
+extern YYSTYPE yylval;
+void yyerror(char *); 
+
 int hash_buckets = 7;
 
 void insert(const char* token, char* yytext) {
@@ -627,7 +635,7 @@ void insert(const char* token, char* yytext) {
 	table.insert(token, yytext, hash_buckets);
 }
 /*keyword         program|if|not|end|begin|else|then|do|while|function|Procedure|integer|real|oh|array|write|include|int|char|float|string|printf*/
-#line 631 "lex.yy.cpp"
+#line 639 "lex.yy.cpp"
 
 #define INITIAL 0
 
@@ -848,10 +856,10 @@ YY_DECL
 		}
 
 	{
-#line 62 "lex.l"
+#line 70 "lex.l"
 
 
-#line 855 "lex.yy.cpp"
+#line 863 "lex.yy.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -911,17 +919,17 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 64 "lex.l"
+#line 72 "lex.l"
 {return LCURL;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 66 "lex.l"
+#line 74 "lex.l"
 {return RCURL;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 68 "lex.l"
+#line 76 "lex.l"
 {
     /*printf("found LPAREN\n");*/
     fprintf(parseLog,"\nLine no %d: Token <LPAREN> lexeme <%s> found\n",line_count,yytext);
@@ -929,7 +937,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 73 "lex.l"
+#line 81 "lex.l"
 {
     /*printf("found RPAREN\n");*/
     fprintf(parseLog,"\nLine no %d: Token <RPAREN> lexeme <%s> found\n",line_count,yytext);
@@ -937,7 +945,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 78 "lex.l"
+#line 86 "lex.l"
 {
     /*printf("found INCOP\n");*/
     fprintf(parseLog,"\nLine no %d: Token <INCOP> lexeme <%s> found\n",line_count,yytext);
@@ -945,7 +953,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 83 "lex.l"
+#line 91 "lex.l"
 {
     /*printf("found DECOP\n");*/
     fprintf(parseLog,"\nLine no %d: Token <DECOP> lexeme <%s> found\n",line_count,yytext);
@@ -953,72 +961,72 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 88 "lex.l"
+#line 96 "lex.l"
 {return LSQBRAC;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 90 "lex.l"
+#line 98 "lex.l"
 {return RSQBRAC;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 92 "lex.l"
+#line 100 "lex.l"
 {
     /*printf("Found COMMA\n");*/
     return COMMA;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 97 "lex.l"
+#line 105 "lex.l"
 { return  CHAR; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 99 "lex.l"
+#line 107 "lex.l"
 { return  ELSE; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 101 "lex.l"
+#line 109 "lex.l"
 { return  FLOAT; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 103 "lex.l"
+#line 111 "lex.l"
 { return  FOR; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 105 "lex.l"
+#line 113 "lex.l"
 { return  IF; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 107 "lex.l"
+#line 115 "lex.l"
 {
     /*printf("found INT\n");*/
     return  INT; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 111 "lex.l"
+#line 119 "lex.l"
 { return  RETURN; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 113 "lex.l"
+#line 121 "lex.l"
 { return  VOID; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 115 "lex.l"
+#line 123 "lex.l"
 { return  WHILE; }
 	YY_BREAK
 case 19:
 /* rule 19 can match eol */
 YY_RULE_SETUP
-#line 117 "lex.l"
+#line 125 "lex.l"
 {
 	line_count++;
 }
@@ -1026,7 +1034,7 @@ YY_RULE_SETUP
 case 20:
 /* rule 20 can match eol */
 YY_RULE_SETUP
-#line 121 "lex.l"
+#line 129 "lex.l"
 {
     line_count = line_count + 2;
     table.print(parseLog);
@@ -1034,7 +1042,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 126 "lex.l"
+#line 134 "lex.l"
 {
 	insert("STR",yytext);
 	/*printf("str: %s\n", yytext);*/
@@ -1051,7 +1059,7 @@ YY_RULE_SETUP
 case 22:
 /* rule 22 can match eol */
 YY_RULE_SETUP
-#line 140 "lex.l"
+#line 148 "lex.l"
 {
     fprintf(tokenout,"\n<STRING, %s>\n",yytext);
     fprintf(parseLog,"\n ERROR string with newline found\nLine no %d:Token <STRING> lexeme <%s> found\n",line_count,yytext);
@@ -1059,7 +1067,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 145 "lex.l"
+#line 153 "lex.l"
 {
 	insert("CHAR",yytext);
     /*printf("str: %s\n", yytext);*/
@@ -1073,7 +1081,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 156 "lex.l"
+#line 164 "lex.l"
 {
 	insert("CHAR",yytext);
     /*printf("str: %s\n", yytext);*/
@@ -1089,7 +1097,7 @@ YY_RULE_SETUP
 case 25:
 /* rule 25 can match eol */
 YY_RULE_SETUP
-#line 168 "lex.l"
+#line 176 "lex.l"
 {
     /*printf("str: %s\n", yytext);*/
     /*printf("line no: %d\n",line_count);*/
@@ -1098,7 +1106,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 174 "lex.l"
+#line 182 "lex.l"
 {
     /*printf("str: %s\n", yytext);*/
     /*printf("line no: %d\n",line_count);*/
@@ -1116,13 +1124,13 @@ YY_RULE_SETUP
 /*[>return HEADER;<]*/
 case 27:
 YY_RULE_SETUP
-#line 193 "lex.l"
+#line 201 "lex.l"
 {
 	insert("ID",yytext);
-    /*printf("id: %s\n", yytext); */
+    printf("id: %s\n", yytext); 
     fprintf(tokenout,"<ID, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <ID> lexeme <%s> found\n",line_count,yytext);
-    /*printf("found ID.\n");*/
+    printf("found ID.\n");
 
     Symbol_info *s= new  Symbol_info(yytext, (char *)"ID");
     yylval = (YYSTYPE)s;
@@ -1132,7 +1140,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 206 "lex.l"
+#line 214 "lex.l"
 {
     /*printf("\nSingleline comment found: %s\n",yytext);*/
     fprintf(parseLog,"\nLine no %d: SINGLELINECOMMENT <%s> found\n",line_count,yytext);
@@ -1141,7 +1149,7 @@ YY_RULE_SETUP
 case 29:
 /* rule 29 can match eol */
 YY_RULE_SETUP
-#line 211 "lex.l"
+#line 219 "lex.l"
 {
     /*printf("\nMultiline comment found: %s\n",yytext);*/
     fprintf(parseLog,"\nLine no %d: MULTILINECOMMENT <%s> found\n",line_count,yytext);
@@ -1150,7 +1158,7 @@ YY_RULE_SETUP
 case 30:
 /* rule 30 can match eol */
 YY_RULE_SETUP
-#line 216 "lex.l"
+#line 224 "lex.l"
 {
     /*printf("\nMultiline comment found: %s\n",yytext);*/
     fprintf(parseLog,"\nLine no %d: Unterminated MULTILINECOMMENT <%s> found\n",line_count,yytext);
@@ -1158,7 +1166,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 221 "lex.l"
+#line 229 "lex.l"
 {
 	insert("NUMBER",yytext);
     /*printf("number:%s\n",yytext);*/
@@ -1174,7 +1182,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 234 "lex.l"
+#line 242 "lex.l"
 {
 	insert("UNSIGNED",yytext);
     /*printf("unsigned:%s\n",yytext);*/
@@ -1190,7 +1198,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 247 "lex.l"
+#line 255 "lex.l"
 {
     insert("ADDOP", yytext);
     /*printf("line no: %d\n",line_count);*/
@@ -1205,7 +1213,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 259 "lex.l"
+#line 267 "lex.l"
 {
     insert("MULOP", yytext);
     /*printf("line no: %d\n",line_count);*/
@@ -1220,7 +1228,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 271 "lex.l"
+#line 279 "lex.l"
 {
     /*relop is relational operator*/
     insert("RELOP", yytext);
@@ -1236,7 +1244,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 284 "lex.l"
+#line 292 "lex.l"
 {
     insert("LOGICOP", yytext);
     /*printf("line no: %d\n",line_count);*/
@@ -1251,7 +1259,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 296 "lex.l"
+#line 304 "lex.l"
 {
     insert("ASSIGNOP", yytext);
     /*printf("line no: %d\n",line_count);*/
@@ -1263,7 +1271,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 306 "lex.l"
+#line 314 "lex.l"
 {
 	insert("DOTDOT", yytext);
     /*printf("line no: %d\n",line_count);*/
@@ -1271,19 +1279,19 @@ YY_RULE_SETUP
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 310 "lex.l"
+#line 318 "lex.l"
 {
 	insert("#",yytext);
 }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 314 "lex.l"
+#line 322 "lex.l"
 {}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 316 "lex.l"
+#line 324 "lex.l"
 {
     /*printf("Illegal usage of decimal\n");*/
     fprintf(parseLog,"\nLine no %d: Illegal usage of decimal <%s> found\n",line_count,yytext);
@@ -1291,7 +1299,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 321 "lex.l"
+#line 329 "lex.l"
 {
 	/*printf("Illegal id\n");*/
 	/*fprintf(parseLog,"\nLine no %d: Illegal usage of id <%s> found\n",line_count,yytext);*/
@@ -1300,7 +1308,7 @@ YY_RULE_SETUP
 case 43:
 /* rule 43 can match eol */
 YY_RULE_SETUP
-#line 326 "lex.l"
+#line 334 "lex.l"
 {
 	/*printf("Illegal id\n");*/
 	/*fprintf(parseLog,"\nLine no %d: Printf statement<%s> found\n",line_count,yytext);*/
@@ -1308,7 +1316,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 331 "lex.l"
+#line 339 "lex.l"
 {
     /*printf("found Semicolon");*/
     return SEMICOLON;
@@ -1316,10 +1324,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 336 "lex.l"
+#line 344 "lex.l"
 ECHO;
 	YY_BREAK
-#line 1323 "lex.yy.cpp"
+#line 1331 "lex.yy.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2323,8 +2331,11 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 336 "lex.l"
+#line 344 "lex.l"
 
 
 
+int yywrap(void)    {
+    return 1;
+}
 
