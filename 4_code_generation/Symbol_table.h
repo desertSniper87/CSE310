@@ -15,8 +15,8 @@ class Symbol_info   {
         string code;
 
         Symbol_info(){
-            this->symbol="";
-            this->symbol_type="";
+            symbol="";
+            symbol_type="";
             code="";
         }
 
@@ -33,9 +33,9 @@ class Symbol_info   {
         }
 
         Symbol_info(const Symbol_info *sym){
-         	this->symbol=sym->symbol;
-         	this->symbol_type=sym->symbol_type;
-         	this->code=sym->code;
+         	symbol=sym->symbol;
+         	symbol_type=sym->symbol_type;
+         	code=sym->code;
         }
 
         string getSymbol(){

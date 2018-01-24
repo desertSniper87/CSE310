@@ -15,7 +15,7 @@ using namespace std;
 /*}*/
 
 int line_count = 1;
-Symbol_table table;
+extern Symbol_table table;
 
 extern FILE *parseLog;
 extern FILE *tokenout;
@@ -25,13 +25,6 @@ extern FILE *parseLog;
 extern YYSTYPE yylval;
 void yyerror(char *); 
 
-int hash_buckets = 7;
-
-void insert(const char* token, char* yytext) {
-	//printf("%s: %s ", token, yytext);
-	/*printf("%s ", token);*/
-	table.insert(token, yytext, hash_buckets);
-}
 %}        
 
 newLine			\n
@@ -128,11 +121,11 @@ err_id 			{digit}+{id}
 
 "\n\n" {
     line_count = line_count + 2;
-    table.print(parseLog);
+    /*table.print(parseLog);*/
 }
 
 {string} {
-	insert("STR",yytext);
+	/*insert("STR",yytext);*/
 	/*printf("str: %s\n", yytext);*/
 	/*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"\n<STRING, %s>\n",yytext);
@@ -151,7 +144,7 @@ err_id 			{digit}+{id}
 }
 
 {char} {
-	insert("CHAR",yytext);
+	/*insert("CHAR",yytext);*/
     /*printf("str: %s\n", yytext);*/
     /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"\n<CHAR, %s>\n",yytext);
@@ -162,7 +155,7 @@ err_id 			{digit}+{id}
 }
 
 {err_multi_char} {
-	insert("CHAR",yytext);
+	/*insert("CHAR",yytext);*/
     /*printf("str: %s\n", yytext);*/
     /*printf("line no: %d\n",line_count);*/
     fprintf(parseLog,"\nWARNING: Multi character constant found\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
@@ -200,10 +193,10 @@ err_id 			{digit}+{id}
 
 {id} {
 	/*insert("ID",yytext);*/
-    printf("id: %s\n", yytext); 
-    fprintf(tokenout,"<ID, %s>\n",yytext);
-    fprintf(parseLog,"\nLine no %d: Token <ID> lexeme <%s> found\n",line_count,yytext);
-    printf("found ID.\n");
+    /*printf("id: %s\n", yytext); */
+    /*fprintf(tokenout,"<ID, %s>\n",yytext);*/
+    /*fprintf(parseLog,"\nLine no %d: Token <ID> lexeme <%s> found\n",line_count,yytext);*/
+    /*printf("found ID.\n");*/
 
     Symbol_info *s= new  Symbol_info(yytext, (char *)"ID");
     yylval = (YYSTYPE)s;
@@ -227,7 +220,7 @@ err_id 			{digit}+{id}
 }
 
 {number} {
-	insert("NUMBER",yytext);
+	/*insert("NUMBER",yytext);*/
     /*printf("number:%s\n",yytext);*/
     /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"<NUMBER, %s>\n",yytext);
@@ -240,7 +233,7 @@ err_id 			{digit}+{id}
 }
 
 {unsigned} {
-	insert("UNSIGNED",yytext);
+	/*insert("UNSIGNED",yytext);*/
     /*printf("unsigned:%s\n",yytext);*/
     /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"<UNSIGNED, %s>\n",yytext);
@@ -253,7 +246,7 @@ err_id 			{digit}+{id}
 }
 
 {addop} {
-    insert("ADDOP", yytext);
+    /*insert("ADDOP", yytext);*/
     /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"\n<ADDOP, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <ADDOP> lexeme <%s> found\n",line_count,yytext);
@@ -265,7 +258,7 @@ err_id 			{digit}+{id}
 }
 
 {mulop} {
-    insert("MULOP", yytext);
+    /*insert("MULOP", yytext);*/
     /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"\n<MULOP, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <MULOP> lexeme <%s> found\n",line_count,yytext);
@@ -278,7 +271,7 @@ err_id 			{digit}+{id}
 
 {relop} {
     /*relop is relational operator*/
-    insert("RELOP", yytext);
+    /*insert("RELOP", yytext);*/
     /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"\n<RELOP, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <RELOP> lexeme <%s> found\n",line_count,yytext);
@@ -290,7 +283,7 @@ err_id 			{digit}+{id}
 }
 
 {logicop} {
-    insert("LOGICOP", yytext);
+    /*insert("LOGICOP", yytext);*/
     /*printf("line no: %d\n",line_count);*/
     fprintf(tokenout,"\n<LOGICOP, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <LOGICOP> lexeme <%s> found\n",line_count,yytext);
@@ -302,7 +295,7 @@ err_id 			{digit}+{id}
 }
 
 {assignop} {
-    insert("ASSIGNOP", yytext);
+    /*insert("ASSIGNOP", yytext);*/
     /*printf("line no: %d\n",line_count);*/
     /*printf("ASSIGNOP found\n");*/
     fprintf(tokenout,"\n<ASSIGNOP, %s>\n",yytext);
@@ -312,11 +305,11 @@ err_id 			{digit}+{id}
 
 
 {dotdot} {
-	insert("DOTDOT", yytext);
+	/*insert("DOTDOT", yytext);*/
     /*printf("line no: %d\n",line_count);*/
 }	
 {hash}  {
-	insert("#",yytext);
+	/*insert("#",yytext);*/
 }
 
 {delim}+ {}

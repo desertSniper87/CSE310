@@ -36,7 +36,14 @@ extern int column;
 
 extern YYSTYPE yylval;
 
-extern Symbol_table table;
+Symbol_table table;
+int hash_buckets = 7;
+
+void insert(string token, string info) {
+	table.insert(token, info, hash_buckets);
+}
+
+string temp;
 
 char *newLabel()
 {
@@ -146,25 +153,27 @@ func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statem
                  {
                     $$=new Symbol_info();
                     // Need to work on this
-                    $$->symbol += $1->symbol;
-                    $$->symbol_type += $1-> symbol_type;
-                    /*$$->code+="PROC "+$2->symbol+"\n";*/
+                    /*$2 = new Symbol_info($2);*/
+                    insert($2->symbol, $2->symbol_type);
+                    $$->code+=$2->symbol+"\n";
+                    /*temp = $2->getSymbol();*/
+                    /*$$->code+="PROC "+string(temp)+"\n";*/
 
                     /*if($2->symbol!="main")*/
                     /*{*/
-                        $$->code+="PUSH AX\n";
-                        $$->code+="PUSH BX\n";
-                        $$->code+="PUSH CX\n";
-                        $$->code+="PUSH DX\n";
+                        /*$$->code+="PUSH AX\n";*/
+                        /*$$->code+="PUSH BX\n";*/
+                        /*$$->code+="PUSH CX\n";*/
+                        /*$$->code+="PUSH DX\n";*/
                     /*}*/
 
-                    $$->code += $6->code ;
+                    /*$$->code += $6->code ;*/
 
                     /*if($2->symbol!="main") {*/
-                        $$->code+="POP DX\n";
-                        $$->code+="POP CX\n";
-                        $$->code+="POP BX\n";
-                        $$->code+="POP AX\n";
+                        /*$$->code+="POP DX\n";*/
+                        /*$$->code+="POP CX\n";*/
+                        /*$$->code+="POP BX\n";*/
+                        /*$$->code+="POP AX\n";*/
                     /*}*/
 
                     //Source of problem
@@ -248,7 +257,7 @@ declaration_list : declaration_list COMMA ID
                  | ID
                  {
                     $$ = new Symbol_info($1);
-                    table.insert("");
+                    insert($1->symbol, $1->symbol_type);
                     fprintf(parseLog, "GRAMMER RULE: declaration_list -> ID \n"); 
                  }
                  | ID LSQBRAC CONST_INT RSQBRAC
