@@ -36,6 +36,8 @@ extern int column;
 
 extern YYSTYPE yylval;
 
+extern Symbol_table table;
+
 char *newLabel()
 {
 	char *lb= new char[4];
@@ -144,8 +146,8 @@ func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statem
                  {
                     $$=new Symbol_info();
                     // Need to work on this
-                    /*$$->symbol += $1->symbol;*/
-                    /*$$->symbol_type += $1-> symbol_type;*/
+                    $$->symbol += $1->symbol;
+                    $$->symbol_type += $1-> symbol_type;
                     /*$$->code+="PROC "+$2->symbol+"\n";*/
 
                     /*if($2->symbol!="main")*/
@@ -246,6 +248,7 @@ declaration_list : declaration_list COMMA ID
                  | ID
                  {
                     $$ = new Symbol_info($1);
+                    table.insert("");
                     fprintf(parseLog, "GRAMMER RULE: declaration_list -> ID \n"); 
                  }
                  | ID LSQBRAC CONST_INT RSQBRAC

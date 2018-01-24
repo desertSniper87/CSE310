@@ -199,7 +199,7 @@ err_id 			{digit}+{id}
 
 
 {id} {
-	insert("ID",yytext);
+	/*insert("ID",yytext);*/
     printf("id: %s\n", yytext); 
     fprintf(tokenout,"<ID, %s>\n",yytext);
     fprintf(parseLog,"\nLine no %d: Token <ID> lexeme <%s> found\n",line_count,yytext);
