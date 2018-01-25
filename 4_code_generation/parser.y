@@ -146,6 +146,35 @@ func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statem
                     // Need to work on this
                     /*$$->symbol += $1->symbol;*/
                     /*$$->symbol_type += $1-> symbol_type;*/
+
+                    $$->code += ".MODEL SMALL\n\n";
+                    $$->code += ".STACK 100H\n\n";
+                    $$->code += ".data\n";
+                    $$->code += "x dw 0\n";
+                    $$->code += "y dw 0\n";
+                    $$->code += "z dw 0\n";
+                    $$->code += "a dw 0\n";
+                    $$->code += "b dw 0\n";
+                    $$->code += "c dw 0\n";
+                    $$->code += "t0 dw 0\n";
+                    $$->code += "t1 dw 0\n";
+                    $$->code += "t2 dw 0\n";
+                    $$->code += "t3 dw 0\n";
+                    $$->code += "t4 dw 0\n";
+                    $$->code += "t5 dw 0\n";
+                    $$->code += "t6 dw 0\n";
+                    $$->code += "t7 dw 0\n";
+                    $$->code += "t8 dw 0\n";
+                    $$->code += "t9 dw 0\n";
+                    $$->code += "t10 dw 0\n";
+                    $$->code += "t11 dw 0\n";
+                    $$->code += "t12 dw 0\n";
+                    $$->code += "t13 dw 0\n";
+                    $$->code += "t14 dw 0\n";
+                    $$->code += "t15 dw 0\n";
+                    $$->code += "t16 dw 0\n\n\n";
+                    $$->code += ".CODE\n\n";
+
                     $$->code+="PROC "+$2->symbol+"\n";
 
                     if($2->symbol!="main")
@@ -297,6 +326,10 @@ statement : var_declaration
 						append the second label in the code
 					*/
                      $$ = $3;
+                     char *label = newLabel();
+                     $$->code += string(label);
+                     $$->code += $5->code;
+                     $$->code += $7->code;
 
                      fprintf(parseLog, "GRAMMER RULE: statement -> FOR LPAREN expression_statement expression_statement expression RPAREN statement  \n"); 
                      // TODO Some code in Line 96 of the template
@@ -307,9 +340,9 @@ statement : var_declaration
 					$$=$3;
 					
 					char *label=newLabel();
-					$$->code+="mov ax, "+$3->getSymbol()+"\n";
-					$$->code+="cmp ax, 0\n";
-					$$->code+="je "+string(label)+"\n";
+					$$->code+="MOV AX, "+$3->getSymbol()+"\n";
+					$$->code+="CMP AX, 0\n";
+					$$->code+="JE "+string(label)+"\n";
 					$$->code+=$5->code;
 					$$->code+=string(label)+":\n";
                  }
@@ -323,6 +356,7 @@ statement : var_declaration
                  }
                  | PRINTLN LPAREN ID RPAREN SEMICOLON
                  {
+                    $$->code += ";Print Code";
                     fprintf(parseLog, "GRAMMER RULE: statement -> PRINTLN LPAREN ID RPAREN SEMICOLON  \n"); 
                  }
                  | RETURN expression SEMICOLON
@@ -354,10 +388,10 @@ variable : ID
                     $$= new Symbol_info($1);
                     $$->setType("array");
 
-                    $$->code=$3->code+"mov bx, " +$3->getSymbol() +"\nadd bx, bx\n";
+                    $$->code=$3->code+"MOV BX, " +$3->getSymbol() +"\nadd BX, BX\n";
                     
                     delete $3;
-                    $$->print_info();
+                    /*$$->print_info();*/
                     fprintf(parseLog, "GRAMMER RULE: variable -> ID LSQBRAC expression RSQBRAC   \n"); 
                  }
      ;
@@ -370,17 +404,30 @@ expression : logic_expression
            | variable ASSIGNOP logic_expression 	
            {
                 // Source of BUG #2
+                printf("Entering e->v a l\n");
+                $$->print_info();
+                $1->print_info();
+                $2->print_info();
+                $3->print_info();
 				$$=$1;
 				$$->code+=$3->code;
-				$$->code+="mov ax, "+$3->getSymbol()+"\n";
+				$$->code+="MOV AX, "+$3->getSymbol()+"\n";
 				if($$->getType()=="notarray"){ 
-					$$->code+= "mov "+$1->getSymbol()+", ax\n";
+					$$->code+= "MOV "+$1->getSymbol()+", AX\n";
+				}
+
+				if($1->getType()=="println"){ 
+                    //TODO
+					/*$$->code+= "MOV "+, AX\n";*/
 				}
 				
 				else{
-					$$->code+= "mov  "+$1->getSymbol()+"[bx], ax\n";
+					$$->code+= "MOV  "+ $1->getSymbol()+"[BX], AX\n";
+
 				}
 				delete $3;
+                printf("Exiting e->v a l\n");
+                
                 fprintf(parseLog, "GRAMMER RULE: expression -> variable ASSIGNOP logic_expression 	  \n"); 
            }
        ;
@@ -411,15 +458,16 @@ logic_expression : rel_expression
 
 rel_expression	: simple_expression 
                  {
-                     $$=$1;
+                     /*$$=$1;*/
+                     $$=new Symbol_info($1);
                      fprintf(parseLog, "GRAMMER RULE: rel_expression -> simple_expression   \n"); 
                  }
                | simple_expression RELOP simple_expression	
                  {
                     $$=$1;
                     $$->code+=$3->code;
-                    $$->code+="mov ax, " + $1->getSymbol()+"\n";
-                    $$->code+="cmp ax, " + $3->getSymbol()+"\n";
+                    $$->code+="MOV AX, " + $1->getSymbol()+"\n";
+                    $$->code+="CMP AX, " + $3->getSymbol()+"\n";
                     char *temp=newTemp();
                     char *label1=newLabel();
                     char *label2=newLabel();
@@ -438,9 +486,9 @@ rel_expression	: simple_expression
                     else{
                     }
                     
-                    $$->code+="mov "+string(temp) +", 0\n";
-                    $$->code+="jmp "+string(label2) +"\n";
-                    $$->code+=string(label1)+":\nmov "+string(temp)+", 1\n";
+                    $$->code+="MOV "+string(temp) +", 0\n";
+                    $$->code+="JMP "+string(label2) +"\n";
+                    $$->code+=string(label1)+":\nMOV "+string(temp)+", 1\n";
                     $$->code+=string(label2)+":\n";
                     $$->setSymbol(temp);
                     delete $3;
@@ -459,7 +507,7 @@ simple_expression : term
                     $$=$1;
                     $$->code+=$3->code;
                     
-                    // move one of the operands to a register, perform addition or subtraction with the other operand and move the result in a temporary variable  
+                    // MOVe one of the operands to a register, perform addition or subtraction with the other operand and MOVe the result in a temporary variable  
                     
                     if($2->getSymbol()=="+"){
                     
@@ -483,19 +531,19 @@ term :	unary_expression
                  {
                     $$=$1;
                     $$->code += $3->code;
-                    $$->code += "mov ax, "+ $1->getSymbol()+"\n";
-                    $$->code += "mov bx, "+ $3->getSymbol() +"\n";
+                    $$->code += "MOV AX, "+ $1->getSymbol()+"\n";
+                    $$->code += "MOV BX, "+ $3->getSymbol() +"\n";
                     char *temp=newTemp();
                     if($2->getSymbol()=="*"){
-                        $$->code += "mul bx\n";
-                        $$->code += "mov "+ string(temp) + ", ax\n";
+                        $$->code += "mul BX\n";
+                        $$->code += "MOV "+ string(temp) + ", AX\n";
                     }
                     else if($2->getSymbol()=="/"){
                         // TODO
-                        // clear dx, perform 'div bx' and mov ax to temp
+                        // clear dx, perform 'div BX' and MOV AX to temp
                     }
                     else{
-                        // clear dx, perform 'div bx' and mov dx to temp
+                        // clear dx, perform 'div BX' and MOV dx to temp
                     }
                     $$->setSymbol(temp);
                     cout << endl << $$->code << endl;
@@ -515,9 +563,9 @@ unary_expression : ADDOP unary_expression
                  {
                     $$=new Symbol_info($2);
                     char *temp=newTemp();
-                    $$->code="mov ax, " + $2->getSymbol() + "\n";
-                    $$->code+="not ax\n";
-                    $$->code+="mov "+string(temp)+", ax";
+                    $$->code="MOV AX, " + $2->getSymbol() + "\n";
+                    $$->code+="not AX\n";
+                    $$->code+="MOV "+string(temp)+", AX";
                     fprintf(parseLog, "GRAMMER RULE: unary_expression -> NOT unary_expression   \n"); 
                  }
                  | factor 
@@ -536,8 +584,8 @@ factor	: variable
 			
 			else{
 				char *temp= newTemp();
-				$$->code+="mov ax, " + $1->getSymbol() + "[bx]\n";
-				$$->code+= "mov " + string(temp) + ", ax\n";
+				$$->code+="MOV AX, " + $1->getSymbol() + "[BX]\n";
+				$$->code+= "MOV " + string(temp) + ", AX\n";
 				$$->setSymbol(temp);
             }
             fprintf(parseLog, "GRAMMER RULE:  factor  -> variable   \n"); 
@@ -547,8 +595,8 @@ factor	: variable
             $$ = $3;
 
             char *temp= newTemp();
-            $$->code+="mov ax, " + $1->getSymbol() + "[bx]\n";
-            $$->code+= "mov " + string(temp) + ", ax\n";
+            $$->code+="MOV AX, " + $1->getSymbol() + "[BX]\n";
+            $$->code+= "MOV " + string(temp) + ", AX\n";
             $$->setSymbol(temp);
 
             fprintf(parseLog, "GRAMMER RULE: factor-> ID LPAREN argument_list RPAREN  \n"); 
@@ -560,7 +608,7 @@ factor	: variable
         }
         | CONST_INT 
         {
-            $$ = $1;
+            $$ = new Symbol_info($1);
             fprintf(parseLog, "GRAMMER RULE: factor -> CONST_INT   \n"); 
         }
         | CONST_FLOAT
@@ -576,15 +624,24 @@ factor	: variable
         | variable INCOP 
         {
             $$ = new Symbol_info($1);
+            if ($1->getType()!="notarray") {
             // TODO Perform increment
-            char *temp = newTemp();
-            $$->code+="ADD BX,2\n";
-            $$->code+="MOV "+string(temp)+","+$1->symbol+"[BX]\n";
+                char *temp = newTemp();
+                $$->code+="ADD BX,2\n";
+                $$->code+="MOV "+string(temp)+","+$1->symbol+"[BX]\n";
+            }
             fprintf(parseLog, "GRAMMER RULE: factor -> variable INCOP   \n"); 
         }
         | variable DECOP
         {
+            $$ = new Symbol_info($1);
             // TODO 
+            if ($1->getType()!="notarray") {
+            // TODO Perform increment
+                char *temp = newTemp();
+                $$->code+="SUB BX,2\n";
+                $$->code+="MOV "+string(temp)+","+$1->symbol+"[BX]\n";
+            }
             fprintf(parseLog, "GRAMMER RULE: factor -> variable DECOP  \n"); 
         }
     ;

@@ -1,1 +1,29 @@
 <ID, main>
+<ID, a>
+<ID, b>
+<ID, x>
+<ID, b>
+
+<ASSIGNOP, =>
+<UNSIGNED, 0>
+<ID, x>
+
+<ASSIGNOP, =>
+<UNSIGNED, 0>
+<ID, x>
+
+<RELOP, <>
+<UNSIGNED, 4>
+<ID, x>
+<ID, a>
+
+<ASSIGNOP, =>
+<UNSIGNED, 3>
+<ID, a>
+<ID, b>
+<ID, println>
+<ID, a>
+<ID, println>
+<ID, b>
+<ID, println>
+<ID, c>

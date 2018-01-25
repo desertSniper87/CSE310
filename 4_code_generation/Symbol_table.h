@@ -65,8 +65,9 @@ class Symbol_info   {
         void print_info(){
             string s = this->symbol;
             string t = this->symbol_type;
+            string c = this->code;
 
-            printf("Symbol name: %s, Symbol type: %s\n", s.c_str(), t.c_str());
+            printf("\nSymbol name: %s, Symbol type: %s\nCode: \n%s\n", s.c_str(), t.c_str(), c.c_str());
         }
 };
 
