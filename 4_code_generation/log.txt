@@ -1,4 +1,12 @@
-ID Inserted in scope table: 1 at position 6, 0
+Program start: Line Count: 1
+GRAMMER RULE: type_specifier -> INT
 
-ID Inserted in scope table: 1 at position 1, 0
+Line no 1: Token <ID> lexeme <main> found
 
+Line no 1: Token <LPAREN> lexeme <(> found
+
+Line no 1: Token <RPAREN> lexeme <)> found
+GRAMMER RULE: compound_statement -> LCURL RCURL  
+GRAMMER RULE: func_definition -> type_specifier ID LPAREN parameter_list RPAREN compound_statement  
+GRAMMER RULE: unit -> func_definition
+GRAMMER RULE: program -> unit

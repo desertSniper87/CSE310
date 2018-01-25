@@ -146,24 +146,24 @@ func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statem
                     // Need to work on this
                     /*$$->symbol += $1->symbol;*/
                     /*$$->symbol_type += $1-> symbol_type;*/
-                    /*$$->code+="PROC "+$2->symbol+"\n";*/
+                    $$->code+="PROC "+$2->symbol+"\n";
 
-                    /*if($2->symbol!="main")*/
-                    /*{*/
+                    if($2->symbol!="main")
+                    {
                         $$->code+="PUSH AX\n";
                         $$->code+="PUSH BX\n";
                         $$->code+="PUSH CX\n";
                         $$->code+="PUSH DX\n";
-                    /*}*/
+                    }
 
                     $$->code += $6->code ;
 
-                    /*if($2->symbol!="main") {*/
+                    if($2->symbol!="main") {
                         $$->code+="POP DX\n";
                         $$->code+="POP CX\n";
                         $$->code+="POP BX\n";
                         $$->code+="POP AX\n";
-                    /*}*/
+                    }
 
                     //Source of problem
                     fprintf(parseLog, "GRAMMER RULE: func_definition -> type_specifier ID LPAREN parameter_list RPAREN compound_statement  \n"); 
@@ -286,6 +286,18 @@ statement : var_declaration
                  }
                  | FOR LPAREN expression_statement expression_statement expression RPAREN statement
                  {
+					/*
+                        for (i=0;i>5;i++) print(x)
+						$3's code at first, which is already done by assigning $$=$3
+						create two labels and append one of them in $$->code
+						compare $4's symbol with 0
+						if equal jump to 2nd label
+						append $7's code
+						append $5's code
+						append the second label in the code
+					*/
+                     $$ = $3;
+
                      fprintf(parseLog, "GRAMMER RULE: statement -> FOR LPAREN expression_statement expression_statement expression RPAREN statement  \n"); 
                      // TODO Some code in Line 96 of the template
                  }

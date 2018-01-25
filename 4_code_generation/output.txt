@@ -7954,3 +7954,299 @@ Symbol not found in scope: 1
 
 Symbol not found in scope: 1
 
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: a in scope: 1
+
+Symbol found: 1 in scope: 1
+
+Symbol found: * in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: i in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: 2 in scope: 1
+
+Symbol found: a in scope: 1
+
+Symbol found: 2 in scope: 1
+
+Symbol found: = in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: x in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: a in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: 3 in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: 3 in scope: 1
+
+Symbol found: b in scope: 1
+
+Symbol found: = in scope: 1
+
+Symbol found: 1 in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: c in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: = in scope: 1
+
+Symbol found: 2 in scope: 1
+
+Symbol found: a in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: b in scope: 1
+
+Symbol found: c in scope: 1
+
+Symbol found: 0 in scope: 1
+
+Symbol found: c in scope: 1
+
+Symbol found: 1 in scope: 1
+
+Symbol found: = in scope: 1
+
+Symbol found: c in scope: 1
+
+Symbol found: 0 in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: b in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: x in scope: 1
+
+Symbol found: = in scope: 1
+
+Symbol found: 0 in scope: 1
+
+Symbol found: x in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: x in scope: 1
+
+Symbol found: a in scope: 1
+
+Symbol found: = in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: a in scope: 1
+
+Symbol found: b in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: b in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: x in scope: 1
+
+Symbol found: = in scope: 1
+
+Symbol found: 0 in scope: 1
+
+Symbol found: x in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: x in scope: 1
+
+Symbol found: a in scope: 1
+
+Symbol found: = in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: a in scope: 1
+
+Symbol found: b in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: a in scope: 1
+
+Symbol found: println in scope: 1
+
+Symbol found: b in scope: 1
+
+Symbol found: println in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: b in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: x in scope: 1
+
+Symbol found: = in scope: 1
+
+Symbol found: 0 in scope: 1
+
+Symbol found: x in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: x in scope: 1
+
+Symbol found: a in scope: 1
+
+Symbol found: = in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: a in scope: 1
+
+Symbol found: b in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: b in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: x in scope: 1
+
+Symbol found: = in scope: 1
+
+Symbol found: 0 in scope: 1
+
+Symbol found: x in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: x in scope: 1
+
+Symbol found: a in scope: 1
+
+Symbol found: = in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol found: a in scope: 1
+
+Symbol found: b in scope: 1
+
+Symbol not found in scope: 1
+
+Symbol not found in scope: 1
+

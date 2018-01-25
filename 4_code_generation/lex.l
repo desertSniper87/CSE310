@@ -22,7 +22,7 @@ extern FILE *tokenout;
 extern FILE *parseLog;
 /*parselog = fopen("log.txt", w)*/
 
-extern YYSTYPE yylval;
+/*extern YYSTYPE yylval;*/
 void yyerror(char *); 
 
 int hash_buckets = 7;
@@ -139,7 +139,7 @@ err_id 			{digit}+{id}
     fprintf(parseLog,"\nLine no %d:Token <STRING> lexeme <%s> found\n",line_count,yytext);
 
     Symbol_info *s= new  Symbol_info(yytext, (char *)"STRING");
-    yylval = (YYSTYPE)s;
+    yylval = s;
 
     /*return STRING;*/
 }
@@ -158,7 +158,7 @@ err_id 			{digit}+{id}
     fprintf(parseLog,"\nLine no %d: Token <CHAR> lexeme <%s> found\n",line_count,yytext);
 
     Symbol_info *s= new  Symbol_info(yytext, (char *)"CHAR");
-    yylval = (YYSTYPE)s;
+    yylval = s;
 }
 
 {err_multi_char} {
@@ -169,7 +169,7 @@ err_id 			{digit}+{id}
     fprintf(tokenout,"\n<CHAR, %s>\n",yytext);
 
     Symbol_info *s= new  Symbol_info(yytext, (char *)"CHAR");
-    yylval = (YYSTYPE)s;
+    yylval = s;
 
 }
 
@@ -206,7 +206,7 @@ err_id 			{digit}+{id}
     printf("found ID.\n");
 
     Symbol_info *s= new  Symbol_info(yytext, (char *)"ID");
-    yylval = (YYSTYPE)s;
+    yylval = s;
 
     return ID;
 }
@@ -234,7 +234,7 @@ err_id 			{digit}+{id}
     fprintf(parseLog,"\nLine no %d: Token <NUMBER> lexeme <%s> found\n",line_count,yytext);
 
     Symbol_info *s= new  Symbol_info(yytext, (char *)"CONST_FLOAT");
-    yylval = (YYSTYPE)s;
+    yylval = s;
 
     return CONST_FLOAT;
 }
@@ -247,7 +247,7 @@ err_id 			{digit}+{id}
     fprintf(parseLog,"\nLine no %d: Token <UNSIGNED> lexeme <%s> found\n",line_count,yytext);
 
     Symbol_info *s= new  Symbol_info(yytext, (char *)"CONST_INT");
-    yylval = (YYSTYPE)s;
+    yylval = s;
 
     return CONST_INT;
 }
@@ -259,7 +259,7 @@ err_id 			{digit}+{id}
     fprintf(parseLog,"\nLine no %d: Token <ADDOP> lexeme <%s> found\n",line_count,yytext);
 
     Symbol_info *s= new  Symbol_info(yytext, (char *)"ADDOP");
-    yylval = (YYSTYPE)s;
+    yylval = s;
 
     return ADDOP;
 }
@@ -271,7 +271,7 @@ err_id 			{digit}+{id}
     fprintf(parseLog,"\nLine no %d: Token <MULOP> lexeme <%s> found\n",line_count,yytext);
 
     Symbol_info *s= new  Symbol_info(yytext, (char *)"MULOP");
-    yylval = (YYSTYPE)s;
+    yylval = s;
 
     return MULOP;
 }
@@ -284,7 +284,7 @@ err_id 			{digit}+{id}
     fprintf(parseLog,"\nLine no %d: Token <RELOP> lexeme <%s> found\n",line_count,yytext);
 
     Symbol_info *s= new  Symbol_info(yytext, (char *)"RELOP");
-    yylval = (YYSTYPE)s;
+    yylval = s;
 
     return RELOP;
 }
@@ -296,7 +296,7 @@ err_id 			{digit}+{id}
     fprintf(parseLog,"\nLine no %d: Token <LOGICOP> lexeme <%s> found\n",line_count,yytext);
 
     Symbol_info *s= new  Symbol_info(yytext, (char *)"LOGICOP");
-    yylval = (YYSTYPE)s;
+    yylval = s;
 
     return LOGICOP;
 }
