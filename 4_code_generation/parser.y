@@ -147,35 +147,9 @@ func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statem
                     /*$$->symbol += $1->symbol;*/
                     /*$$->symbol_type += $1-> symbol_type;*/
 
-                    $$->code += ".MODEL SMALL\n\n";
-                    $$->code += ".STACK 100H\n\n";
-                    $$->code += ".data\n";
-                    $$->code += "x dw 0\n";
-                    $$->code += "y dw 0\n";
-                    $$->code += "z dw 0\n";
-                    $$->code += "a dw 0\n";
-                    $$->code += "b dw 0\n";
-                    $$->code += "c dw 0\n";
-                    $$->code += "t0 dw 0\n";
-                    $$->code += "t1 dw 0\n";
-                    $$->code += "t2 dw 0\n";
-                    $$->code += "t3 dw 0\n";
-                    $$->code += "t4 dw 0\n";
-                    $$->code += "t5 dw 0\n";
-                    $$->code += "t6 dw 0\n";
-                    $$->code += "t7 dw 0\n";
-                    $$->code += "t8 dw 0\n";
-                    $$->code += "t9 dw 0\n";
-                    $$->code += "t10 dw 0\n";
-                    $$->code += "t11 dw 0\n";
-                    $$->code += "t12 dw 0\n";
-                    $$->code += "t13 dw 0\n";
-                    $$->code += "t14 dw 0\n";
-                    $$->code += "t15 dw 0\n";
-                    $$->code += "t16 dw 0\n\n\n";
-                    $$->code += ".CODE\n\n";
 
-                    $$->code+="PROC "+$2->symbol+"\n";
+                    $$->code+="\n;function definition";
+                    $$->code+="\nPROC "+$2->symbol+"\n\n";
 
                     if($2->symbol!="main")
                     {
@@ -326,10 +300,21 @@ statement : var_declaration
 						append the second label in the code
 					*/
                      $$ = $3;
+                     $$->code += "\n;Forloop\n";
                      char *label = newLabel();
-                     $$->code += string(label);
-                     $$->code += $5->code;
+                     char *endlabel = newLabel();
+
+                     $$->code += "\n"+ string(label)+ ":\n";
+                     $$->code += ";i<5\n";
+                     $$->code += $4->code;
+                     $$->code += "CMP "+ $4->symbol+ " ,0\n";
+                     $$->code += "JE "+ string(endlabel)+ "\n";
+                     $$->code += ";statement\n";
                      $$->code += $7->code;
+                     $$->code += ";i++\n";
+                     $$->code += $5->code;
+                     $$->code += "JMP "+ string(label)+ "\n";
+                     $$->code += "\n"+ string(endlabel)+ ":\n";
 
                      fprintf(parseLog, "GRAMMER RULE: statement -> FOR LPAREN expression_statement expression_statement expression RPAREN statement  \n"); 
                      // TODO Some code in Line 96 of the template
@@ -339,6 +324,7 @@ statement : var_declaration
                     fprintf(parseLog, "GRAMMER RULE: statement -> IF LPAREN expression RPAREN statement  \n"); 
 					$$=$3;
 					
+                    $$->code += "\n;If statement\n";
 					char *label=newLabel();
 					$$->code+="MOV AX, "+$3->getSymbol()+"\n";
 					$$->code+="CMP AX, 0\n";
@@ -352,11 +338,25 @@ statement : var_declaration
                  }
                  | WHILE LPAREN expression RPAREN statement
                  {
+                     $$ = new Symbol_info();
+                     $$->code += "\n;While Loop\n";
+                     char *label = newLabel();
+                     char *endlabel = newLabel();
+
+                     $$->code += "\n"+ string(label)+ ":\n";
+                     $$->code += ";While loop - Test expression\n";
+                     $$->code += $3->code;
+                     $$->code += "CMP "+ $3->symbol+ " ,0\n";
+                     $$->code += "JE "+ string(endlabel)+ "\n";
+                     $$->code += ";statement\n";
+                     $$->code += $5->code;
+                     $$->code += "JMP "+ string(label)+ "\n";
+                     $$->code += "\n"+ string(endlabel)+ ":\n";
                     fprintf(parseLog, "GRAMMER RULE: statement -> WHILE LPAREN expression RPAREN statement  \n"); 
                  }
                  | PRINTLN LPAREN ID RPAREN SEMICOLON
                  {
-                    $$->code += ";Print Code";
+                    $$->code += "\n;Print Code\n";
                     fprintf(parseLog, "GRAMMER RULE: statement -> PRINTLN LPAREN ID RPAREN SEMICOLON  \n"); 
                  }
                  | RETURN expression SEMICOLON
@@ -404,11 +404,11 @@ expression : logic_expression
            | variable ASSIGNOP logic_expression 	
            {
                 // Source of BUG #2
-                printf("Entering e->v a l\n");
-                $$->print_info();
-                $1->print_info();
-                $2->print_info();
-                $3->print_info();
+                /*printf("Entering e->v a l\n");*/
+                /*$$->print_info();*/
+                /*$1->print_info();*/
+                /*$2->print_info();*/
+                /*$3->print_info();*/
 				$$=$1;
 				$$->code+=$3->code;
 				$$->code+="MOV AX, "+$3->getSymbol()+"\n";
@@ -416,17 +416,21 @@ expression : logic_expression
 					$$->code+= "MOV "+$1->getSymbol()+", AX\n";
 				}
 
-				if($1->getType()=="println"){ 
-                    //TODO
-					/*$$->code+= "MOV "+, AX\n";*/
-				}
+				/*if($1->getType()=="println"){ */
+                    /*//TODO*/
+                    /*$$->print_info();*/
+                    /*$1->print_info();*/
+                    /*$2->print_info();*/
+                    /*$3->print_info();*/
+					/*[>$$->code+= "MOV "+, AX\n";<]*/
+				/*}*/
 				
 				else{
 					$$->code+= "MOV  "+ $1->getSymbol()+"[BX], AX\n";
 
 				}
 				delete $3;
-                printf("Exiting e->v a l\n");
+                /*printf("Exiting e->v a l\n");*/
                 
                 fprintf(parseLog, "GRAMMER RULE: expression -> variable ASSIGNOP logic_expression 	  \n"); 
            }
@@ -439,14 +443,18 @@ logic_expression : rel_expression
                  }
                  | rel_expression LOGICOP rel_expression 	
                  {
-					$$=$1;
-					$$->code+=$3->code;
+					$$=new Symbol_info($1);
+					/*$$->code+=$1->code;*/
+					/*$$->code+=$3->code;*/
 					
 					if($2->getSymbol()=="&&"){
 						/* 
 						Check whether both operands value is 1. If both are one set value of a temporary variable to 1
 						otherwise 0
 						*/
+                        $1->print_info();
+                        $3->print_info();
+                        /*if ($1->sy)*/
 					}
 					else if($2->getSymbol()=="||"){
 						
@@ -472,18 +480,23 @@ rel_expression	: simple_expression
                     char *label1=newLabel();
                     char *label2=newLabel();
                     if($2->getSymbol()=="<"){
-                        $$->code+="jl " + string(label1)+"\n";
+                        $$->code+="JL " + string(label1)+"\n";
                     }
                     else if($2->getSymbol()=="<="){
                     //TODO
+                        $$->code+="JLE " + string(label1)+"\n";
                     }
                     else if($2->getSymbol()==">"){
+                        $$->code+="JG " + string(label1)+"\n";
                     }
                     else if($2->getSymbol()==">="){
+                        $$->code+="JGE " + string(label1)+"\n";
                     }
                     else if($2->getSymbol()=="=="){
+                        $$->code+="JE " + string(label1)+"\n";
                     }
                     else{
+                        $$->code+="JNE " + string(label1)+"\n";
                     }
                     
                     $$->code+="MOV "+string(temp) +", 0\n";
@@ -504,19 +517,33 @@ simple_expression : term
                  }
                   | simple_expression ADDOP term 
                  {
-                    $$=$1;
+                    $$=new Symbol_info($1);
+                    /*$1->print_info();*/
+                    /*$2->print_info();*/
+                    /*$3->print_info();*/
                     $$->code+=$3->code;
+                    char *t = newTemp();
                     
                     // MOVe one of the operands to a register, perform addition or subtraction with the other operand and MOVe the result in a temporary variable  
                     
                     if($2->getSymbol()=="+"){
-                    
+                        $$->code += "\n;ADDING THINGS\n";
+                        $$->code+="MOV AX,"+$1->symbol+"\n";
+                        $$->code+="MOV BX,"+$3->symbol+"\n";
+                        $$->code+="ADD AX,BX\n";
+                        $$->code+="MOV "+string(t)+",AX\n";
+                        $$->code+="\n";
                     }
                     else{
+                        $$->code += "\n;SUBBING THINGS\n";
+                        $$->code+="MOV AX,"+$1->symbol+"\n";
+                        $$->code+="MOV BX,"+$3->symbol+"\n";
+                        $$->code+="SUB AX,BX\n";
+                        $$->code+="MOV "+string(t)+",AX\n";
+                        $$->code+="\n";
                     
                     }
                     delete $3;
-                    cout << endl;
 
                     fprintf(parseLog, "GRAMMER RULE: simple_expression -> simple_expression ADDOP term   \n"); 
                  }
@@ -535,7 +562,7 @@ term :	unary_expression
                     $$->code += "MOV BX, "+ $3->getSymbol() +"\n";
                     char *temp=newTemp();
                     if($2->getSymbol()=="*"){
-                        $$->code += "mul BX\n";
+                        $$->code += "MUL BX\n";
                         $$->code += "MOV "+ string(temp) + ", AX\n";
                     }
                     else if($2->getSymbol()=="/"){
@@ -603,7 +630,7 @@ factor	: variable
         }
         | LPAREN expression RPAREN
         {
-           $$ = new Symbol_info($2); 
+           $$ = $2; 
            fprintf(parseLog, "GRAMMER RULE: factor -> LPAREN expression RPAREN  \n"); 
         }
         | CONST_INT 
@@ -624,24 +651,34 @@ factor	: variable
         | variable INCOP 
         {
             $$ = new Symbol_info($1);
-            if ($1->getType()!="notarray") {
+            char *t = newTemp();
+            if ($1->getType()=="notarray") {
             // TODO Perform increment
                 char *temp = newTemp();
                 $$->code+="ADD BX,2\n";
                 $$->code+="MOV "+string(temp)+","+$1->symbol+"[BX]\n";
             }
+            else {
+                $$->code+= "INC " + $1->symbol + "\n";
+            }
+            $$->symbol = string(t);
             fprintf(parseLog, "GRAMMER RULE: factor -> variable INCOP   \n"); 
         }
         | variable DECOP
         {
             $$ = new Symbol_info($1);
+            char *t = newTemp();
             // TODO 
-            if ($1->getType()!="notarray") {
+            if ($1->getType()=="notarray") {
             // TODO Perform increment
                 char *temp = newTemp();
                 $$->code+="SUB BX,2\n";
                 $$->code+="MOV "+string(temp)+","+$1->symbol+"[BX]\n";
             }
+            else {
+                $$->code+= "DEC " + $1->symbol + "\n";
+            }
+            $$->symbol = string(t);
             fprintf(parseLog, "GRAMMER RULE: factor -> variable DECOP  \n"); 
         }
     ;
@@ -668,6 +705,39 @@ int main(int argc,char *argv[]){
     tokenout= fopen("token.txt","w");
     parseLog = fopen("log.txt", "w");
     asmout = fopen("code.asm", "w");
+
+    string c = "";
+
+    c += ".MODEL SMALL\n\n";
+    c += ".STACK 100H\n\n";
+    c += ".data\n";
+    c += "x dw 0\n";
+    c += "y dw 0\n";
+    c += "z dw 0\n";
+    c += "a dw 0\n";
+    c += "b dw 0\n";
+    c += "c dw 0\n";
+    c += "t0 dw 0\n";
+    c += "t1 dw 0\n";
+    c += "t2 dw 0\n";
+    c += "t3 dw 0\n";
+    c += "t4 dw 0\n";
+    c += "t5 dw 0\n";
+    c += "t6 dw 0\n";
+    c += "t7 dw 0\n";
+    c += "t8 dw 0\n";
+    c += "t9 dw 0\n";
+    c += "t10 dw 0\n";
+    c += "t11 dw 0\n";
+    c += "t12 dw 0\n";
+    c += "t13 dw 0\n";
+    c += "t14 dw 0\n";
+    c += "t15 dw 0\n";
+    c += "t16 dw 0\n\n\n";
+    c += ".CODE\n";
+
+    fprintf(asmout, c.c_str());
+
     fprintf(parseLog, "Program start: Line Count: 1\n");
     yyparse();
     fclose(tokenout);

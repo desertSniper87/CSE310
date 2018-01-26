@@ -30,24 +30,54 @@ t16 dw 0
 
 .CODE
 
+;function definition
 PROC main
+
 MOV AX, 0
 MOV  b[BX], AX
 MOV AX, 0
 MOV  x[BX], AX
-L2ADD BX,2
-MOV t2,x[BX]
+
+;Forloop
+
+L4:
+;i<5
+MOV AX, x[BX]
+MOV t0, AX
+MOV AX, t0
+CMP AX, 4
+JL L0
+MOV t1, 0
+JMP L1
+L0:
+MOV t1, 1
+L1:
+CMP t1 ,0
+JE L5
+;statement
 MOV AX, 3
 MOV  a[BX], AX
-MOV AX, a[BX]
-MOV t5, AX
-MOV AX, println[BX]
-MOV t6, AX
-MOV AX, b[BX]
-MOV t7, AX
-MOV AX, println[BX]
-MOV t8, AX
-MOV AX, c[BX]
-MOV t9, AX
-MOV AX, println[BX]
-MOV t10, AX
+
+;While Loop
+
+L2:
+;While loop - Test expression
+DEC a
+CMP t3 ,0
+JE L3
+;statement
+INC b
+JMP L2
+
+L3:
+;i++
+INC x
+JMP L4
+
+L5:
+
+;Print Code
+
+;Print Code
+
+;Print Code

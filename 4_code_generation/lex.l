@@ -122,6 +122,8 @@ err_id 			{digit}+{id}
 
 "while"			{ return  WHILE; }
 
+"println"       { return  PRINTLN; }
+
 {newLine} {
 	line_count++;
 }
@@ -331,10 +333,11 @@ err_id 			{digit}+{id}
 	/*fprintf(parseLog,"\nLine no %d: Illegal usage of id <%s> found\n",line_count,yytext);*/
 }
 
-{prnt_stmt} {
+    /*{prnt_stmt} {*/
 	/*printf("Illegal id\n");*/
 	/*fprintf(parseLog,"\nLine no %d: Printf statement<%s> found\n",line_count,yytext);*/
-}
+    /*return PRINTLN;*/
+    /*}*/
 
 {semicolon} {
     /*printf("found Semicolon");*/

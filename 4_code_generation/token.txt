@@ -21,9 +21,6 @@
 <UNSIGNED, 3>
 <ID, a>
 <ID, b>
-<ID, println>
 <ID, a>
-<ID, println>
 <ID, b>
-<ID, println>
 <ID, c>
