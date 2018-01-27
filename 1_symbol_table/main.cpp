@@ -9,9 +9,23 @@ int hash_buckets;
 bool scope_flag;
 
 class Symbol_info   {
+    string symbol_name, symbol_type;
     public:
-        string symbol_name, symbol_type;
         Symbol_info *next;
+        string get_name(){
+            return this->symbol_name;
+        }
+        string get_type(){
+            return this->symbol_type;
+        }
+
+        void set_symbol(string s){
+            this->symbol_name = s;
+        }
+
+        void set_type(string t){
+            this->symbol_type = t;
+        }
 
 };
 
@@ -28,9 +42,9 @@ class Symbol_table  {
             int flag=0;
             Symbol_info *cur = arr[count];
             while(cur) {
-                if(cur->symbol_name==s) {
+                if(cur->get_name()==s) {
                     flag=1;
-                    outfile <<"Symbol found: " <<cur->symbol_name<<" in scope: "<< scope_id<< endl<< endl;
+                    outfile <<"Symbol found: " <<cur->get_name()<<" in scope: "<< scope_id<< endl<< endl;
                     break;
                 }
                 cur=cur->next;
@@ -53,9 +67,9 @@ class Symbol_table  {
             int flag=0;
             Symbol_info *cur = arr[count];          // As arr is public, we are accessing the symbol_table object
             while(cur) {
-                if(cur->symbol_name==s) {
+                if(cur->get_name()==s) {
                     flag=1;
-                    outfile <<"Symbol found:" <<cur->symbol_name<<" in scope "<< scope_id<< ". Deleting."<< endl<< endl;
+                    outfile <<"Symbol found:" <<cur->get_name()<<" in scope "<< scope_id<< ". Deleting."<< endl<< endl;
                     arr[count] = NULL;
                     break;
                 }
@@ -101,8 +115,8 @@ class Symbol_table  {
                         }
                         else {
                             Symbol_info *newOb=new Symbol_info;
-                            newOb->symbol_name=s1;
-                            newOb->symbol_type=s2;
+                            newOb->set_symbol(s1);
+                            newOb->set_type(s2);
                             cur->next=newOb;
 
                             cur->next->next=NULL;
@@ -122,8 +136,8 @@ class Symbol_table  {
             else {
                 arr[count]=new Symbol_info;
 
-                arr[count]->symbol_name=s1;
-                arr[count]->symbol_type=s2;
+                arr[count]->set_symbol(s1);
+                arr[count]->set_type(s2);
                 arr[count]->next=NULL;
 
                 ofstream outfile;
@@ -146,7 +160,7 @@ class Symbol_table  {
                 if(cur) {
                     outfile<< i;
                     while(cur) {
-                        outfile<< " -->"<< " < "<< cur->symbol_name<< " "<< cur->symbol_type<< " > ";
+                        outfile<< " -->"<< " < "<< cur->get_name()<< " "<< cur->get_type()<< " > ";
                         cur=cur->next;
                         }
                 }
