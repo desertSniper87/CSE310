@@ -244,6 +244,7 @@ declaration_list : declaration_list COMMA ID
                  }
                  | declaration_list COMMA ID LSQBRAC CONST_INT RSQBRAC
                  {
+                     //TODO
                      fprintf(parseLog, "GRAMMER RULE: declaration_list -> declaration_list COMMA ID LSQBRAC CONST_INT RSQBRAC \n"); 
                  }
                  | ID
@@ -300,18 +301,18 @@ statement : var_declaration
 						append the second label in the code
 					*/
                      $$ = $3;
-                     $$->code += "\n;Forloop\n";
+                     $$->code += "\n;Forloop";
                      char *label = newLabel();
                      char *endlabel = newLabel();
 
                      $$->code += "\n"+ string(label)+ ":\n";
-                     $$->code += ";i<5\n";
+                     $$->code += ";For loop - test expression\n";
                      $$->code += $4->code;
                      $$->code += "CMP "+ $4->symbol+ " ,0\n";
                      $$->code += "JE "+ string(endlabel)+ "\n";
-                     $$->code += ";statement\n";
+                     $$->code += ";For loop - body\n";
                      $$->code += $7->code;
-                     $$->code += ";i++\n";
+                     $$->code += ";For loop - increment\n";
                      $$->code += $5->code;
                      $$->code += "JMP "+ string(label)+ "\n";
                      $$->code += "\n"+ string(endlabel)+ ":\n";
@@ -335,11 +336,25 @@ statement : var_declaration
                  | IF LPAREN expression RPAREN statement ELSE statement
                  {
                     fprintf(parseLog, "GRAMMER RULE: statement -> IF LPAREN expression RPAREN statement ELSE statement  \n"); 
+					$$=$3;
+					
+                    $$->code += "\n;If-Else statement\n";
+					char *label=newLabel();
+					char *label_if=newLabel();
+					char *label_else=newLabel();
+					$$->code+="MOV AX, "+$3->getSymbol()+"\n";
+					$$->code+="CMP AX, 0\n";
+					$$->code+="JE "+string(label_else)+"\n";
+					$$->code+=$5->code;     
+					$$->code+="JE "+string(label_if)+"\n";
+					$$->code+=string(label_else)+":\n";
+					$$->code+=$7->code;     
+					$$->code+=string(label_if)+":\n";
                  }
                  | WHILE LPAREN expression RPAREN statement
                  {
                      $$ = new Symbol_info();
-                     $$->code += "\n;While Loop\n";
+                     $$->code += "\n;While Loop";
                      char *label = newLabel();
                      char *endlabel = newLabel();
 
@@ -348,7 +363,7 @@ statement : var_declaration
                      $$->code += $3->code;
                      $$->code += "CMP "+ $3->symbol+ " ,0\n";
                      $$->code += "JE "+ string(endlabel)+ "\n";
-                     $$->code += ";statement\n";
+                     $$->code += ";While loop - body\n";
                      $$->code += $5->code;
                      $$->code += "JMP "+ string(label)+ "\n";
                      $$->code += "\n"+ string(endlabel)+ ":\n";
@@ -356,7 +371,8 @@ statement : var_declaration
                  }
                  | PRINTLN LPAREN ID RPAREN SEMICOLON
                  {
-                    $$->code += "\n;Print Code\n";
+                    //TODO 
+                    $$->code += "\n;Print Variable " + $3->symbol;
                     fprintf(parseLog, "GRAMMER RULE: statement -> PRINTLN LPAREN ID RPAREN SEMICOLON  \n"); 
                  }
                  | RETURN expression SEMICOLON
@@ -383,12 +399,14 @@ variable : ID
                     $$= new Symbol_info($1);
                     fprintf(parseLog, "GRAMMER RULE: variable -> ID 		  \n"); 
                  }
-         | ID LSQBRAC expression RSQBRAC 
+                 | ID LSQBRAC expression RSQBRAC 
                  {
                     $$= new Symbol_info($1);
+                    /*$$->print_info();*/
+                    /*$3->print_info();*/
                     $$->setType("array");
 
-                    $$->code=$3->code+"MOV BX, " +$3->getSymbol() +"\nadd BX, BX\n";
+                    $$->code=$3->code+"MOV BX, " +$3->getSymbol() +"\nADD BX, BX\n";
                     
                     delete $3;
                     /*$$->print_info();*/
@@ -399,6 +417,7 @@ variable : ID
 expression : logic_expression	
            {
                $$ = $1;
+               $$->code += ";Logical Expression\n";
                fprintf(parseLog, "GRAMMER RULE: expression -> logic_expression	  \n"); 
            }
            | variable ASSIGNOP logic_expression 	
@@ -410,6 +429,7 @@ expression : logic_expression
                 /*$2->print_info();*/
                 /*$3->print_info();*/
 				$$=$1;
+				$$->code+="\n;Assignment Operation\n";
 				$$->code+=$3->code;
 				$$->code+="MOV AX, "+$3->getSymbol()+"\n";
 				if($$->getType()=="notarray"){ 
@@ -443,23 +463,55 @@ logic_expression : rel_expression
                  }
                  | rel_expression LOGICOP rel_expression 	
                  {
-					$$=new Symbol_info($1);
-					/*$$->code+=$1->code;*/
-					/*$$->code+=$3->code;*/
+                    $$=new Symbol_info($1);
+                    /*$$ = new Symbol_info();*/
+                    $$->code+=$3->code;
+                    $$->code+="\n;Doing Logical opeation between two relational expressions\n";
 					
+                    char *tr = newTemp();
+                    char *f = newLabel();
+                    char *t = newLabel();
+
 					if($2->getSymbol()=="&&"){
 						/* 
 						Check whether both operands value is 1. If both are one set value of a temporary variable to 1
 						otherwise 0
 						*/
-                        $1->print_info();
-                        $3->print_info();
+                        //TODO Priority 1
+                        /*$$->print_info();*/
+                        /*$1->print_info();*/
+                        /*$3->print_info();*/
                         /*if ($1->sy)*/
+                        $$->code += "\n;Doing AND operation\n";
+                        
+                        /*this is full of errors y'all*/
+                        $$->code += "CMP " + $1->symbol + ", 1\n";
+                        $$->code += "JNE " + string(f) + "\n";
+                        $$->code += "CMP " + $3->symbol + ", 1\n";
+                        $$->code += "JNE " + string(f) + "\n";
+                        $$->code += "MOV " + string(tr) + " ,1\n";
+                        $$->code += "JMP " + string(t) + " \n";
+                        $$->code +=  string(f) + ": \n";
+                        $$->code += "MOV " + string(tr) + " ,0\n";
+                        $$->code += string(t) + " :\n";
+
 					}
 					else if($2->getSymbol()=="||"){
+                        $$->code += "\n;Doing OR operation\n";
+
+                        $$->code += "CMP " + $1->symbol + ", 1\n";
+                        $$->code += "JE " + string(t) + "\n";
+                        $$->code += "CMP " + $3->symbol + ", 1\n";
+                        $$->code += "JE " + string(t) + "\n";
+                        $$->code += "MOV " + string(tr) + " ,0\n";
+                        $$->code += "JMP " + string(f) + " \n";
+                        $$->code += string(t) + " :\n";
+                        $$->code += "MOV " + string(t) + " ,1\n";
+                        $$->code +=  string(f) + ": \n";
 						
 					}
 					delete $3;
+                    $$->symbol = string(t);
                     fprintf(parseLog, "GRAMMER RULE: logic_expression -> rel_expression LOGICOP rel_expression 	  \n"); 
                  }
          ;
@@ -556,24 +608,35 @@ term :	unary_expression
                  }
      |  term MULOP unary_expression
                  {
+                 //TODO
                     $$=$1;
                     $$->code += $3->code;
                     $$->code += "MOV AX, "+ $1->getSymbol()+"\n";
                     $$->code += "MOV BX, "+ $3->getSymbol() +"\n";
                     char *temp=newTemp();
                     if($2->getSymbol()=="*"){
+                        $$->code += "\n;Multiplication\n";
                         $$->code += "MUL BX\n";
-                        $$->code += "MOV "+ string(temp) + ", AX\n";
+                        $$->code += "MOV "+ string(temp) + ", AX\n\n";
                     }
                     else if($2->getSymbol()=="/"){
                         // TODO
+                        // Division
                         // clear dx, perform 'div BX' and MOV AX to temp
+                        $$->code += "\n;Division\n";
+                        $$->code += "POP DX\n";
+                        $$->code += "DIV BX\n";
+                        $$->code += "MOV "+ string(temp) + ", AX\n\n";
                     }
                     else{
+                        // % or MOD
                         // clear dx, perform 'div BX' and MOV dx to temp
+                        $$->code += "\n;Modulo\n";
+                        $$->code += "POP DX\n";
+                        $$->code += "DIV BX\n";
+                        $$->code += "MOV "+ string(temp) + ", DX\n\n";
                     }
                     $$->setSymbol(temp);
-                    cout << endl << $$->code << endl;
                     delete $3;
                     
                     fprintf(parseLog, "GRAMMER RULE: term -> term MULOP unary_expression  \n"); 
@@ -651,6 +714,7 @@ factor	: variable
         | variable INCOP 
         {
             $$ = new Symbol_info($1);
+            $$->code += "\n;Increment\n";
             char *t = newTemp();
             if ($1->getType()=="notarray") {
             // TODO Perform increment
@@ -662,11 +726,13 @@ factor	: variable
                 $$->code+= "INC " + $1->symbol + "\n";
             }
             $$->symbol = string(t);
+            $$->print_info();
             fprintf(parseLog, "GRAMMER RULE: factor -> variable INCOP   \n"); 
         }
         | variable DECOP
         {
             $$ = new Symbol_info($1);
+            $$->code += "\n;Decrement\n";
             char *t = newTemp();
             // TODO 
             if ($1->getType()=="notarray") {

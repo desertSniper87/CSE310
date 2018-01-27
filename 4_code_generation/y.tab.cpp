@@ -568,11 +568,11 @@ static const yytype_uint16 yyrline[] =
 {
        0,   101,   101,   107,   113,   120,   125,   130,   137,   143,
      176,   180,   184,   188,   192,   196,   199,   205,   213,   221,
-     226,   231,   239,   245,   249,   254,   260,   266,   275,   280,
-     285,   290,   322,   335,   339,   357,   362,   369,   374,   381,
-     386,   399,   404,   439,   444,   467,   473,   513,   518,   552,
-     557,   583,   589,   598,   605,   620,   631,   636,   641,   646,
-     651,   667,   686,   692,   697
+     226,   231,   239,   245,   250,   255,   261,   267,   276,   281,
+     286,   291,   323,   336,   354,   372,   378,   385,   390,   397,
+     402,   417,   423,   459,   464,   519,   525,   565,   570,   604,
+     609,   646,   652,   661,   668,   683,   694,   699,   704,   709,
+     714,   732,   752,   758,   763
 };
 #endif
 
@@ -1637,78 +1637,79 @@ yyreduce:
   case 23:
 #line 246 "parser.y" /* yacc.c:1646  */
     {
+                     //TODO
                      fprintf(parseLog, "GRAMMER RULE: declaration_list -> declaration_list COMMA ID LSQBRAC CONST_INT RSQBRAC \n"); 
                  }
-#line 1643 "y.tab.cpp" /* yacc.c:1646  */
+#line 1644 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 250 "parser.y" /* yacc.c:1646  */
+#line 251 "parser.y" /* yacc.c:1646  */
     {
                     (yyval) = new Symbol_info((yyvsp[0]));
                     fprintf(parseLog, "GRAMMER RULE: declaration_list -> ID \n"); 
                  }
-#line 1652 "y.tab.cpp" /* yacc.c:1646  */
+#line 1653 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 255 "parser.y" /* yacc.c:1646  */
+#line 256 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: declaration_list -> ID LSQBRAC CONST_INT RSQBRAC \n"); 
                  }
-#line 1660 "y.tab.cpp" /* yacc.c:1646  */
+#line 1661 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 261 "parser.y" /* yacc.c:1646  */
+#line 262 "parser.y" /* yacc.c:1646  */
     {
                      (yyval) = (yyvsp[0]);
                      fprintf(parseLog, "GRAMMER RULE: statements -> statement  \n"); 
 
                  }
-#line 1670 "y.tab.cpp" /* yacc.c:1646  */
+#line 1671 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 267 "parser.y" /* yacc.c:1646  */
+#line 268 "parser.y" /* yacc.c:1646  */
     {
                      fprintf(parseLog, "GRAMMER RULE: statements -> statements statement  \n"); 
                      (yyval) = (yyvsp[-1]);
                      (yyval)->code += (yyvsp[0])->code;
                      delete (yyvsp[0]);
                  }
-#line 1681 "y.tab.cpp" /* yacc.c:1646  */
+#line 1682 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 276 "parser.y" /* yacc.c:1646  */
+#line 277 "parser.y" /* yacc.c:1646  */
     {
                     (yyval)=(yyvsp[0]);
                     fprintf(parseLog, "GRAMMER RULE: statement -> var_declaration  \n"); 
                  }
-#line 1690 "y.tab.cpp" /* yacc.c:1646  */
+#line 1691 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 281 "parser.y" /* yacc.c:1646  */
+#line 282 "parser.y" /* yacc.c:1646  */
     {
                      (yyval) = (yyvsp[0]);
                      fprintf(parseLog, "GRAMMER RULE: statement -> expression_statement  \n"); 
                  }
-#line 1699 "y.tab.cpp" /* yacc.c:1646  */
+#line 1700 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 286 "parser.y" /* yacc.c:1646  */
+#line 287 "parser.y" /* yacc.c:1646  */
     {
                      (yyval) = new Symbol_info((yyvsp[0]));
                      fprintf(parseLog, "GRAMMER RULE: statement -> compound_statement  \n"); 
                  }
-#line 1708 "y.tab.cpp" /* yacc.c:1646  */
+#line 1709 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 291 "parser.y" /* yacc.c:1646  */
+#line 292 "parser.y" /* yacc.c:1646  */
     {
 					/*
                         for (i=0;i>5;i++) print(x)
@@ -1721,18 +1722,18 @@ yyreduce:
 						append the second label in the code
 					*/
                      (yyval) = (yyvsp[-4]);
-                     (yyval)->code += "\n;Forloop\n";
+                     (yyval)->code += "\n;Forloop";
                      char *label = newLabel();
                      char *endlabel = newLabel();
 
                      (yyval)->code += "\n"+ string(label)+ ":\n";
-                     (yyval)->code += ";i<5\n";
+                     (yyval)->code += ";For loop - test expression\n";
                      (yyval)->code += (yyvsp[-3])->code;
                      (yyval)->code += "CMP "+ (yyvsp[-3])->symbol+ " ,0\n";
                      (yyval)->code += "JE "+ string(endlabel)+ "\n";
-                     (yyval)->code += ";statement\n";
+                     (yyval)->code += ";For loop - body\n";
                      (yyval)->code += (yyvsp[0])->code;
-                     (yyval)->code += ";i++\n";
+                     (yyval)->code += ";For loop - increment\n";
                      (yyval)->code += (yyvsp[-2])->code;
                      (yyval)->code += "JMP "+ string(label)+ "\n";
                      (yyval)->code += "\n"+ string(endlabel)+ ":\n";
@@ -1740,11 +1741,11 @@ yyreduce:
                      fprintf(parseLog, "GRAMMER RULE: statement -> FOR LPAREN expression_statement expression_statement expression RPAREN statement  \n"); 
                      // TODO Some code in Line 96 of the template
                  }
-#line 1744 "y.tab.cpp" /* yacc.c:1646  */
+#line 1745 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 323 "parser.y" /* yacc.c:1646  */
+#line 324 "parser.y" /* yacc.c:1646  */
     {
                     fprintf(parseLog, "GRAMMER RULE: statement -> IF LPAREN expression RPAREN statement  \n"); 
 					(yyval)=(yyvsp[-2]);
@@ -1757,22 +1758,36 @@ yyreduce:
 					(yyval)->code+=(yyvsp[0])->code;
 					(yyval)->code+=string(label)+":\n";
                  }
-#line 1761 "y.tab.cpp" /* yacc.c:1646  */
+#line 1762 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 336 "parser.y" /* yacc.c:1646  */
+#line 337 "parser.y" /* yacc.c:1646  */
     {
                     fprintf(parseLog, "GRAMMER RULE: statement -> IF LPAREN expression RPAREN statement ELSE statement  \n"); 
+					(yyval)=(yyvsp[-4]);
+					
+                    (yyval)->code += "\n;If-Else statement\n";
+					char *label=newLabel();
+					char *label_if=newLabel();
+					char *label_else=newLabel();
+					(yyval)->code+="MOV AX, "+(yyvsp[-4])->getSymbol()+"\n";
+					(yyval)->code+="CMP AX, 0\n";
+					(yyval)->code+="JE "+string(label_else)+"\n";
+					(yyval)->code+=(yyvsp[-2])->code;     
+					(yyval)->code+="JE "+string(label_if)+"\n";
+					(yyval)->code+=string(label_else)+":\n";
+					(yyval)->code+=(yyvsp[0])->code;     
+					(yyval)->code+=string(label_if)+":\n";
                  }
-#line 1769 "y.tab.cpp" /* yacc.c:1646  */
+#line 1784 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 340 "parser.y" /* yacc.c:1646  */
+#line 355 "parser.y" /* yacc.c:1646  */
     {
                      (yyval) = new Symbol_info();
-                     (yyval)->code += "\n;While Loop\n";
+                     (yyval)->code += "\n;While Loop";
                      char *label = newLabel();
                      char *endlabel = newLabel();
 
@@ -1781,86 +1796,90 @@ yyreduce:
                      (yyval)->code += (yyvsp[-2])->code;
                      (yyval)->code += "CMP "+ (yyvsp[-2])->symbol+ " ,0\n";
                      (yyval)->code += "JE "+ string(endlabel)+ "\n";
-                     (yyval)->code += ";statement\n";
+                     (yyval)->code += ";While loop - body\n";
                      (yyval)->code += (yyvsp[0])->code;
                      (yyval)->code += "JMP "+ string(label)+ "\n";
                      (yyval)->code += "\n"+ string(endlabel)+ ":\n";
                     fprintf(parseLog, "GRAMMER RULE: statement -> WHILE LPAREN expression RPAREN statement  \n"); 
                  }
-#line 1791 "y.tab.cpp" /* yacc.c:1646  */
+#line 1806 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 358 "parser.y" /* yacc.c:1646  */
+#line 373 "parser.y" /* yacc.c:1646  */
     {
-                    (yyval)->code += "\n;Print Code\n";
+                    //TODO 
+                    (yyval)->code += "\n;Print Variable " + (yyvsp[-2])->symbol;
                     fprintf(parseLog, "GRAMMER RULE: statement -> PRINTLN LPAREN ID RPAREN SEMICOLON  \n"); 
                  }
-#line 1800 "y.tab.cpp" /* yacc.c:1646  */
+#line 1816 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 363 "parser.y" /* yacc.c:1646  */
+#line 379 "parser.y" /* yacc.c:1646  */
     {
                     (yyval) = (yyvsp[-2]);
                     fprintf(parseLog, "GRAMMER RULE: statement -> RETURN expression SEMICOLON  \n"); 
                  }
-#line 1809 "y.tab.cpp" /* yacc.c:1646  */
+#line 1825 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 370 "parser.y" /* yacc.c:1646  */
+#line 386 "parser.y" /* yacc.c:1646  */
     {
                             (yyval) = new Symbol_info(";", "SEMICOLON");
                             fprintf(parseLog, "GRAMMER RULE: expression_statement -> SEMICOLON  \n"); 
                         }
-#line 1818 "y.tab.cpp" /* yacc.c:1646  */
+#line 1834 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 375 "parser.y" /* yacc.c:1646  */
+#line 391 "parser.y" /* yacc.c:1646  */
     {
                             (yyval) = (yyvsp[-1]);
                             fprintf(parseLog, "GRAMMER RULE: expression_statement -> expression SEMICOLON   \n"); 
                         }
-#line 1827 "y.tab.cpp" /* yacc.c:1646  */
+#line 1843 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 382 "parser.y" /* yacc.c:1646  */
+#line 398 "parser.y" /* yacc.c:1646  */
     {
                     (yyval)= new Symbol_info((yyvsp[0]));
                     fprintf(parseLog, "GRAMMER RULE: variable -> ID 		  \n"); 
                  }
-#line 1836 "y.tab.cpp" /* yacc.c:1646  */
+#line 1852 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 387 "parser.y" /* yacc.c:1646  */
+#line 403 "parser.y" /* yacc.c:1646  */
     {
                     (yyval)= new Symbol_info((yyvsp[-3]));
+                    /*$$->print_info();*/
+                    /*$3->print_info();*/
                     (yyval)->setType("array");
 
-                    (yyval)->code=(yyvsp[-1])->code+"MOV BX, " +(yyvsp[-1])->getSymbol() +"\nadd BX, BX\n";
+                    (yyval)->code=(yyvsp[-1])->code+"MOV BX, " +(yyvsp[-1])->getSymbol() +"\nADD BX, BX\n";
                     
                     delete (yyvsp[-1]);
                     /*$$->print_info();*/
                     fprintf(parseLog, "GRAMMER RULE: variable -> ID LSQBRAC expression RSQBRAC   \n"); 
                  }
-#line 1851 "y.tab.cpp" /* yacc.c:1646  */
+#line 1869 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 400 "parser.y" /* yacc.c:1646  */
+#line 418 "parser.y" /* yacc.c:1646  */
     {
                (yyval) = (yyvsp[0]);
+               (yyval)->code += ";Logical Expression\n";
                fprintf(parseLog, "GRAMMER RULE: expression -> logic_expression	  \n"); 
            }
-#line 1860 "y.tab.cpp" /* yacc.c:1646  */
+#line 1879 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 405 "parser.y" /* yacc.c:1646  */
+#line 424 "parser.y" /* yacc.c:1646  */
     {
                 // Source of BUG #2
                 /*printf("Entering e->v a l\n");*/
@@ -1869,6 +1888,7 @@ yyreduce:
                 /*$2->print_info();*/
                 /*$3->print_info();*/
 				(yyval)=(yyvsp[-2]);
+				(yyval)->code+="\n;Assignment Operation\n";
 				(yyval)->code+=(yyvsp[0])->code;
 				(yyval)->code+="MOV AX, "+(yyvsp[0])->getSymbol()+"\n";
 				if((yyval)->getType()=="notarray"){ 
@@ -1893,55 +1913,87 @@ yyreduce:
                 
                 fprintf(parseLog, "GRAMMER RULE: expression -> variable ASSIGNOP logic_expression 	  \n"); 
            }
-#line 1897 "y.tab.cpp" /* yacc.c:1646  */
+#line 1917 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 440 "parser.y" /* yacc.c:1646  */
+#line 460 "parser.y" /* yacc.c:1646  */
     {
                     (yyval) = (yyvsp[0]);
                     fprintf(parseLog, "GRAMMER RULE: logic_expression -> rel_expression 	  \n"); 
                  }
-#line 1906 "y.tab.cpp" /* yacc.c:1646  */
+#line 1926 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 445 "parser.y" /* yacc.c:1646  */
+#line 465 "parser.y" /* yacc.c:1646  */
     {
-					(yyval)=new Symbol_info((yyvsp[-2]));
-					/*$$->code+=$1->code;*/
-					/*$$->code+=$3->code;*/
+                    (yyval)=new Symbol_info((yyvsp[-2]));
+                    /*$$ = new Symbol_info();*/
+                    (yyval)->code+=(yyvsp[0])->code;
+                    (yyval)->code+="\n;Doing Logical opeation between two relational expressions\n";
 					
+                    char *tr = newTemp();
+                    char *f = newLabel();
+                    char *t = newLabel();
+
 					if((yyvsp[-1])->getSymbol()=="&&"){
 						/* 
 						Check whether both operands value is 1. If both are one set value of a temporary variable to 1
 						otherwise 0
 						*/
-                        (yyvsp[-2])->print_info();
-                        (yyvsp[0])->print_info();
+                        //TODO Priority 1
+                        /*$$->print_info();*/
+                        /*$1->print_info();*/
+                        /*$3->print_info();*/
                         /*if ($1->sy)*/
+                        (yyval)->code += "\n;Doing AND operation\n";
+                        
+                        /*this is full of errors y'all*/
+                        (yyval)->code += "CMP " + (yyvsp[-2])->symbol + ", 1\n";
+                        (yyval)->code += "JNE " + string(f) + "\n";
+                        (yyval)->code += "CMP " + (yyvsp[0])->symbol + ", 1\n";
+                        (yyval)->code += "JNE " + string(f) + "\n";
+                        (yyval)->code += "MOV " + string(tr) + " ,1\n";
+                        (yyval)->code += "JMP " + string(t) + " \n";
+                        (yyval)->code +=  string(f) + ": \n";
+                        (yyval)->code += "MOV " + string(tr) + " ,0\n";
+                        (yyval)->code += string(t) + " :\n";
+
 					}
 					else if((yyvsp[-1])->getSymbol()=="||"){
+                        (yyval)->code += "\n;Doing OR operation\n";
+
+                        (yyval)->code += "CMP " + (yyvsp[-2])->symbol + ", 1\n";
+                        (yyval)->code += "JE " + string(t) + "\n";
+                        (yyval)->code += "CMP " + (yyvsp[0])->symbol + ", 1\n";
+                        (yyval)->code += "JE " + string(t) + "\n";
+                        (yyval)->code += "MOV " + string(tr) + " ,0\n";
+                        (yyval)->code += "JMP " + string(f) + " \n";
+                        (yyval)->code += string(t) + " :\n";
+                        (yyval)->code += "MOV " + string(t) + " ,1\n";
+                        (yyval)->code +=  string(f) + ": \n";
 						
 					}
 					delete (yyvsp[0]);
+                    (yyval)->symbol = string(t);
                     fprintf(parseLog, "GRAMMER RULE: logic_expression -> rel_expression LOGICOP rel_expression 	  \n"); 
                  }
-#line 1931 "y.tab.cpp" /* yacc.c:1646  */
+#line 1983 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 468 "parser.y" /* yacc.c:1646  */
+#line 520 "parser.y" /* yacc.c:1646  */
     {
                      /*$$=$1;*/
                      (yyval)=new Symbol_info((yyvsp[0]));
                      fprintf(parseLog, "GRAMMER RULE: rel_expression -> simple_expression   \n"); 
                  }
-#line 1941 "y.tab.cpp" /* yacc.c:1646  */
+#line 1993 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 474 "parser.y" /* yacc.c:1646  */
+#line 526 "parser.y" /* yacc.c:1646  */
     {
                     (yyval)=(yyvsp[-2]);
                     (yyval)->code+=(yyvsp[0])->code;
@@ -1979,20 +2031,20 @@ yyreduce:
 
                     fprintf(parseLog, "GRAMMER RULE: rel_expression -> simple_expression RELOP simple_expression	  \n"); 
                  }
-#line 1983 "y.tab.cpp" /* yacc.c:1646  */
+#line 2035 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 514 "parser.y" /* yacc.c:1646  */
+#line 566 "parser.y" /* yacc.c:1646  */
     {
                      (yyval) = (yyvsp[0]);
                      fprintf(parseLog, "GRAMMER RULE: simple_expression -> term   \n"); 
                  }
-#line 1992 "y.tab.cpp" /* yacc.c:1646  */
+#line 2044 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 519 "parser.y" /* yacc.c:1646  */
+#line 571 "parser.y" /* yacc.c:1646  */
     {
                     (yyval)=new Symbol_info((yyvsp[-2]));
                     /*$1->print_info();*/
@@ -2024,58 +2076,69 @@ yyreduce:
 
                     fprintf(parseLog, "GRAMMER RULE: simple_expression -> simple_expression ADDOP term   \n"); 
                  }
-#line 2028 "y.tab.cpp" /* yacc.c:1646  */
+#line 2080 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 553 "parser.y" /* yacc.c:1646  */
+#line 605 "parser.y" /* yacc.c:1646  */
     {
                     (yyval) = (yyvsp[0]);
                     fprintf(parseLog, "GRAMMER RULE:  term ->	unary_expression  \n"); 
                  }
-#line 2037 "y.tab.cpp" /* yacc.c:1646  */
+#line 2089 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 558 "parser.y" /* yacc.c:1646  */
+#line 610 "parser.y" /* yacc.c:1646  */
     {
+                 //TODO
                     (yyval)=(yyvsp[-2]);
                     (yyval)->code += (yyvsp[0])->code;
                     (yyval)->code += "MOV AX, "+ (yyvsp[-2])->getSymbol()+"\n";
                     (yyval)->code += "MOV BX, "+ (yyvsp[0])->getSymbol() +"\n";
                     char *temp=newTemp();
                     if((yyvsp[-1])->getSymbol()=="*"){
+                        (yyval)->code += "\n;Multiplication\n";
                         (yyval)->code += "MUL BX\n";
-                        (yyval)->code += "MOV "+ string(temp) + ", AX\n";
+                        (yyval)->code += "MOV "+ string(temp) + ", AX\n\n";
                     }
                     else if((yyvsp[-1])->getSymbol()=="/"){
                         // TODO
+                        // Division
                         // clear dx, perform 'div BX' and MOV AX to temp
+                        (yyval)->code += "\n;Division\n";
+                        (yyval)->code += "POP DX\n";
+                        (yyval)->code += "DIV BX\n";
+                        (yyval)->code += "MOV "+ string(temp) + ", AX\n\n";
                     }
                     else{
+                        // % or MOD
                         // clear dx, perform 'div BX' and MOV dx to temp
+                        (yyval)->code += "\n;Modulo\n";
+                        (yyval)->code += "POP DX\n";
+                        (yyval)->code += "DIV BX\n";
+                        (yyval)->code += "MOV "+ string(temp) + ", DX\n\n";
                     }
                     (yyval)->setSymbol(temp);
-                    cout << endl << (yyval)->code << endl;
                     delete (yyvsp[0]);
                     
                     fprintf(parseLog, "GRAMMER RULE: term -> term MULOP unary_expression  \n"); 
                  }
-#line 2065 "y.tab.cpp" /* yacc.c:1646  */
+#line 2128 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 584 "parser.y" /* yacc.c:1646  */
+#line 647 "parser.y" /* yacc.c:1646  */
     {
                     (yyval)=new Symbol_info((yyvsp[0]));
                     //TODO Perform NEG operation if the symbol of ADDOP is '-'
                     fprintf(parseLog, "GRAMMER RULE: unary_expression -> ADDOP unary_expression    \n"); 
                  }
-#line 2075 "y.tab.cpp" /* yacc.c:1646  */
+#line 2138 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 590 "parser.y" /* yacc.c:1646  */
+#line 653 "parser.y" /* yacc.c:1646  */
     {
                     (yyval)=new Symbol_info((yyvsp[0]));
                     char *temp=newTemp();
@@ -2084,20 +2147,20 @@ yyreduce:
                     (yyval)->code+="MOV "+string(temp)+", AX";
                     fprintf(parseLog, "GRAMMER RULE: unary_expression -> NOT unary_expression   \n"); 
                  }
-#line 2088 "y.tab.cpp" /* yacc.c:1646  */
+#line 2151 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 599 "parser.y" /* yacc.c:1646  */
+#line 662 "parser.y" /* yacc.c:1646  */
     {
                     (yyval) = (yyvsp[0]);
                     fprintf(parseLog, "GRAMMER RULE: unary_expression -> factor   \n"); 
                  }
-#line 2097 "y.tab.cpp" /* yacc.c:1646  */
+#line 2160 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 606 "parser.y" /* yacc.c:1646  */
+#line 669 "parser.y" /* yacc.c:1646  */
     {
 			(yyval)= (yyvsp[0]);
 			if((yyval)->getType()=="notarray"){
@@ -2112,11 +2175,11 @@ yyreduce:
             }
             fprintf(parseLog, "GRAMMER RULE:  factor  -> variable   \n"); 
         }
-#line 2116 "y.tab.cpp" /* yacc.c:1646  */
+#line 2179 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 621 "parser.y" /* yacc.c:1646  */
+#line 684 "parser.y" /* yacc.c:1646  */
     {
             (yyval) = (yyvsp[-1]);
 
@@ -2127,49 +2190,50 @@ yyreduce:
 
             fprintf(parseLog, "GRAMMER RULE: factor-> ID LPAREN argument_list RPAREN  \n"); 
         }
-#line 2131 "y.tab.cpp" /* yacc.c:1646  */
+#line 2194 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 632 "parser.y" /* yacc.c:1646  */
+#line 695 "parser.y" /* yacc.c:1646  */
     {
            (yyval) = (yyvsp[-1]); 
            fprintf(parseLog, "GRAMMER RULE: factor -> LPAREN expression RPAREN  \n"); 
         }
-#line 2140 "y.tab.cpp" /* yacc.c:1646  */
+#line 2203 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 637 "parser.y" /* yacc.c:1646  */
+#line 700 "parser.y" /* yacc.c:1646  */
     {
             (yyval) = new Symbol_info((yyvsp[0]));
             fprintf(parseLog, "GRAMMER RULE: factor -> CONST_INT   \n"); 
         }
-#line 2149 "y.tab.cpp" /* yacc.c:1646  */
+#line 2212 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 642 "parser.y" /* yacc.c:1646  */
+#line 705 "parser.y" /* yacc.c:1646  */
     {
             (yyval) = new Symbol_info((yyvsp[0]));
             fprintf(parseLog, "GRAMMER RULE: factor -> CONST_FLOAT  \n"); 
         }
-#line 2158 "y.tab.cpp" /* yacc.c:1646  */
+#line 2221 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 647 "parser.y" /* yacc.c:1646  */
+#line 710 "parser.y" /* yacc.c:1646  */
     {
             (yyval) = new Symbol_info((yyvsp[0]));
             fprintf(parseLog, "GRAMMER RULE: factor -> CONST_CHAR  \n"); 
         }
-#line 2167 "y.tab.cpp" /* yacc.c:1646  */
+#line 2230 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 652 "parser.y" /* yacc.c:1646  */
+#line 715 "parser.y" /* yacc.c:1646  */
     {
             (yyval) = new Symbol_info((yyvsp[-1]));
+            (yyval)->code += "\n;Increment\n";
             char *t = newTemp();
             if ((yyvsp[-1])->getType()=="notarray") {
             // TODO Perform increment
@@ -2181,15 +2245,17 @@ yyreduce:
                 (yyval)->code+= "INC " + (yyvsp[-1])->symbol + "\n";
             }
             (yyval)->symbol = string(t);
+            (yyval)->print_info();
             fprintf(parseLog, "GRAMMER RULE: factor -> variable INCOP   \n"); 
         }
-#line 2187 "y.tab.cpp" /* yacc.c:1646  */
+#line 2252 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 668 "parser.y" /* yacc.c:1646  */
+#line 733 "parser.y" /* yacc.c:1646  */
     {
             (yyval) = new Symbol_info((yyvsp[-1]));
+            (yyval)->code += "\n;Decrement\n";
             char *t = newTemp();
             // TODO 
             if ((yyvsp[-1])->getType()=="notarray") {
@@ -2204,30 +2270,30 @@ yyreduce:
             (yyval)->symbol = string(t);
             fprintf(parseLog, "GRAMMER RULE: factor -> variable DECOP  \n"); 
         }
-#line 2208 "y.tab.cpp" /* yacc.c:1646  */
+#line 2274 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 687 "parser.y" /* yacc.c:1646  */
+#line 753 "parser.y" /* yacc.c:1646  */
     {
                      (yyval) = (yyvsp[-2]);
                      (yyval)->code += (yyvsp[-1])->code;
                      fprintf(parseLog, "GRAMMER RULE: argument_list -> argument_list COMMA logic_expression  \n"); 
                  }
-#line 2218 "y.tab.cpp" /* yacc.c:1646  */
+#line 2284 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 693 "parser.y" /* yacc.c:1646  */
+#line 759 "parser.y" /* yacc.c:1646  */
     {
                      (yyval) = (yyvsp[0]);
                      fprintf(parseLog, "GRAMMER RULE: argument_list -> logic_expression  \n"); 
                  }
-#line 2227 "y.tab.cpp" /* yacc.c:1646  */
+#line 2293 "y.tab.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 2231 "y.tab.cpp" /* yacc.c:1646  */
+#line 2297 "y.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2455,7 +2521,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 701 "parser.y" /* yacc.c:1906  */
+#line 767 "parser.y" /* yacc.c:1906  */
 
 
 int main(int argc,char *argv[]){
