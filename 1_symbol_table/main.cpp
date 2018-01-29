@@ -212,8 +212,10 @@ class ScopeTable {
      *
      * \return Returns a pointer to a symbol info
      */
-    void function_name()
-    {
+    Symbol_info* lookup(string name) {
+        
+    }
+    Symbol_info* insert(string name, string type, int table_no=1) {
         
     }
 };

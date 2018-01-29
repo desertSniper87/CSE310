@@ -1805,7 +1805,6 @@ func_definition	3_syntax_and_semantic_analysis/parser_temp.y	/^func_definition :
 func_definition	4_code_generation/fail.y	/^func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statement$/;"	l
 func_definition	4_code_generation/parser.y	/^func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statement$/;"	l
 func_definition	4_code_generation/parser_temp.y	/^func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statement$/;"	l
-function_name	1_symbol_table/main.cpp	/^    void function_name()$/;"	f	class:ScopeTable	typeref:typename:void	file:
 g	4_code_generation/Input/func.c	/^int g(int a, int b){$/;"	f	typeref:typename:int
 getLabel	3_syntax_and_semantic_analysis/y.tab.cpp	/^string getLabel()	\/\/put type = "b" for byte$/;"	f	typeref:typename:string
 getLabel	4_code_generation/y.tab.cpp	/^string getLabel()	\/\/put type = "b" for byte$/;"	f	typeref:typename:string
@@ -1856,6 +1855,7 @@ info_version	1_symbol_table/cmake-build-debug/CMakeFiles/3.8.2/CompilerIdC/CMake
 info_version	1_symbol_table/cmake-build-debug/CMakeFiles/3.8.2/CompilerIdCXX/CMakeCXXCompilerId.cpp	/^char const info_version[] = {$/;"	v	typeref:typename:char const[]
 input	3_syntax_and_semantic_analysis/Democodes/simplecalc/simplecalc.y	/^input:              \/* empty string *\/$/;"	l
 insert	1_symbol_table/main.cpp	/^        void insert(string s1,string s2, int hash_buckets) {$/;"	f	class:Symbol_table	typeref:typename:void	file:
+insert	1_symbol_table/main.cpp	/^    Symbol_info* insert(string name, string type, int table_no=1) {$/;"	f	class:ScopeTable	typeref:typename:Symbol_info *	file:
 insert	2_lexical_analysis/lex.yy.cpp	/^void insert(const char* token, char* yytext) {$/;"	f	typeref:typename:void
 insert	2_lexical_analysis/main.cpp	/^        void insert(string s1,string s2, int hash_buckets)        {$/;"	f	class:Symbol_table	typeref:typename:void	file:
 insert	3_syntax_and_semantic_analysis/Symbol_table.cpp	/^void Symbol_table::insert(string s1,string s2, int hash_buckets)        {$/;"	f	class:Symbol_table	typeref:typename:void
@@ -1889,6 +1889,7 @@ logout	4_code_generation/Code Generation - jan 17/lex.yy.c	/^FILE *logout;$/;"	v
 logout	4_code_generation/Code Generation - jan 17/lex.yy.cpp	/^FILE *logout;$/;"	v	typeref:typename:FILE *
 logout	4_code_generation/y.tab.cpp	/^FILE *logout;$/;"	v	typeref:typename:FILE *
 lookup	1_symbol_table/main.cpp	/^        bool lookup(int count,string s) {$/;"	f	class:Symbol_table	typeref:typename:bool	file:
+lookup	1_symbol_table/main.cpp	/^    Symbol_info* lookup(string name) {$/;"	f	class:ScopeTable	typeref:typename:Symbol_info *	file:
 lookup	2_lexical_analysis/main.cpp	/^        bool lookup(int count,string s) {$/;"	f	class:Symbol_table	typeref:typename:bool	file:
 lookup	3_syntax_and_semantic_analysis/Symbol_table.cpp	/^bool Symbol_table::lookup(int count,string s) {$/;"	f	class:Symbol_table	typeref:typename:bool
 lookup	4_code_generation/Code Generation - jan 17/Symbol_table.cpp	/^bool Symbol_table::lookup(int count,string s) {$/;"	f	class:Symbol_table	typeref:typename:bool
