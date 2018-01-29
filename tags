@@ -773,11 +773,16 @@ SWITCH	4_code_generation/Code Generation - jan 17/y.tab.hpp	/^    SWITCH = 270,$
 SWITCH	4_code_generation/Code Generation - jan 17/y.tab.hpp	/^#define SWITCH /;"	d
 SYMBOLINFO_H_INCLUDED	4_code_generation/Code Generation - jan 17/SymbolInfo.h	/^#define SYMBOLINFO_H_INCLUDED$/;"	d
 SYMBOLINFO_H_INCLUDED	4_code_generation/Code Generation - jan 17/Symbol_table.h	/^#define SYMBOLINFO_H_INCLUDED$/;"	d
+ScopeTable	1_symbol_table/main.cpp	/^    ScopeTable(int n){$/;"	f	class:ScopeTable	file:
+ScopeTable	1_symbol_table/main.cpp	/^class ScopeTable {$/;"	c	file:
+ScopeTable	1_symbol_table/python_rw/symbol_table.py	/^class ScopeTable(hashtable):$/;"	c
+SumbolInfo	1_symbol_table/python_rw/symbol_table.py	/^class SumbolInfo(object):$/;"	c
 SymbolInfo	4_code_generation/Code Generation - jan 17/SymbolInfo.h	/^        SymbolInfo(){$/;"	f	class:SymbolInfo
 SymbolInfo	4_code_generation/Code Generation - jan 17/SymbolInfo.h	/^        SymbolInfo(char *symbol, char *type){$/;"	f	class:SymbolInfo
 SymbolInfo	4_code_generation/Code Generation - jan 17/SymbolInfo.h	/^        SymbolInfo(const SymbolInfo *sym){$/;"	f	class:SymbolInfo
 SymbolInfo	4_code_generation/Code Generation - jan 17/SymbolInfo.h	/^        SymbolInfo(string symbol, string type){$/;"	f	class:SymbolInfo
 SymbolInfo	4_code_generation/Code Generation - jan 17/SymbolInfo.h	/^class SymbolInfo{$/;"	c
+SymbolTable	1_symbol_table/python_rw/symbol_table.py	/^class SymbolTable():$/;"	c
 Symbol_info	1_symbol_table/main.cpp	/^class Symbol_info   {$/;"	c	file:
 Symbol_info	2_lexical_analysis/main.cpp	/^class Symbol_info   {$/;"	c	file:
 Symbol_info	3_syntax_and_semantic_analysis/Symbol_table.h	/^class Symbol_info   {$/;"	c
@@ -1604,6 +1609,7 @@ __anonb330b8070103	3_syntax_and_semantic_analysis/Democodes/conflict/y.tab.c	/^ 
 __anoncf1fb3720103	3_syntax_and_semantic_analysis/Democodes/simplecalc/y.tab.c	/^  enum { YYERROR_VERBOSE_ARGS_MAXIMUM = 5 };$/;"	g	function:yysyntax_error	file:
 __anond5ceaec00103	4_code_generation/Code Generation - jan 17/y.tab.c	/^  enum { YYERROR_VERBOSE_ARGS_MAXIMUM = 5 };$/;"	g	function:yysyntax_error	file:
 __anone1dd00440103	3_syntax_and_semantic_analysis/y.tab.cpp	/^  enum { YYERROR_VERBOSE_ARGS_MAXIMUM = 5 };$/;"	g	function:yysyntax_error	file:
+__init__	1_symbol_table/python_rw/symbol_table.py	/^    def __init__(self):$/;"	m	class:SumbolInfo
 a	3_syntax_and_semantic_analysis/Sample IO/Sample 1/input.c	/^int x,y,z; float a;$/;"	v	typeref:typename:float
 a	3_syntax_and_semantic_analysis/Sample IO/Sample 3/input.c	/^int a;$/;"	v	typeref:typename:int
 a	3_syntax_and_semantic_analysis/sample_input_1.c	/^int x,y,z; float a;$/;"	v	typeref:typename:float
@@ -1645,9 +1651,11 @@ b	4_code_generation/lex.yy.cpp	/^			YY_BUFFER_STATE b = YY_CURRENT_BUFFER_LVALUE
 bar	3_syntax_and_semantic_analysis/Sample IO/Sample 3/input.c	/^int bar(int a, int b){$/;"	f	typeref:typename:int
 bar	3_syntax_and_semantic_analysis/sample_input_3.c	/^int bar(int a, int b){$/;"	f	typeref:typename:int
 bar	4_code_generation/sample_input_3.c	/^int bar(int a, int b){$/;"	f	typeref:typename:int
+bucket	1_symbol_table/main.cpp	/^    int bucket;$/;"	m	class:ScopeTable	typeref:typename:int	file:
 buffer	4_code_generation/Code Generation - jan 17/lex.yy.c	/^char buffer[500];$/;"	v	typeref:typename:char[500]
 buffer	4_code_generation/Code Generation - jan 17/lex.yy.cpp	/^char buffer[500];$/;"	v	typeref:typename:char[500]
 c	4_code_generation/code.asm	/^c dw 0$/;"	d
+child	1_symbol_table/main.cpp	/^    ScopeTable* child;$/;"	m	class:ScopeTable	typeref:typename:ScopeTable *	file:
 clean	1_symbol_table/cmake-build-debug/Makefile	/^clean:$/;"	t
 clean/fast	1_symbol_table/cmake-build-debug/Makefile	/^clean\/fast: clean$/;"	t
 cmake_check_build_system	1_symbol_table/cmake-build-debug/Makefile	/^cmake_check_build_system:$/;"	t
@@ -1797,6 +1805,7 @@ func_definition	3_syntax_and_semantic_analysis/parser_temp.y	/^func_definition :
 func_definition	4_code_generation/fail.y	/^func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statement$/;"	l
 func_definition	4_code_generation/parser.y	/^func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statement$/;"	l
 func_definition	4_code_generation/parser_temp.y	/^func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statement$/;"	l
+function_name	1_symbol_table/main.cpp	/^    void function_name()$/;"	f	class:ScopeTable	typeref:typename:void	file:
 g	4_code_generation/Input/func.c	/^int g(int a, int b){$/;"	f	typeref:typename:int
 getLabel	3_syntax_and_semantic_analysis/y.tab.cpp	/^string getLabel()	\/\/put type = "b" for byte$/;"	f	typeref:typename:string
 getLabel	4_code_generation/y.tab.cpp	/^string getLabel()	\/\/put type = "b" for byte$/;"	f	typeref:typename:string
@@ -1809,7 +1818,9 @@ getType	4_code_generation/Code Generation - jan 17/SymbolInfo.h	/^        string
 getType	4_code_generation/Code Generation - jan 17/Symbol_table.h	/^        string getType(){$/;"	f	class:Symbol_info	typeref:typename:string
 getType	4_code_generation/Symbol_table.h	/^        string getType(){$/;"	f	class:Symbol_info	typeref:typename:string
 get_name	1_symbol_table/main.cpp	/^        string get_name(){$/;"	f	class:Symbol_info	typeref:typename:string	file:
+get_name	1_symbol_table/python_rw/symbol_table.py	/^    def get_name():$/;"	m	class:SumbolInfo
 get_type	1_symbol_table/main.cpp	/^        string get_type(){$/;"	f	class:Symbol_info	typeref:typename:string	file:
+get_type	1_symbol_table/python_rw/symbol_table.py	/^    def get_type():$/;"	m	class:SumbolInfo
 hash_buckets	1_symbol_table/main.cpp	/^int hash_buckets;$/;"	v	typeref:typename:int
 hash_buckets	2_lexical_analysis/main.cpp	/^int hash_buckets = 7;$/;"	v	typeref:typename:int
 hash_buckets	3_syntax_and_semantic_analysis/lex.yy.cpp	/^int hash_buckets = 7;$/;"	v	typeref:typename:int
@@ -1819,6 +1830,7 @@ hash_key	2_lexical_analysis/main.cpp	/^        int hash_key(string word,unsigned
 hash_key	3_syntax_and_semantic_analysis/Symbol_table.cpp	/^int Symbol_table::hash_key(string word,unsigned int hashtable_size)$/;"	f	class:Symbol_table	typeref:typename:int
 hash_key	4_code_generation/Code Generation - jan 17/Symbol_table.cpp	/^int Symbol_table::hash_key(string word,unsigned int hashtable_size)$/;"	f	class:Symbol_table	typeref:typename:int
 hash_key	4_code_generation/Symbol_table.cpp	/^int Symbol_table::hash_key(string word,unsigned int hashtable_size)$/;"	f	class:Symbol_table	typeref:typename:int
+hashtable	1_symbol_table/main.cpp	/^    Symbol_info* hashtable;$/;"	m	class:ScopeTable	typeref:typename:Symbol_info *	file:
 help	1_symbol_table/cmake-build-debug/Makefile	/^help:$/;"	t
 i	2_lexical_analysis/lex.yy.cpp	/^	int number_to_move, i;$/;"	v	typeref:typename:int
 i	3_syntax_and_semantic_analysis/in2.c	/^int main{char s1[100], s2[100], i, j; printf("Enter first string: "); scanf("%s", s1); printf("E/;"	v	typeref:typename:char[100][100]
@@ -1970,6 +1982,7 @@ parameter_list	3_syntax_and_semantic_analysis/parser_temp.y	/^parameter_list  : 
 parameter_list	4_code_generation/fail.y	/^parameter_list  : parameter_list COMMA type_specifier ID$/;"	l
 parameter_list	4_code_generation/parser.y	/^parameter_list  : parameter_list COMMA type_specifier ID$/;"	l
 parameter_list	4_code_generation/parser_temp.y	/^parameter_list  : parameter_list COMMA type_specifier ID$/;"	l
+parent	1_symbol_table/main.cpp	/^    ScopeTable* parent;$/;"	m	class:ScopeTable	typeref:typename:ScopeTable *	file:
 parseLog	3_syntax_and_semantic_analysis/y.tab.cpp	/^FILE *parseLog;$/;"	v	typeref:typename:FILE *
 parseLog	4_code_generation/y.tab.cpp	/^FILE *parseLog;$/;"	v	typeref:typename:FILE *
 parser_table	3_syntax_and_semantic_analysis/y.tab.cpp	/^Symbol_table parser_table;$/;"	v	typeref:typename:Symbol_table
@@ -2043,8 +2056,10 @@ setType	4_code_generation/Code Generation - jan 17/Symbol_table.h	/^        void
 setType	4_code_generation/Code Generation - jan 17/Symbol_table.h	/^        void setType(string type){$/;"	f	class:Symbol_info	typeref:typename:void
 setType	4_code_generation/Symbol_table.h	/^        void setType(char *type){$/;"	f	class:Symbol_info	typeref:typename:void
 setType	4_code_generation/Symbol_table.h	/^        void setType(string type){$/;"	f	class:Symbol_info	typeref:typename:void
+set_name	1_symbol_table/python_rw/symbol_table.py	/^    def set_name(n):$/;"	m	class:SumbolInfo
 set_symbol	1_symbol_table/main.cpp	/^        void set_symbol(string s){$/;"	f	class:Symbol_info	typeref:typename:void	file:
 set_type	1_symbol_table/main.cpp	/^        void set_type(string t){$/;"	f	class:Symbol_info	typeref:typename:void	file:
+set_type	1_symbol_table/python_rw/symbol_table.py	/^    def set_type(t):$/;"	m	class:SumbolInfo
 simple_expression	3_syntax_and_semantic_analysis/Example Skeleton/parser.y	/^simple_expression : term $/;"	l
 simple_expression	3_syntax_and_semantic_analysis/parser.y	/^simple_expression : term $/;"	l
 simple_expression	3_syntax_and_semantic_analysis/parser_temp.y	/^simple_expression : term $/;"	l
@@ -2088,9 +2103,11 @@ symbol	4_code_generation/Code Generation - jan 17/SymbolInfo.h	/^        string 
 symbol	4_code_generation/Code Generation - jan 17/Symbol_table.h	/^        string symbol, symbol_type;$/;"	m	class:Symbol_info	typeref:typename:string
 symbol	4_code_generation/Symbol_table.h	/^        string symbol, symbol_type;$/;"	m	class:Symbol_info	typeref:typename:string
 symbol_name	1_symbol_table/main.cpp	/^    string symbol_name, symbol_type;$/;"	m	class:Symbol_info	typeref:typename:string	file:
+symbol_name	1_symbol_table/python_rw/symbol_table.py	/^    symbol_name = ""$/;"	v	class:SumbolInfo
 symbol_table	1_symbol_table/cmake-build-debug/Makefile	/^symbol_table: cmake_check_build_system$/;"	t
 symbol_table/fast	1_symbol_table/cmake-build-debug/Makefile	/^symbol_table\/fast:$/;"	t
 symbol_type	1_symbol_table/main.cpp	/^    string symbol_name, symbol_type;$/;"	m	class:Symbol_info	typeref:typename:string	file:
+symbol_type	1_symbol_table/python_rw/symbol_table.py	/^    symbol_type = ""$/;"	v	class:SumbolInfo
 symbol_type	2_lexical_analysis/main.cpp	/^        string symbol, symbol_type;$/;"	m	class:Symbol_info	typeref:typename:string	file:
 symbol_type	3_syntax_and_semantic_analysis/Symbol_table.h	/^        string symbol, symbol_type;$/;"	m	class:Symbol_info	typeref:typename:string
 symbol_type	4_code_generation/Code Generation - jan 17/Symbol_table.h	/^        string symbol, symbol_type;$/;"	m	class:Symbol_info	typeref:typename:string
@@ -2115,6 +2132,7 @@ t9	4_code_generation/code.asm	/^t9 dw 0$/;"	d
 table	2_lexical_analysis/lex.yy.cpp	/^Symbol_table table;$/;"	v	typeref:typename:Symbol_table
 table	3_syntax_and_semantic_analysis/lex.yy.cpp	/^Symbol_table table;$/;"	v	typeref:typename:Symbol_table
 table	4_code_generation/lex.yy.cpp	/^Symbol_table table;$/;"	v	typeref:typename:Symbol_table
+table_no	1_symbol_table/main.cpp	/^    int table_no = 1;$/;"	m	class:ScopeTable	typeref:typename:int	file:
 tempCount	3_syntax_and_semantic_analysis/y.tab.cpp	/^int tempCount = 0, labelCount = 0;$/;"	v	typeref:typename:int
 tempCount	4_code_generation/Code Generation - jan 17/y.tab.c	/^int tempCount=0;$/;"	v	typeref:typename:int
 tempCount	4_code_generation/Code Generation - jan 17/y.tab.cpp	/^int tempCount=0;$/;"	v	typeref:typename:int

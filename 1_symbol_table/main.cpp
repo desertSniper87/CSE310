@@ -190,6 +190,34 @@ class Symbol_table  {
         }
 };      //End of symboltable class
 
+class ScopeTable {
+    Symbol_info* hashtable;
+
+    public:
+    int bucket;
+    int table_no = 1;
+    ScopeTable* parent;
+    ScopeTable* child;
+
+    ScopeTable(int n){
+        bucket     = n;
+        parent     = NULL;
+        child      = NULL;
+        hashtable  = new Symbol_info[n];
+    }
+
+    /*! \brief The scopetable insert function.
+     *
+     *  Detailed description of the function
+     *
+     * \return Returns a pointer to a symbol info
+     */
+    void function_name()
+    {
+        
+    }
+};
+
 int main() {
     string temp;
     fstream datafile("input.txt", ios::in);
