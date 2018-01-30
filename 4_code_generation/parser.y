@@ -144,9 +144,6 @@ func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statem
                  {
                     $$=new Symbol_info();
                     // Need to work on this
-                    /*$$->symbol += $1->symbol;*/
-                    /*$$->symbol_type += $1-> symbol_type;*/
-
 
                     $$->code+="\n;function definition";
                     $$->code+="\nPROC "+$2->symbol+"\n\n";
@@ -199,7 +196,6 @@ parameter_list  : parameter_list COMMA type_specifier ID
 compound_statement : LCURL statements RCURL
                  {
                     $$ = $2;
-                    /*$$ = $2;*/
                     fprintf(parseLog, "GRAMMER RULE: compound_statement -> LCURL statements RCURL  \n"); 
                  }
                    | LCURL RCURL
@@ -213,7 +209,6 @@ compound_statement : LCURL statements RCURL
 var_declaration : type_specifier declaration_list SEMICOLON
                 {
                     $$ = $2;
-                    /*$$-> symbol_type = $1-> symbol_type;*/
                     fprintf(parseLog, "GRAMMER RULE: var_declaration -> type_specifier declaration_list SEMICOLON\n"); 
                 }
                 ;
@@ -402,14 +397,11 @@ variable : ID
                  | ID LSQBRAC expression RSQBRAC 
                  {
                     $$= new Symbol_info($1);
-                    /*$$->print_info();*/
-                    /*$3->print_info();*/
                     $$->setType("array");
 
                     $$->code=$3->code+"MOV BX, " +$3->getSymbol() +"\nADD BX, BX\n";
                     
                     delete $3;
-                    /*$$->print_info();*/
                     fprintf(parseLog, "GRAMMER RULE: variable -> ID LSQBRAC expression RSQBRAC   \n"); 
                  }
      ;
@@ -422,12 +414,6 @@ expression : logic_expression
            }
            | variable ASSIGNOP logic_expression 	
            {
-                // Source of BUG #2
-                /*printf("Entering e->v a l\n");*/
-                /*$$->print_info();*/
-                /*$1->print_info();*/
-                /*$2->print_info();*/
-                /*$3->print_info();*/
 				$$=$1;
 				$$->code+="\n;Assignment Operation\n";
 				$$->code+=$3->code;
@@ -436,15 +422,6 @@ expression : logic_expression
 					$$->code+= "MOV "+$1->getSymbol()+", AX\n";
 				}
 
-				/*if($1->getType()=="println"){ */
-                    /*//TODO*/
-                    /*$$->print_info();*/
-                    /*$1->print_info();*/
-                    /*$2->print_info();*/
-                    /*$3->print_info();*/
-					/*[>$$->code+= "MOV "+, AX\n";<]*/
-				/*}*/
-				
 				else{
 					$$->code+= "MOV  "+ $1->getSymbol()+"[BX], AX\n";
 
@@ -478,10 +455,6 @@ logic_expression : rel_expression
 						otherwise 0
 						*/
                         //TODO Priority 1
-                        /*$$->print_info();*/
-                        /*$1->print_info();*/
-                        /*$3->print_info();*/
-                        /*if ($1->sy)*/
                         $$->code += "\n;Doing AND operation\n";
                         
                         /*this is full of errors y'all*/
@@ -570,9 +543,6 @@ simple_expression : term
                   | simple_expression ADDOP term 
                  {
                     $$=new Symbol_info($1);
-                    /*$1->print_info();*/
-                    /*$2->print_info();*/
-                    /*$3->print_info();*/
                     $$->code+=$3->code;
                     char *t = newTemp();
                     
@@ -726,7 +696,6 @@ factor	: variable
                 $$->code+= "INC " + $1->symbol + "\n";
             }
             $$->symbol = string(t);
-            $$->print_info();
             fprintf(parseLog, "GRAMMER RULE: factor -> variable INCOP   \n"); 
         }
         | variable DECOP
@@ -734,9 +703,7 @@ factor	: variable
             $$ = new Symbol_info($1);
             $$->code += "\n;Decrement\n";
             char *t = newTemp();
-            // TODO 
             if ($1->getType()=="notarray") {
-            // TODO Perform increment
                 char *temp = newTemp();
                 $$->code+="SUB BX,2\n";
                 $$->code+="MOV "+string(temp)+","+$1->symbol+"[BX]\n";
