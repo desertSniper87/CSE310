@@ -427,7 +427,6 @@ expression : logic_expression
 
 				}
 				delete $3;
-                /*printf("Exiting e->v a l\n");*/
                 
                 fprintf(parseLog, "GRAMMER RULE: expression -> variable ASSIGNOP logic_expression 	  \n"); 
            }
