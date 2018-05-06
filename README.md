@@ -1,14 +1,14 @@
-##CSE-310
+# CSE-310
 The source code for CSE-310 lab(Compiler Sessional) that I flunked in 3rd year.
 
-#How to run
-###1. Symbol table creation
+## How to run
+### 1. Symbol table creation
 ```bash
 g++ main.cpp
 chmod +x a.out
 ./a.out
 ```
-###2. Lexical Analysis
+### 2. Lexical Analysis
 ```bash
 #!/bin/bash
 
@@ -18,7 +18,7 @@ g++ -o lex.out lex.yy.o -lfl
 chmod u+x lex.out
 ./lex.out < input1.txt
 ```
-###3. Syntax and semantic analysis
+### 3. Syntax and semantic analysis
 Note: Use a 32 bit Linux environment
 ```bash
 #!/usr/bin/bash
@@ -32,5 +32,5 @@ g++ -o compiler lexer.o parser.o main.o -L /usr/lib -lfl -ly
 ./compiler < sample_input_1.c
 
 ```
-###4. Code Generation
+### 4. Code Generation
 Same as before. Install emu8086 using wine and feed asm file.
